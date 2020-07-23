@@ -36,37 +36,22 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
-# class Solution:
-#     def numMagicSquaresInside(self, grid: List[List[int]]) -> int:
-#         row, col = len(grid), len(grid[0])
-#
-#         def magic(a, b, c, d, e, f, g, h, i):
-#             return (sorted([a, b, c, d, e, f, g, h, i]) == range(1, 10) and     # a, b, c,
-#                     (a + b + c == d + e + f == g + h + i == a + e + i ==        # d, e, f,
-#                      a + d + g == b + e + h == c + f + i == c + e + g == 15))   # g, h, i
-#
-#         ans = 0
-#         for r in range(row - 2):  # (r,c) 幻方的左上角
-#             for c in range(col - 2):
-#                 if grid[r + 1][c + 1] != 5: continue  # optional skip
-#                 if magic(grid[r][c], grid[r][c + 1], grid[r][c + 2],
-#                          grid[r + 1][c], grid[r + 1][c + 1], grid[r + 1][c + 2],
-#                          grid[r + 2][c], grid[r + 2][c + 1], grid[r + 2][c + 2]):
-#                     ans += 1
-#         return ans
-class Solution(object):
-    def numMagicSquaresInside(self, grid):
-        R, C = len(grid), len(grid[0])
+from typing import List
+
+
+class Solution:
+    def numMagicSquaresInside(self, grid: List[List[int]]) -> int:
+        row, col = len(grid), len(grid[0])
 
         def magic(a, b, c, d, e, f, g, h, i):
-            return (sorted([a, b, c, d, e, f, g, h, i]) == list(range(1, 10)) and
-                    (a + b + c == d + e + f == g + h + i == a + d + g ==
-                     b + e + h == c + f + i == a + e + i == c + e + g == 15))
+            return (sorted([a, b, c, d, e, f, g, h, i]) == list(range(1, 10)) and  # a, b, c,
+                    (a + b + c == d + e + f == g + h + i == a + e + i ==  # d, e, f,
+                     a + d + g == b + e + h == c + f + i == c + e + g == 15))  # g, h, i
 
         ans = 0
-        for r in range(R - 2):
-            for c in range(C - 2):
-                if grid[r + 1][c + 1] != 5: continue  # optional skip
+        for r in range(row - 2):  # (r,c) 幻方的左上角
+            for c in range(col - 2):
+                if grid[r + 1][c + 1] != 5: continue  # 剪枝：若正中间不是5，则肯定不是幻方
                 if magic(grid[r][c], grid[r][c + 1], grid[r][c + 2],
                          grid[r + 1][c], grid[r + 1][c + 1], grid[r + 1][c + 2],
                          grid[r + 2][c], grid[r + 2][c + 1], grid[r + 2][c + 2]):
