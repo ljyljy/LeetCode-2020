@@ -30,45 +30,9 @@
 
 # 方法2:
 #     从给定时间点一分钟一分钟地递增, 即枚举每一个时间点, 直到这个时间点可以被给定的数字组成为止.
+from datetime import *
 
 class Solution:
-    # 法1：
-    def nextClosestTime(self, time):
-        time = time[:2] + time[3:]  # 去掉":"
-        # 预处理，找到 time 里的 unique number 并排序
-        digits = sorted([int(num) for num in time])
-        smallest = digits[0]
-
-        for i in reversed(range(len(time))):  # range(len(time)-1, -1, -1)
-            #  【↑从后往前】 ↓找比当前数字大的最小数字
-            larger = self._get_larger_digit(digits, int(time[i]))
-            if larger == -1:
-                continue  # 没找到
-
-            # 找到了，则把当前数字替换成larger，并把【此后直到结尾的数字】都替换成【全局最小值】
-            #           ∵ time[:i]取了(0,i-1)共i个数 ∴ len(time) - (i-1 +1) - 1 ↓
-            new_time = time[:i] + str(larger) + str(smallest) * (len(time) - 1 - i)
-            # 判断新的时间是否 valid，是则可直接返回
-            if not self.is_valid(new_time):
-                continue
-            return self.construct_time(new_time)
-
-        # 遍历完整个 time 都没有找到 valid_新时间，直接返回全由最小值组成的时间（第二天）
-        return self.construct_time(str(smallest) * 4)
-
-    def _get_larger_digit(self, digits, num):
-        idx = digits.index(num)
-        if idx == len(digits) - 1:
-            return -1  # num已是max
-        else:
-            return digits[idx + 1]  # digits是递增序列
-
-    def is_valid(self, time):
-        return int(time[:2]) <= 23 and int(time[2:]) <= 59
-
-    def construct_time(self, time):
-        return str(time[:2]) + ":" + str(time[2:])
-
     # 法2：把时间转换成分钟，24小时有1440分钟。
     # 在（1，1441）的范围内逐步往上加分钟数，保证时间始终往后。
     # 再用set把每个step的结果分开，如果set的长度大于原时间组的长度，说明数字和原时间不同，继续往下。
@@ -84,15 +48,64 @@ class Solution:
                 break
         return result
 
+    def nextClosestTime3(self, time):
+        digits = set(time)
+        while True:
+            time = (datetime.strptime(time, '%H:%M') + timedelta(minutes=1)).strftime('%H:%M')
+            if set(time) <= digits:
+                return time
+
+    # # 法1：有误！！！
+    # def nextClosestTime(self, time):
+    #     time = time[:2] + time[3:]  # 去掉":"
+    #     # 预处理，找到 time 里的 unique number 并排序
+    #     digits = sorted([int(num) for num in time])
+    #     smallest = digits[0]
+    #
+    #     for i in reversed(range(len(time))):  # range(len(time)-1, -1, -1)
+    #         #  【↑从后往前】 ↓找比当前数字大的最小数字
+    #         larger = self._get_larger_digit(digits, int(time[i]))
+    #         if larger == -1:
+    #             continue  # 没找到
+    #
+    #         # 找到了，则把当前数字替换成larger，并把【此后直到结尾的数字】都替换成【全局最小值】
+    #         #           ∵ time[:i]取了(0,i-1)共i个数 ∴ len(time) - (i-1 +1) - 1 ↓
+    #         new_time = time[:i] + str(larger) + str(smallest) * (len(time) - 1 - i)
+    #         # 判断新的时间是否 valid，是则可直接返回
+    #         if not self.is_valid(new_time):
+    #             continue
+    #         return self.construct_time(new_time)
+    #
+    #     # 遍历完整个 time 都没有找到 valid_新时间，直接返回全由最小值组成的时间（第二天）
+    #     return self.construct_time(str(smallest) * 4)
+    #
+    # def _get_larger_digit(self, digits, num):
+    #     idx = digits.index(num)
+    #     if idx == len(digits) - 1:
+    #         return -1  # num已是max
+    #     else:
+    #         return digits[idx + 1]  # digits是递增序列
+    #
+    # def is_valid(self, time):
+    #     return int(time[:2]) <= 23 and int(time[2:]) <= 59
+    #
+    # def construct_time(self, time):
+    #     return str(time[:2]) + ":" + str(time[2:])
+
 
 if __name__ == "__main__":
+    # 法3
     sol = Solution()
-    new_time = sol.nextClosestTime("19:34")
+    new_time = sol.nextClosestTime3("19:34")
     print(new_time)
-    new_time2 = sol.nextClosestTime("23:59")
+    new_time2 = sol.nextClosestTime3("23:59")
     print(new_time2)
+    new_time3 = sol.nextClosestTime3("21:19")
+    print(new_time3)
     # 法2：
     new_time = sol.nextClosestTime2("19:34")
     print(new_time)
     new_time2 = sol.nextClosestTime2("23:59")
     print(new_time2)
+    new_time3 = sol.nextClosestTime2("21:19")
+    print(new_time3)
