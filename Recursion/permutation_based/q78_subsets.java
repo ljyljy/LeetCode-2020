@@ -1,4 +1,4 @@
-package Divide_Conquer;
+package permutation_based;
 
 import java.util.ArrayList;
 import java.util.List;

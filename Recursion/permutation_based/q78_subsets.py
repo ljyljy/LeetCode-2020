@@ -20,6 +20,9 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
+from typing import List
+
+
 class Solution:
     # 1.
     def subsets(self, nums: List[int]) -> List[List[int]]:
