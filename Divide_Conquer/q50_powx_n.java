@@ -1,4 +1,3 @@
-package Divide_Conquer;
 
 public class q50_powx_n {
     /**

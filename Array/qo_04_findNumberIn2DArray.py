@@ -48,7 +48,7 @@ class Solution:
     def findNumberIn2DArray(self, matrix: List[List[int]], target: int) -> bool:
         if not matrix: return False
         row, col = len(matrix), len(matrix[0])
-        i, j = 0, col - 1
+        i, j = 0, col - 1  # 右上角
         while j >= 0 and i < row:
             if matrix[i][j] > target:
                 j -= 1
