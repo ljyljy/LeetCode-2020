@@ -739,6 +739,14 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 10- II]青蛙跳台阶问题.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 10- II]青蛙跳台阶问题.py" />
+              <option name="questionId" value="100277" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 10- I]斐波那契数列.py">
           <value>
             <LeetcodeEditor>
@@ -760,6 +768,14 @@
             <LeetcodeEditor>
               <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 12]矩阵中的路径.py" />
               <option name="questionId" value="100279" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 13]机器人的运动范围.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 13]机器人的运动范围.py" />
+              <option name="questionId" value="100281" />
             </LeetcodeEditor>
           </value>
         </entry>
