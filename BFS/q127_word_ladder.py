@@ -60,10 +60,10 @@ class Solution:
             if cur_word == end:
                 return cur_len
             for i in range(word_len):
-                left = cur_word[:i]  # 取出当前单词左部分
+                left = cur_word[:i]  # 取出当前单词左部分【左边切片可以为空，此时j为cur_word[0]】
                 right = cur_word[i + 1:]  # 取出当前单词右部分
                 for j in 'abcdefghijklmnopqrstuvwxyz':  # 枚举替换字母
-                    if cur_word[i] == j:  # 相同则不替换
+                    if cur_word[i] == j:  # 相同则不替换【从idx=0开始！】
                         continue
                     new_word = left + j + right
                     if new_word in word_set:  # 勿写成wordList!
