@@ -467,6 +467,22 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[380]常数时间插入、删除和获取随机元素.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[380]常数时间插入、删除和获取随机元素.py" />
+              <option name="questionId" value="380" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[381]O(1) 时间插入、删除和获取随机元素 - 允许重复.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[381]O(1) 时间插入、删除和获取随机元素 - 允许重复.py" />
+              <option name="questionId" value="381" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[392]判断子序列.py">
           <value>
             <LeetcodeEditor>
@@ -616,6 +632,14 @@
             <LeetcodeEditor>
               <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[658]找到 K 个最接近的元素.java" />
               <option name="questionId" value="658" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[65]有效数字.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[65]有效数字.py" />
+              <option name="questionId" value="65" />
             </LeetcodeEditor>
           </value>
         </entry>
@@ -843,6 +867,38 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 19]正则表达式匹配.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 19]正则表达式匹配.py" />
+              <option name="questionId" value="100297" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 20]表示数值的字符串.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 20]表示数值的字符串.py" />
+              <option name="questionId" value="100290" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 21]调整数组顺序使奇数位于偶数前面.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 21]调整数组顺序使奇数位于偶数前面.py" />
+              <option name="questionId" value="100291" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 22]链表中倒数第k个节点.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 22]链表中倒数第k个节点.py" />
+              <option name="questionId" value="100294" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 34]二叉树中和为某一值的路径.java">
           <value>
             <LeetcodeEditor>
@@ -864,6 +920,14 @@
             <LeetcodeEditor>
               <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 68 - I]二叉搜索树的最近公共祖先 LCOF.java" />
               <option name="questionId" value="100346" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[面试题 02.01]移除重复节点.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[面试题 02.01]移除重复节点.py" />
+              <option name="questionId" value="100163" />
             </LeetcodeEditor>
           </value>
         </entry>
