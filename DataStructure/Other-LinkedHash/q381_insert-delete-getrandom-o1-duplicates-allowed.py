@@ -77,3 +77,36 @@ class RandomizedCollection:
 # param_2 = obj.remove(val)
 # param_3 = obj.getRandom()
 # leetcode submit region end(Prohibit modification and deletion)
+import random
+from collections import defaultdict
+
+
+class RandomizedCollection_ii:
+    def __init__(self):
+        self.dict_idxes = defaultdict(set)  # {val: set(idxes)}❤❤❤
+        self.list_val = []
+
+    def insert(self, val: int) -> bool:
+        self.list_val.append(val)
+        self.dict_idxes[val].add(len(self.list_val) - 1)
+        return len(self.dict_idxes[val]) == 1  # ❤ set(idxes) == 1 ?
+
+    def remove(self, val: int) -> bool:
+        # 如果写if val not in self.dict会TLE！！！
+        if not self.dict_idxes[val]:  return False
+        x = self.dict_idxes[val].pop()  # 从dict中pop出set(idxes)[0] -- set集的首元素
+        self.list_val[x] = None
+        return True
+
+    def getRandom(self) -> int:
+        x = None
+        while x is None:
+            x = random.choice(self.list_val)
+        return x
+
+# # TEST: list_val = ['a','a','a','b','b','c']
+# dictt = defaultdict(set)
+# dictt['a'] = set([0,1,2])
+# dictt['b'] = set([3,4])
+# dictt['c'] = set([5])
+# x = dictt['a'].pop() --> x = 0, dictt['a'] = {1, 2}
