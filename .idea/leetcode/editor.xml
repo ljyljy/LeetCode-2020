@@ -315,6 +315,14 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[226]翻转二叉树.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[226]翻转二叉树.py" />
+              <option name="questionId" value="226" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[22]括号生成.java">
           <value>
             <LeetcodeEditor>
@@ -376,6 +384,22 @@
             <LeetcodeEditor>
               <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[257]二叉树的所有路径.java" />
               <option name="questionId" value="257" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[263]丑数.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[263]丑数.py" />
+              <option name="questionId" value="263" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[264]丑数 II.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[264]丑数 II.py" />
+              <option name="questionId" value="264" />
             </LeetcodeEditor>
           </value>
         </entry>
@@ -928,6 +952,30 @@
             <LeetcodeEditor>
               <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 25]合并两个排序的链表.py" />
               <option name="questionId" value="100286" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 26]树的子结构.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 26]树的子结构.py" />
+              <option name="questionId" value="100287" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 27]二叉树的镜像.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 27]二叉树的镜像.py" />
+              <option name="questionId" value="100288" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 28]对称的二叉树.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[剑指 Offer 28]对称的二叉树.py" />
+              <option name="questionId" value="100289" />
             </LeetcodeEditor>
           </value>
         </entry>
