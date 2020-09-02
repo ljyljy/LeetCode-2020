@@ -1,3 +1,6 @@
+from Tree.q246_inorder_successor_in_bst import TreeNode
+
+
 class Solution:
     # 【迭代版】中序遍历模板+卖萌处理
     def kthSmallest(self, root: TreeNode, k: int) -> int:
