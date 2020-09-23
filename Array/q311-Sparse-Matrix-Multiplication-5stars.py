@@ -36,11 +36,11 @@ class Solution:
     def multiply(self, A, B):  # mcolA == mrowB
         nrow, mcolA, kcolB = len(A), len(A[0]), len(B[0])  # A行数:2, B: 3*3（例1）
         row_vecsA = [[(j, A[i][j])  # (A列号，A值) -- (nrows_A, 每行非0的元素 & 列号)
-                      for j in range(mcolA) if A[i][j]]
-                     for i in range(nrow)]  # [[(0, 1)], [(0, -1), (2, 3)]]
+                      for j in range(mcolA) if A[i][j]]  # 内for
+                     for i in range(nrow)]  # 外for； [[(0, 1)], [(0, -1), (2, 3)]]
         col_vecsB = [[(i, B[i][j])  # (B行号，B值)
-                      for i in range(mcolA) if B[i][j]]  # ❤ # mcolA == mrowB
-                     for j in range(kcolB)]  # [[(0, 7)], [], [(2, 1)]]
+                      for i in range(mcolA) if B[i][j]]  # 内for ❤ # mcolA == mrowB
+                     for j in range(kcolB)]  # 外for；  [[(0, 7)], [], [(2, 1)]]
         # retuaa = [[(row, col) for col in col_vecs] for row in row_vecs]
         # ↓ row, col: [[([(0, 1)], [(0, 7)]), ([(0, 1)], []), ([(0, 1)], [(2, 1)])], [([(0, -1), (2, 3)], [(0, 7)]), ([(0, -1), (2, 3)], []), ([(0, -1), (2, 3)], [(2, 1)])]]
         return nrow, mcolA, kcolB, row_vecsA, col_vecsB, \
@@ -51,8 +51,8 @@ class Solution:
         print("mat1_rows -- mat2_cols:", mat1_rows, ' -- ', mat2_cols)
         i, j, sum = 0, 0, 0
         while i < len(mat1_rows) and j < len(mat2_cols):
-            idx1_col, val1 = mat1_rows[i]
-            idx2_row, val2 = mat2_cols[j]
+            idx1_col, val1 = mat1_rows[i]  # 行向量组 -- 需要知道列号
+            idx2_row, val2 = mat2_cols[j]  # 列向量组 -- 需要知道行号
             if idx1_col < idx2_row:
                 i += 1
             elif idx1_col > idx2_row:
