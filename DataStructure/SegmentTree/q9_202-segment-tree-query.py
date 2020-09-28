@@ -40,15 +40,25 @@ class SegmentTreeNode:
 
 class Solution:
     def query(self, root, start, end):
-        if start <= root.start and end >= root.end:
+        if start <= root.start and root.end <= end:
             return root.max
-
         overlap = lambda node: max(start, node.start) <= min(end, node.end)
-
         return max(self.query(node, start, end) for node in (root.left, root.right)
                    if node and overlap(node))
 
-    def query1(self, root, start, end):
+    # def query1(self, root, start, end):
+    #     # // 如果查询区间在当前节点的区间之内, 直接输出结果
+    #     if start <= root.start and root.end <= end:
+    #         return root.max
+    #     mid = root.start + root.end >> 1
+    #     ans = -sys.maxsize
+    #     if start <= mid:
+    #         ans = max(ans, self.query1(root.left, start, end))
+    #     if mid + 1 <= end:
+    #         ans = max(ans, self.query1(root.right, start, end))
+    #     return ans
+
+    def query2(self, root, start, end):
         if start == root.start and end == root.end:
             return root.max
         mid = root.start + root.end >> 1
