@@ -29,7 +29,8 @@ class SegmentTree(object):
         self.left, self.right = None, None
 
     @classmethod
-    def build(cls, start, end, a):
+    def build(cls, start, end, a=None):
+        if a is None: a = [0]
         if start > end: return None
         if start == end:
             return SegmentTree(start, end, a[start])

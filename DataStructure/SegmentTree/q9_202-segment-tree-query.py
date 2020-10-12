@@ -39,6 +39,14 @@ class SegmentTreeNode:
 
 
 class Solution:
+    def query2(cls, root, start, end):
+        if root.start > end or root.end < start:
+            return 0
+        if start <= root.start and root.end <= end:
+            return root.max
+        return cls.query(root.left, start, end) + \
+               cls.query(root.right, start, end)
+
     def query(self, root, start, end):
         if start <= root.start and root.end <= end:
             return root.max

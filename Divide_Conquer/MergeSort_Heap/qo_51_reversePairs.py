@@ -114,4 +114,66 @@ class Solution:
         sorted_arr = [0 for _ in range(len(nums))]
         return cnt_reverse_pairs(nums, 0, len(nums) - 1)
 
+
+from typing import List
+
+
+# 法2: 线段树
+class SegmentTree(object):
+    def __init__(self, start, end, cnt=0):
+        self.start, self.end, self.cnt = start, end, cnt
+        self.left, self.right = None, None
+
+    @classmethod
+    def build(cls, start, end, arr):
+        if start > end: return None
+        if start == end:
+            return SegmentTree(start, end, 0)
+        root = SegmentTree(start, end, 0)
+        mid = start + end >> 1
+        root.left = cls.build(start, mid, arr)
+        root.right = cls.build(mid + 1, end, arr)
+        root.cnt = root.left.cnt + root.right.cnt
+        return root
+
+    @classmethod
+    def modify(cls, root, idx, cnt=1):
+        if not root: return None
+        if root.start == root.end:  # == idx
+            root.cnt += cnt
+            return
+        mid = root.start + root.end >> 1
+        if idx <= mid:
+            cls.modify(root.left, idx, cnt)
+        else:
+            cls.modify(root.right, idx, cnt)
+        root.cnt = root.left.cnt + root.right.cnt
+
+    @classmethod
+    def query(cls, root, start, end):
+        if start > end or end < root.start or root.end < start:
+            return 0  # 不可写等于，由于有重复元素，但位置不一样，逆序对个数也不一样
+        if start <= root.start and root.end <= end:
+            return root.cnt
+        mid = root.start + root.end >> 1
+        if end <= mid: return cls.query(root.left, start, end)
+        if mid < start: return cls.query(root.right, start, end)
+        return cls.query(root.left, start, mid) + \
+               cls.query(root.right, mid + 1, end)
+
+
+class Solution2:
+    def reversePairs(self, nums: List[int]) -> int:
+        rst = 0
+        if not nums: return rst
+        # 离散化：将nums转化成升序后对应元素的下标列表
+        sorted_nums = sorted(nums)
+        sorted_idx = [sorted_nums.index(num) for num in nums]
+        # 线段树
+        root = SegmentTree.build(0, len(nums) - 1, nums)
+        for si in sorted_idx:
+            rst += (root.cnt - SegmentTree.query(root, 0, si))
+            print(f'si: {si}, root.cnt: {root.cnt}, query(root, 0, si):{SegmentTree.query(root, 0, si)}')
+            SegmentTree.modify(root, si, 1)
+        return rst
 # leetcode submit region end(Prohibit modification and deletion)
