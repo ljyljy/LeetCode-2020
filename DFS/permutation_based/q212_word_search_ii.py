@@ -33,12 +33,74 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 
 from heapq import heapify, heappop, heappush
+from typing import List
 
 DIRECTIONS = [(0, -1), (0, 1), (-1, 0), (1, 0)]
 
 
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_word = False
+        self.word = None  # ❤ 标记单词
+
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def add(self, word):
+        node = self.root
+        for c in word:
+            if c not in node.children:
+                node.children[c] = TrieNode()
+            node = node.children[c]  # 指针下移
+        node.is_word = True
+        node.word = word  # ❤ 标记单词
+
+    def search(self, word):
+        node = self.root
+        for c in word:
+            node = node.children.get(c)  # 指针下移
+            if not node: return None
+        return node  # 返回叶子节点（以便判断is_word）
+
+
 class Solution:
+    # 法1：优化 - Trie树
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        if not len(board) or not len(board[0]): return []
+        n, m, rst = len(board), len(board[0]), set()
+        # 构建Trie前缀树
+        trie = Trie()
+        for word in words:
+            trie.add(word)
+
+        for i in range(n):
+            for j in range(m):
+                ch = board[i][j]
+                self.helper(board, i, j, trie.root.children.get(ch),
+                            set([(i, j)]), rst)
+                return list(rst)
+
+    def helper(self, board, i, j, node: TrieNode, visited: set, rst: set):
+        if not node: return
+        if node.is_word:
+            rst.add(node.word)
+
+        for dirs in DIRECTIONS:
+            new_i, new_j = i + dirs[0], j + dirs[1]
+            if not self.isBounded(new_i, new_j, board): continue
+            if (new_i, new_j) in visited: continue
+
+            visited.add((new_i, new_j))
+            self.helper(board, new_i, new_j,
+                        node.children.get(board[new_i][new_j]),
+                        visited, rst)
+            visited.remove((new_i, new_j))
+
+    # 法2：DFS + Heap
+    def findWords2(self, board: List[List[str]], words: List[str]) -> List[str]:
         if not board or not words: return []
         # 预处理: 设置单词set与前缀set，未来只对前缀为prefix_set中的单词进行dfs
         word_set = set(words)
