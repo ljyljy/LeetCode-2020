@@ -37,13 +37,11 @@ from typing import List
 
 DIRECTIONS = [(0, -1), (0, 1), (-1, 0), (1, 0)]
 
-
 class TrieNode:
     def __init__(self):
         self.children = {}
         self.is_word = False
         self.word = None  # ❤ 标记单词
-
 
 class Trie:
     def __init__(self):
@@ -65,7 +63,6 @@ class Trie:
             if not node: return None
         return node  # 返回叶子节点（以便判断is_word）
 
-
 class Solution:
     # 法1：优化 - Trie树
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
@@ -81,7 +78,7 @@ class Solution:
                 ch = board[i][j]
                 self.helper(board, i, j, trie.root.children.get(ch),
                             set([(i, j)]), rst)
-                return list(rst)
+        return list(rst)
 
     def helper(self, board, i, j, node: TrieNode, visited: set, rst: set):
         if not node: return
