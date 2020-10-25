@@ -755,6 +755,14 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[425]单词方块.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[425]单词方块.py" />
+              <option name="questionId" value="425" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[429]N叉树的层序遍历.java">
           <value>
             <LeetcodeEditor>
@@ -992,6 +1000,14 @@
             <LeetcodeEditor>
               <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[840]矩阵中的幻方.py" />
               <option name="questionId" value="870" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[845]数组中的最长山脉.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$USER_HOME$/AppData/Local/Temp/leetcode/editor/cn/[845]数组中的最长山脉.py" />
+              <option name="questionId" value="875" />
             </LeetcodeEditor>
           </value>
         </entry>
