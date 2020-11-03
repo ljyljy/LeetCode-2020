@@ -10,10 +10,12 @@
 # 输出: 4
 # 挑战：要求时间复杂度为O(n)，空间复杂度为O(1)。
 # 相关题目 1281. 前K个高频元素606. 第K大的元素 II507. 摆动排序 II461. 无序数组K小元素401. 排序矩阵中的从小到大第k个数80. 中位数
+from typing import List
+
 
 class Solution:
     # 法1：最小堆 -- O(nlogk) – pop出前k-1个数，剩下堆中的第一个就是第k大
-    def findKthLargest1(self, k, nums):
+    def findKthLargest(self, nums: List[int], k: int) -> int:
         import heapq
         if not nums or k <= 0: return None
         min_heap = []
@@ -24,34 +26,45 @@ class Solution:
         return min_heap[0]
 
     # 法2：快速选择 1 -- O(n)
-    class Solution:
-        def findKthLargest0(self, nums: List[int], k: int) -> int:
-            import heapq
-            if not nums or k <= 0: return None
-            min_heap = []
-            for num in nums:
-                heapq.heappush(min_heap, num)
-                if len(min_heap) > k:
-                    heapq.heappop(min_heap)
-            return min_heap[0]
+    def findKthLargest2(self, nums, k):
+        # nums_set = list(set(nums))
+        n = len(nums)
+        self.quick_select_v1(nums, 0, n - 1)  # 无需去重！
+        print(nums)
+        return nums[-k]  # 升序的倒数第k个
 
-        # 法2：快速选择 1 -- O(n)
-        def findKthLargest(self, nums, k):
-            # nums_set = list(set(nums))
-            n = len(nums)
-            self.quick_select_v1(nums, 0, n - 1)  # 无需去重！
-            print(nums)
-            return nums[-k]  # 升序的倒数第k个
+    def quick_select_v1(self, arr, left, right):
+        if left >= right: return
+        i, j, pivot = left, right, arr[left + right >> 1]
+        while i <= j:
+            while i <= j and arr[i] < pivot: i += 1
+            while i <= j and arr[j] > pivot: j -= 1
+            if i <= j:
+                arr[i], arr[j] = arr[j], arr[i]
+                i += 1
+                j -= 1
+        self.quick_select_v1(arr, left, j)
+        self.quick_select_v1(arr, i, right)
 
-        def quick_select_v1(self, arr, left, right):
-            if left >= right: return
-            i, j, pivot = left, right, arr[left + right >> 1]
-            while i <= j:
-                while i <= j and arr[i] < pivot: i += 1
-                while i <= j and arr[j] > pivot: j -= 1
-                if i <= j:
-                    arr[i], arr[j] = arr[j], arr[i]
-                    i += 1
-                    j -= 1
-            self.quick_select_v1(arr, left, j)
-            self.quick_select_v1(arr, i, right)
+    # 法3：快速选择 2 -- O(n)
+    def findKthLargest_error(self, nums, k):
+        n = len(nums)
+        self.quick_select_v2(nums, 0, n - 1, k)  # 无需去重！
+        return nums[-k]  # 升序的倒数第k个
+
+    def quick_select_v2(self, arr, left, right, k):
+        if left == right: return
+        i, j, pivot = left - 1, right + 1, arr[left + right >> 1]
+        while i < j:
+            while True:
+                i += 1
+                if arr[i] >= pivot: break
+            while True:
+                j -= 1
+                if arr[j] <= pivot: break
+        if i < j: arr[i], arr[j] = arr[j], arr[i]
+
+        s1 = j - left + 1  # 左半段长度/数的个数
+        if k <= s1:
+            return self.quick_select_v2(arr, left, j, k)
+        return self.quick_select_v2(arr, j + 1, right, k - s1)
