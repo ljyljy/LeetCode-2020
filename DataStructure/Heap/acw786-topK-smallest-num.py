@@ -41,6 +41,20 @@ def quick_select(arr, l, r, k):
     return quick_select(arr, j + 1, r, k - sl)
 
 
+def quickSort(arr, l, r):
+    if l >= r: return
+    i, j, pivot = l, r, arr[l + r >> 1]
+    while i <= j:
+        while i <= j and arr[i] < pivot: i += 1
+        while i <= j and arr[j] > pivot: j -= 1
+        if i <= j:
+            arr[i], arr[j] = arr[j], arr[i]
+            i += 1
+            j -= 1
+    quickSort(arr, l, j)
+    quickSort(arr, i, r)  # ❤注意是[iii, r]!!!!
+
+
 if __name__ == "__main__":
     n, k = list(map(int, input().split()))
     arr = list(map(int, input().split()))
@@ -48,3 +62,8 @@ if __name__ == "__main__":
     ans2 = quick_select(arr, 0, len(arr) - 1, k)
     print(ans)
     print(ans2)
+
+    # 法3：
+    quickSort(arr, 0, len(arr) - 1)
+    print(arr)
+    print(arr[k - 1])
