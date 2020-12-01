@@ -18,12 +18,15 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
+from typing import List
+
+
 class Solution:
     # 法1：九章模板
     def searchRange1(self, nums: List[int], target: int) -> List[int]:
-        if not nums: return [-1, -1]
-        left_idx = self.bSearch(nums, target, isFindLeft=Frue)
-        if first_idx == -1: return [-1, -1]
+        if not nums or target is None: return [-1, -1]
+        left_idx = self.bSearch(nums, target, isFindLeft=True)
+        if left_idx == -1: return [-1, -1]
         right_idx = self.bSearch(nums, target, isFindLeft=False)
         return [left_idx, right_idx]
 
@@ -69,4 +72,11 @@ class Solution:
             else:
                 l = mid
         return [l0, r]
+
+
+if __name__ == '__main__':
+    sol = Solution()
+    nums, target = [0, 0, 0, 1, 2, 3], 0
+    print(sol.searchRange1(nums, target))
+
 # leetcode submit region end(Prohibit modification and deletion)
