@@ -22,14 +22,17 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
+# 思路：直接对答案可能存在的区间进行二分 => 二分答案
+# 注意：判断区间的时候一个小技巧： mid * mid == x 中使用乘法可能会溢出，写成 mid == x / mid 即可防止溢出，不需要使用long或者BigInteger
 class Solution:
     def mySqrt(self, x: int) -> int:
         left, right = 0, x
         while left + 1 < right:
             mid = left + (right - left) // 2
-            if mid * mid == x:
+            # 为避免溢出，勿写 "nums[mid] * nums[mid]"
+            if mid == x / mid:
                 return mid
-            elif mid * mid > x:
+            elif mid > x / mid:
                 right = mid
             else:
                 left = mid
