@@ -60,9 +60,42 @@ import collections
 from typing import List
 
 
+class UnionFind:
+    def __init__(self, n: int):
+        self.father = list(range(n))
+        self.cnt_connected = n  # 连通块个数
+
+    def union(self, a, b):
+        root_a, root_b = self.find(a), self.find(b)
+        if root_a != root_b:
+            self.father[root_a] = root_b
+            self.cnt_connected -= 1
+
+    def find(self, x):
+        if x == self.father[x]:
+            return x
+        self.father[x] = self.find(self.father[x])
+        return self.father[x]
+
+    def query(self):
+        return self.cnt_connected
+
+
 class Solution:
-    # 法1 DFS
+    # 法2 并查集
+    # 时间复杂度：O(n+m)，其中 m 是数组 connections 的长度。
+    # 空间复杂度：O(n+m)，其中 O(m)为存储所有边需要的空间，O(n) 为深度优先搜索中使用的栈空间。
     def makeConnected(self, n: int, connections: List[List[int]]) -> int:
+        if len(connections) < n - 1: return -1
+        uf = UnionFind(n)
+        for x, y in connections:
+            uf.union(x, y)
+        return uf.query() - 1
+
+    # 法1 DFS
+    # 时间复杂度：O(n+m)，其中 m 是数组 connections 的长度。
+    # 空间复杂度：O(n+m)，其中 O(m)为存储所有边需要的空间，O(n) 为深度优先搜索中使用的栈空间。
+    def makeConnected1(self, n: int, connections: List[List[int]]) -> int:
         if len(connections) < n - 1: return -1
         edges = collections.defaultdict(list)
         for x, y in connections:
