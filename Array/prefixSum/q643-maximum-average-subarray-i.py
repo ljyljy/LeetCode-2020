@@ -1,5 +1,8 @@
+from typing import List
+
+
 class Solution:
-    def findMaxAverage(self, nums, k):
+    def findMaxAverage(self, nums: List[int], k):
         n = len(nums)
         prefix_sum = [0 for i in range(n + 1)]
         for i in range(1, n + 1):
