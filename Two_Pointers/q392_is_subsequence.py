@@ -29,12 +29,25 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
-    def isSubsequence(self, subStr: str, pStr: str) -> bool:
+    def isSubsequence(self, subSeq, pSeq) -> bool:
+        if not subSeq or not pSeq: return False
         i, j = 0, 0
-        while i < len(subStr) and j < len(pStr):
-            if subStr[i] == pStr[j]:
+        while i < len(subSeq) and j < len(pSeq):
+            if subSeq[i] == pSeq[j]:
                 i += 1
             j += 1
-        return i == len(subStr)
+        return i == len(subSeq)
+
+
+if __name__ == "__main__":
+    n, m = map(int, input().split())
+    subSeq = list(map(int, input().split()))
+    pSeq = list(map(int, input().split()))
+    sol = Solution()
+    res = sol.isSubsequence(subSeq, pSeq)
+    if res:
+        print('Yes')
+    else:
+        print('No')
 
 # leetcode submit region end(Prohibit modification and deletion)

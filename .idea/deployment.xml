@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="ljy@10.193.14.114:22">
+  <component name="PublishConfigData">
     <serverData>
       <paths name="ljy@10.193.14.114:22">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/ljy/文档/ljy/Codes/LeetCode-Java-Python-C" local="$PROJECT_DIR$" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
     </serverData>
-    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>

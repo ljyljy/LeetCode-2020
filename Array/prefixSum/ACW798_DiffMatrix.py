@@ -67,3 +67,4 @@ if __name__ == "__main__":
         for j in range(1, m + 1):
             print(diff_mat[i][j], end=' ')
         print()
+

@@ -27,26 +27,39 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
+    def lengthOfLongestSubstring(self, s) -> int:
         from collections import defaultdict
         if not s: return 0
         i, j = 0, 0
         dictt, res = defaultdict(int), 0  # 字典默认值为0
         while i < len(s) and i - j + 1 >= 0:
             dictt[s[i]] += 1
-            # print(f'dictt[s[i]] -- {s[i]} : {dictt[s[i]]}')
+            print(f'dictt[s[i]] -- {s[i]} : {dictt[s[i]]}')
+            # 遇到重复元素：
+            # 首先，清空当前答案 ↓（①字典中将j处词频-1 ②j++ ③重复，直到s[i]词频<=1）
             while dictt[s[i]] > 1:  # (1)'bbbb': j会挪到最后
+                print(f'===============遇到重复:{s[i]}, 词频：{dictt[s[i]]}=====================')
+                print(f'before j++： dictt[s[j]] -- {s[j]} : {dictt[s[j]]}')
                 dictt[s[j]] -= 1  # (2)'abcb': j会挪到c（扫描到abc时，res=3，
                 # 下次碰到b-> j后移至c，不重复长度为2 -- cb, 与res作比较）
                 j += 1
+                print(f'after j++： dictt[s[i]] -- {s[i]} : {dictt[s[i]]};  dictt[s[j]] -- {s[j]} : {dictt[s[j]]}')
+
             res = max(res, i - j + 1)
-            # print(f'{i}, {j}, res: {res}')
+            print(f'i={i}, j={j}, res={res}')
             i += 1
         return res
 
 
+
+
 if __name__ == "__main__":
+    # seq = list(map(str, input().split()))  # 1 2 2 3 5 / a b c a b c b b / 9 3 6 9 5 10 1 2 3 9
+    seq = 'abcabcbb'
+    print(seq)
     sol = Solution()
-    res = sol.lengthOfLongestSubstring('abcabcbb')
+    res = sol.lengthOfLongestSubstring(seq)
     print(res)
+
+
 # leetcode submit region end(Prohibit modification and deletion)
