@@ -18,8 +18,8 @@
 class SegmentTreeNode:
     def __init__(self, start, end, max):
         self.start, self.end = start, end
-        self.max = max
         self.left, self.right = None, None
+        self.max = max
 
 
 class Solution:
@@ -35,6 +35,7 @@ class Solution:
         mid = start + end >> 1
         node.left = self.buildHelper(start, mid, A)
         node.right = self.buildHelper(mid + 1, end, A)
+        # 维护max值【二分递归 - 自顶向下】
         if node.left and node.left.max > node.max:
             node.max = node.left.max
         if node.right and node.right.max > node.max:

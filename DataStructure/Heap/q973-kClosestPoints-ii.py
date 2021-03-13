@@ -11,7 +11,7 @@ class Solution:
         self.heap, rst = [], []
         for p in points:
             dist = self._getDist(p, origin)
-            heapq.heappush(self.heap, (-dist, -p.x, -p.y))
+            heapq.heappush(self.heap, (-dist, -p.idx1, -p.y))
             if len(self.heap) > k:
                 heapq.heappop(self.heap)
 
@@ -22,4 +22,4 @@ class Solution:
         return rst[::-1]
 
     def _getDist(self, p, origin):
-        return (p.x - origin.x) ** 2 + (p.y - origin.y) ** 2
+        return (p.idx1 - origin.idx1) ** 2 + (p.y - origin.y) ** 2

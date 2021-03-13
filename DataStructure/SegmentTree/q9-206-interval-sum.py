@@ -19,15 +19,14 @@ class SegmentTree(object):
         self.left, self.right = None, None
 
     @classmethod
-    def build(cls, start, end, a):
+    def build(cls, start, end, arr):
         if start > end: return None
-        if start == end:  #
-            return SegmentTree(start, end, a[start])
-        node = SegmentTree(start, end, a[start])
-        mid = start + end >> 1
+        node = SegmentTree(start, end, arr[start])
+        if start == end: return node
 
-        node.left = cls.build(start, mid, a)
-        node.right = cls.build(mid + 1, end, a)
+        mid = start + end >> 1
+        node.left = cls.build(start, mid, arr)
+        node.right = cls.build(mid + 1, end, arr)
         node.sum = node.left.sum + node.right.sum
         return node
 
@@ -35,6 +34,9 @@ class SegmentTree(object):
     def query(cls, root, start, end):
         if root.start > end or root.end < start:
             return 0
+        # WHY 【包含∈】而非【=≠】:
+        # 1) query查询区间范围∈±∞, 当查询区间超过arr区间时，返回0即可（合法）
+        # 2) sum = 左子树sum + 右子树sum
         if start <= root.start and root.end <= end:
             return root.sum
         return cls.query(root.left, start, end) + \
@@ -42,9 +44,44 @@ class SegmentTree(object):
 
 
 class Solution:
-    def intervalSum(self, A, queries: List[Interval]):
+    # 法1：线段树【不推荐】(查询区间∈[-∞, +∞])
+    def intervalSum1(self, A, queries: List[Interval]):
         root = SegmentTree.build(0, len(A) - 1, A)
         rst = []
         for query in queries:
             rst.append(SegmentTree.query(root, query.start, query.end))
         return rst
+
+    # 法2：【前缀树 推荐√】(查询区间∈[0, n-1])
+    def intervalSum(self, A, queries: List[Interval]):
+        if not A: return 0
+        n, res = len(A), []
+        prefix_sum = [0] * (n+1)
+        for i in range(1, n+1):
+            prefix_sum[i] = prefix_sum[i-1] + A[i-1]
+        for query in queries:  # 前缀和下标 = 查询下标+1
+            # 下标问题：举个例子，打个草稿
+            ans = prefix_sum[query.end + 1] - prefix_sum[query.start]
+            res.append(ans)
+        return res
+
+
+
+
+
+
+# def print_root(root: SegmentTree):
+#     if root:
+#         print(f'{root.start}, {root.end}, sum={root.sum}')
+
+# if __name__ == "__main__":
+#     arr = [1, 2, 7, 8, 5]
+#     root = SegmentTree.build(0, len(arr)-1, arr)
+#     while root:
+#         print_root(root)
+#         print_root(root.left)
+#         print_root(root.right)
+
+
+
+

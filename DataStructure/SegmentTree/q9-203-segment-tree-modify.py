@@ -17,6 +17,7 @@ class Solution:
             self.modify1(root.right, idx, val)
         root.max = max(root.left.max, root.right.max)
 
+    # 推荐
     def modify(self, root, index, value):
         if not root: return
         if root.left == root.right:
@@ -28,3 +29,4 @@ class Solution:
         else:
             self.modify(root.right, index, value)
         root.max = max(root.left.max, root.right.max)
+
