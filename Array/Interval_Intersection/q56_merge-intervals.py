@@ -33,6 +33,7 @@ from typing import List
 
 
 class Solution:
+
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         if not intervals: return []
         # 按照区间start进行排序

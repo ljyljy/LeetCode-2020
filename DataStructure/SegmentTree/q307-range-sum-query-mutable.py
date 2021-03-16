@@ -61,7 +61,7 @@ class SegmentTree(object):
         if start <= root.start and root.end <= end:
             return root.val
         return cls.query(root.left, start, end) + \
-               cls.query(root.right, start, end)
+               cls.query(root.right, start, end)  # 分治
 
 
 class NumArray:

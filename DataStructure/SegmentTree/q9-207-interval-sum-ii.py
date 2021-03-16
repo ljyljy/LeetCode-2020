@@ -28,28 +28,25 @@ class SegmentTree(object):
         self.start, self.end, self.sum = start, end, sum
         self.left, self.right = None, None
 
-
     # 助记: why 传参 arr 而非root？
     # - （1）root是返回值，需要递归建立
     # - （2）arr是为了赋值sum，叶子结点的sum即为arr[start/end]
     @classmethod
-    def build(cls, start, end, a=None):
-        if a is None: a = [0]
+    def build(cls, start, end, A):
         if start > end: return None
-        if start == end:
-            return SegmentTree(start, end, a[start])
-        node = SegmentTree(start, end, a[start])
+        root = SegmentTree(start, end, sum=A[start])
+        if start == end: return root
 
         mid = start + end >> 1
-        node.left = cls.build(start, mid, a)
-        node.right = cls.build(mid + 1, end, a)
-        node.sum = node.left.sum + node.right.sum
-        return node
+        root.left = cls.build(start, mid, A)
+        root.right = cls.build(mid+1, end, A)
+        root.sum = root.left.sum + root.right.sum
+        return root
 
     # 助记: why 传参 root？ - 因为需要递归修改区间和sum
     @classmethod
     def modify(cls, root, idx, val):
-        if not root: return None
+        if not root: return
         if root.start == root.end:
             root.sum = val
             return
@@ -67,8 +64,7 @@ class SegmentTree(object):
         if start <= root.start and root.end <= end:
             return root.sum
         return cls.query(root.left, start, end) + \
-               cls.query(root.right, start, end)
-
+               cls.query(root.right, start, end)  # 分治
 
 
 class Solution:
