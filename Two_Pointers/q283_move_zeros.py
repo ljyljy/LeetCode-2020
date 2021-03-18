@@ -28,6 +28,7 @@ from typing import List
 
 
 class Solution:
+
     # 法1：可保证写次数最少
     def moveZeroes0(self, nums: List[int]) -> None:
         left, right = 0, 0

@@ -22,21 +22,33 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 # Definition for singly-linked list.
+# 迭代、递归都要会
+
 class ListNode:
     def __init__(self, x):
         self.val = x
         self.next = None
 
-
 class Solution:
-    def reverseList(self, head: ListNode) -> ListNode:
+    # 法1：迭代法
+    def reverseList1(self, head: ListNode) -> ListNode:
         if not head: return None
-        cur, prev = head, None
-        while (cur):
-            nxt = cur.next
-            cur.next = prev
-            prev = cur
+        prev, cur = None, head  # 1. 初始化
+        while cur:
+            nxt = cur.next  # 2. 从后向前
+            cur.next = prev  # 3. 反转（顺序勿错）
+            prev = cur  # 4. 指针后移
             cur = nxt
         return prev
+
+    # 法2：递归法
+    # https://leetcode-cn.com/problems/reverse-linked-list/solution/shi-pin-jiang-jie-die-dai-he-di-gui-hen-hswxy/
+    def reverseList(self, head: ListNode) -> ListNode:
+        if not head or not head.next: return head  # head[本身]为空 or [递归时]下一个空
+        # 自上而下递归到最后一个结点，设为dummy
+        dummy = self.reverseList(head.next)
+        head.next.next = head  # 反转; head = dummy上一层(递归)的父亲
+        head.next = None
+        return dummy
 
 # leetcode submit region end(Prohibit modification and deletion)
