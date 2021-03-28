@@ -39,7 +39,25 @@ public class q94_binary_tree_inorder_traversal {
         return res;
     }
 
-    // 3. 染色法
+    // 3.栈 - 左中右【模板❤】
+    public List<Integer> inorderTraversal(TreeNode root) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        while (root != null || !stack.isEmpty()) {
+            if (root != null) {
+                stack.push(root); // 0.根
+                root = root.left; // 【1. 左】
+            } else{ // 走到最左 or 叶子
+                TreeNode last_pop = stack.pop(); // 【2. 根】 - 回溯到左叶子的父亲
+                res.add(last_pop.val);
+                root = last_pop.right; // 【3. 右】
+            }
+        }
+        return res;
+    }
+
+        // 3. 染色法
 //    class Solution:
 //    def inorderTraversal(self, root: TreeNode) -> List[int]:
 //    stack,rst = [root],[]

@@ -22,7 +22,7 @@ public class q145_binary_tree_postorder_traversal {
     //    顺序压栈【左右根】, 找到最左叶子->弹栈(记last_pop)
     //  ->回溯到父亲->找右儿子（直到叶子）
     //  ->回溯到父亲->父亲也压栈->...(循环)
-    public List<Integer> postorderTraversal(TreeNode root) {
+    public List<Integer> postorderTraversal1(TreeNode root) {
         Deque<TreeNode> stack = new ArrayDeque<>();
         List<Integer> res = new ArrayList<>();
         if (root == null) return res;
@@ -74,6 +74,24 @@ public class q145_binary_tree_postorder_traversal {
             } else { // p为叶子 || 【左右根】顺序压栈
                 res.add(stack.pop().val);
                 last_pop = p;
+            }
+        }
+        return res;
+    }
+
+    // 法3：非递归v3 【模板】 【需要逆序压栈 -- [左-右-根]の逆 +list逆序！】
+    public List<Integer> postorderTraversal(TreeNode head) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        List<Integer> res = new ArrayList<>();
+        if (head == null) return res;
+        while (head != null || !stack.isEmpty()) {
+            if (head != null) {
+                stack.push(head); // 【1. 根】
+                res.add(0, head.val);  // 头插 【1. 根 2.右、左子树插入头部】
+                head = head.right; // 【2. 右】
+            }else {
+                TreeNode last_pop = stack.pop();
+                head = last_pop.left;  // 【3. 左】
             }
         }
         return res;
