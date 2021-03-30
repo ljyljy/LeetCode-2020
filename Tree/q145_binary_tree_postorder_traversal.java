@@ -80,6 +80,9 @@ public class q145_binary_tree_postorder_traversal {
     }
 
     // 法3：非递归v3 【模板】 【需要逆序压栈 -- [左-右-根]の逆 +list逆序！】
+    // ❤❤❤【vs'前序遍历'】 -
+    // (1) res头插法(逆序插入)
+    // (2)入栈顺序-根右左(将'前序'模板中的左右子树颠倒)
     public List<Integer> postorderTraversal(TreeNode head) {
         Deque<TreeNode> stack = new ArrayDeque<>();
         List<Integer> res = new ArrayList<>();
