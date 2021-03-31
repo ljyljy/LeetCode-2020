@@ -37,6 +37,8 @@ public class q90_subsets_ii {
     private void dfs3(int[] nums, int idx, boolean[] used, List<Integer> path, List<List<Integer>> res) {
         res.add(new ArrayList<>(path));
         for (int i = idx; i < nums.length; i++) {
+// 去重2：重复且前一个相同元素刚选过置否(也可以不加not去重另一部分)
+// 写 !used[i - 1] 是因为 nums[i-1] 在DFS过程中刚刚被撤销选择 - 见q47.全排列ii
             if (i > 0 && nums[i] == nums[i-1] && !used[i-1]) // ↓ 算作'重复'(同层)
                 continue;  // !used[i-1] -- 并非“同气连枝”/同一树枝的重复数值
 
