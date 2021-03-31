@@ -1,8 +1,38 @@
-package permutation_based;
+package Recursion.permutation_based;//package permutation_based;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        Deque<Integer> path = new ArrayDeque<>();
+        if(nums == null) return res;
+        Arrays.sort(nums);
+        dfs(nums, 0, path, res); // dfs_v2(nums, 0, path, res);
+        return res;
+    }
+
+    // 写法1：
+    private void dfs(int[] nums, int idx, Deque<Integer> path, List<List<Integer>> res){
+        res.add(new ArrayList<>(path));
+        for (int i = idx; i < nums.length; i++){
+            path.addLast(nums[i]);
+            dfs(nums, i+1, path, res);
+            path.removeLast();
+        }
+    }
+    // 写法2：
+    private void dfs_v2(int[] nums, int idx, Deque<Integer> path, List<List<Integer>> res){
+        if (idx == nums.length) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        path.addLast(nums[idx]);
+        dfs_v2(nums, idx+1, path, res);
+        path.removeLast();
+        dfs_v2(nums, idx+1, path, res);
+    }
+}
 public class q78_subsets {
     private List<List<Integer>> res = new ArrayList<>();
     public List<List<Integer>> subsets(int[] nums) {
@@ -43,6 +73,8 @@ public class q78_subsets {
         path.remove(path.size()-1);
         backtrack2(nums, path, idx+1);
     }
+
+
 }
 
 

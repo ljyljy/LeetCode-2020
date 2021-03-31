@@ -30,6 +30,15 @@ public class q74_search_2d_matrix {
         if (matrix[start / n][start % n] == target) return true;
         else if (matrix[end / n][end % n] == target) return true;
         return false;
+
+        /* 二分模板3 [L, mid-1], mid, [mid+1, R]
+        while (start <= end) {
+            int mid = start + end >> 1;
+            if (matrix[mid / n][mid % n] == target) return true;
+            else if (matrix[mid / n][mid % n] < target) start = mid+1;
+            else end = mid-1;
+        }
+         */
     }
 
     // 法2:（二分模板3）- [left, mid-1], mid, [mid+1, right]
@@ -46,7 +55,6 @@ public class q74_search_2d_matrix {
         }
         return false;
     }
-
 
     // 法1：二分*2次（先第一列-获取行号row_i，后在row_i行继续二分查找target）
     public boolean searchMatrix_v1(int[][] matrix, int target) {
@@ -83,4 +91,16 @@ public class q74_search_2d_matrix {
         }
         return false;
     }
+
+    private boolean BinSearch2_row_v2(int[] row_i, int target) {
+        int start = 0, end = row_i.length - 1;
+        while (start < end) { // [L, mid], [mid+1, R]
+            int mid = start + end >> 1;
+            if (row_i[mid] == target) return true;
+            else if (row_i[mid] < target) start = mid+1;
+            else end = mid;
+        }
+        return (row_i[start] == target);
+    }
+
 }
