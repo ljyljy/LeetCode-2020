@@ -70,3 +70,4 @@ class Solution:
                 water += h * width
             stack.append(i)  # stack为空 || cur_h < 栈顶h，无法接水，暂时进栈
         return water
+

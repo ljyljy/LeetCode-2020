@@ -1,4 +1,4 @@
-package Deque;
+package DataStructure.Deque;
 
 public class q114_Flatten_Binary_Tree_to_LinkedList {
     // 法1：递归
