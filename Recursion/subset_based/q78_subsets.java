@@ -1,38 +1,46 @@
-package Recursion.permutation_based;//package permutation_based;
+package Recursion.subset_based;//package permutation_based;
 
 import java.util.*;
 
+// 二刷写法1 —— 推荐（子集 - 模板）
 class Solution {
+    List<List<Integer>> res = new ArrayList<>();
+    Deque<Integer> path = new ArrayDeque<>();
+
     public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
-        Deque<Integer> path = new ArrayDeque<>();
-        if(nums == null) return res;
-        Arrays.sort(nums);
-        dfs(nums, 0, path, res); // dfs_v2(nums, 0, path, res);
+        if(nums == null || nums.length == 0) return res;
+        Arrays.sort(nums); // 子集、全排列の预处理，加速
+        dfs(nums, 0, path); // dfs_v2(nums, 0, path, res);
         return res;
     }
 
-    // 写法1：
-    private void dfs(int[] nums, int idx, Deque<Integer> path, List<List<Integer>> res){
+    // 写法1（推荐：子集模板vs全排列、组合问题）：
+    private void dfs(int[] nums, int idx, Deque<Integer> path){
+        // ↓子集问题：收集【所有结点】(vs全排列、组合、分割：只收集叶子)
         res.add(new ArrayList<>(path));
+        if (idx == nums.length) return; // 1)可不写，与for的i<n呼应 /重复
+        // ↑ 2)写在res.add以后，否则叶子无法加入res
         for (int i = idx; i < nums.length; i++){
             path.addLast(nums[i]);
-            dfs(nums, i+1, path, res);
+            dfs(nums, i+1, path);
             path.removeLast();
         }
     }
-    // 写法2：
-    private void dfs_v2(int[] nums, int idx, Deque<Integer> path, List<List<Integer>> res){
+
+    // 写法2（不推荐）：
+    private void dfs_v2(int[] nums, int idx, Deque<Integer> path){
         if (idx == nums.length) {
             res.add(new ArrayList<>(path));
             return;
         }
         path.addLast(nums[idx]);
-        dfs_v2(nums, idx+1, path, res);
+        dfs_v2(nums, idx+1, path);
         path.removeLast();
-        dfs_v2(nums, idx+1, path, res);
+        dfs_v2(nums, idx+1, path);
     }
 }
+
+// 不推荐
 public class q78_subsets {
     private List<List<Integer>> res = new ArrayList<>();
     public List<List<Integer>> subsets(int[] nums) {

@@ -1,9 +1,33 @@
-package Recursion.permutation_based;//package permutation_based;
+package Recursion.subset_based;//package permutation_based;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
+// 推荐写法（即dfs3）
+class Solution_q90 {
+    List<List<Integer>> res = new ArrayList<>();
+    Deque<Integer> path = new ArrayDeque<>();
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        if (nums == null || nums.length == 0) return res;
+        Arrays.sort(nums); // 去重前提（配合i!=idx / !used[i-1]）
+        boolean[] used = new boolean[nums.length];
+        dfs(nums, 0, used, path);
+        return res;
+    }
+
+    private void dfs(int[] nums, int idx, boolean[] used, Deque<Integer> path) {
+        res.add(new ArrayList<>(path));
+        if (idx == nums.length) return; // 可不写(与for中 i<n重复)
+        for (int i = idx; i < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i-1] && !used[i-1])
+                continue; // 同一树层-去重(前提: sorted)
+            used[i] = true;
+            path.addLast(nums[i]);
+            dfs(nums, i+1, used, path);
+            used[i] = false;
+            path.removeLast();
+        }
+    }
+}
 public class q90_subsets_ii {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
@@ -11,26 +35,26 @@ public class q90_subsets_ii {
         Arrays.sort(nums);
 //        dfs(nums, 0, path, res);
 //        dfs2(nums, 0, -1, path, res);
-
         boolean[] used = new boolean[nums.length];
         dfs3(nums, 0, used, path, res);
         return res;
     }
 
-    // 法1【推荐】：
+    // 法1【理解】：❤本题也可以不用used数组来去重（见下），因为递归的时候下一个startIndex是i+1而不是0。
+    //如果要是全排列的话，每次要从0开始遍历，为了跳过已入栈的元素，需要使用used。
     private void dfs(int[] nums, int idx, List<Integer> path, List<List<Integer>> res) {
         res.add(new ArrayList<>(path));
         for (int i = idx; i < nums.length; i++) {
             // ↓ 对同层使用过的元素进行跳过（回溯时）
             if (i != idx && nums[i] == nums[i-1])
-                continue;  // 出现重复数字
+                continue; // 出现重复数字（前提：排序,重复数字idx相邻）
 
             path.add(nums[i]); // 不是idx！是i！否则无法去重！
             dfs(nums, i+1, path, res);
             path.remove(path.size()-1);
         }
     }
-    // 法2：(使用used[]去重 - 【同层】的结点，即【数值重复 && !used[i-1] -- 本层的重复结点与之前遍历的结点是[水平]关系，算作重复】)
+    // 法2【推荐】：(使用used[]去重 - 【同层】的结点，即【数值重复 && !used[i-1] -- 本层的重复结点与之前遍历的结点是[水平]关系，算作重复】)
     // 补充：同树枝的重复结点是允许(不算重复)的，
     //      如[1,2,2]子集本身，此时：
     //      【数值重复 && used[i-1]为真--本层的重复结点是从设true后下探的(同气连枝,上下级)】
