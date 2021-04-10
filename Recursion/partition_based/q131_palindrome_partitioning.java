@@ -119,12 +119,15 @@ public class q131_palindrome_partitioning {
 
         for (int i = idx; i < chars.length; i++) {
             if (! dp[idx][i]) continue; // 否则，是回文, dfs下探↓
-            List<List<String>> res_next = dfs_v3(chars, i+1, dp, memo);
+            List<List<String>> res_next = dfs_v3(chars, i+1, dp, memo); // 下层分割的所有子方案
             for (List<String> path: res_next) {
+                // path: 某一条完整的可行路径，如["aa", "b"] 或 ["a","a","b"]
                 List<String> list = new ArrayList<>();
                 list.add(new String(chars, idx, i-idx+1)); // 本层结果，或s.substring(idx, i+1);
                 list.addAll(path); // 下层结果，类似于extend; ↓ list: 某一种情况List<String>
                 memo.get(idx).add(list); // 每多一种情况，就向new ArrayList<~<Str>>()嵌套一个list
+                //       ↑ 不是i！是idx！ （不是memo.get(i)!）
+                // ❤ ↑ 理解：将回文子串s[idx, i+1](下探)的答案 扩充至 s[idx, i]的答案中
             }
         }
         return memo.get(idx);

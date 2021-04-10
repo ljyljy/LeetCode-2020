@@ -5,7 +5,8 @@ import java.util.*;
 public class q491_increasing_subsequences {
     private List<List<Integer>> res = new ArrayList<>();
     private Deque<Integer> path = new ArrayDeque<>();
-    public List<List<Integer>> findSubsequences(int[] nums) {
+    // 法1：未优化版（必会）
+    public List<List<Integer>> findSubsequences_1(int[] nums) {
         if (nums == null || nums.length == 0) return res;
         // 与子集ii不同：1) 不可利用sort辅助去重 2)去重used数组需定义在dfs内
         dfs(nums, 0, path);
@@ -34,6 +35,32 @@ public class q491_increasing_subsequences {
             // usedSet.remove(nums[i]);// ❤ 不可写pop！下探后used自动清空！
 //            System.out.println("2) usedSet - backtrack: " + usedSet);
         }
+    }
+
+    // 法2-优化：数组(根据题目定义len)代替哈希HashMap
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        if (nums == null || nums.length == 0) return res;
+        dfs2(nums, 0);
+        return res;
+    }
+
+    private void dfs2(int[] nums, int idx) {
+        if (path.size() >= 2) // 保存所有符合条件(路径长度>1)的中间结点
+            res.add(new ArrayList<>(path));
+
+        // 优化：数组代替哈希
+        // - 题目中，元素∈[-100, 100] -> 映射下标(+100) ∈[0, 200],共201个
+        boolean[] used = new boolean[201];
+        for (int i = idx; i < nums.length; i++) {
+            if ((!path.isEmpty() && path.peekLast() > nums[i])
+                    || used[nums[i] + 100])
+                continue;
+            used[nums[i] + 100] = true; // 优化：数组代替哈希(每层都会重新定义，不可写false)
+            path.addLast(nums[i]);
+            dfs2(nums, i+1);
+            path.removeLast();
+        }
+
     }
 
     public static void main(String[] args) {
