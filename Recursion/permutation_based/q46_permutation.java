@@ -4,32 +4,30 @@ import java.util.*;
 
 
 public class q46_permutation {
+    List<List<Integer>> res = new ArrayList<>();
+    Deque<Integer> path = new ArrayDeque<>();
     public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
-        Deque<Integer> path = new ArrayDeque<>();
-        if (nums == null) return res;
+        if (nums == null || nums.length == 0) return res;
+        // ∵全排列 ∴(1) {1,2}、{2,1}是不同的排列 -> for中i从0起，而非idx！
+        // - (2) ∵i从0起，∴需要used进行路径(树枝)去重！❤
         boolean[] used = new boolean[nums.length];
-
-        dfs(nums, 0, used, path, res);
+        dfs(nums, 0, used);
         return res;
     }
 
-    private void dfs(int[] nums, int idx, boolean[] used, Deque<Integer> path, List<List<Integer>> res) {
-        if (idx == nums.length) {
+    private void dfs(int[] nums, int idx, boolean[] used) {
+        if (path.size() == nums.length) { // 而非idx == n！❤
             res.add(new ArrayList<>(path));
-            return;
+            return; // 不同于子集，组合、排列仅保存[叶子]
         }
+        // ∵ {1,2}、{2,1}是不同的排列 -> for中i从0起，而非idx！
         for (int i = 0; i < nums.length; i++) {
             if (used[i]) continue;
-
-            System.out.println("  递归之前 => " + path);
             used[i] = true;
             path.addLast(nums[i]);
-
-            dfs(nums, idx+1, used, path, res);
-            used[i] = false;
+            dfs(nums, i+1, used);
             path.removeLast();
-            System.out.println("  递归之后 => " + path);
+            used[i] = false;
         }
     }
 

@@ -3,38 +3,38 @@ package Recursion.permutation_based;
 import java.util.*;
 
 public class q47_permutations_ii {
+    List<List<Integer>> res = new ArrayList<>();
+    Deque<Integer> path = new ArrayDeque<>();
     public List<List<Integer>> permuteUnique(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
-        Deque<Integer> path = new ArrayDeque<>();
-        if (nums == null) return res;
+        if (nums == null || nums.length == 0) return res;
+        // 同一树层去重(∵去重判断：根据相邻元素 ∴预处理：sorted)
         Arrays.sort(nums);
         boolean[] used = new boolean[nums.length];
-        dfs(nums, 0, used, path, res);
+        dfs(nums, 0, used);
         return res;
     }
 
-    private void dfs(int[] nums, int idx, boolean[] used,
-                     Deque<Integer> path, List<List<Integer>> res) {
-        if (path.size() == nums.length) { // 叶子
-            res.add(new ArrayList<>(path));
-            return; // （idx深度为num.length时，不一定是叶子！）
+    private void dfs(int[] nums, int idx, boolean[] used) {
+        if (path.size() == nums.length) { // 叶子【判断指标不是idx！】
+            res.add(new ArrayList<>(path)); // ×: idx==n时，不一定是叶子
+            return; // 保存仅【叶子】（不同于[子集]-保存[所有结点]）
         }
-        for (int i = 0; i < nums.length; i++) { // 非叶子
-            if (used[i]) {
-                continue;
-            } // 已访问过
-            // 重复结点（同层）
-            if (i > 0 && nums[i] == nums[i-1] && !used[i-1])
-                continue;
-
+        // 全排列 i从0起（不同于组合、排列startIdx）
+        for (int i = 0; i < nums.length; i++) {
+            // 1)同一树枝的同一结点(地址同) - ∵ i从0起, 勿漏！
+            if (used[i]) continue;
+            // 2)同一树层去重（nums[i-1]遍历结束后回溯-used置false）
+            if (i > 0 && nums[i-1] == nums[i] && !used[i-1]) continue;
             used[i] = true;
             path.addLast(nums[i]);
-            dfs(nums, i+1, used, path, res);
-            used[i] = false; // 回溯
+            dfs(nums, i+1, used);
+            used[i] = false;
             path.removeLast();
         }
     }
 
+
+    // TEST
     private void dfs_test(int[] nums, int idx, boolean[] used,
                      Deque<Integer> path, List<List<Integer>> res) {
         if (path.size() == nums.length) { // 叶子
@@ -56,7 +56,7 @@ public class q47_permutations_ii {
             System.out.println("1, dfs前 -- i = " + i + ", path:" + path);
             used[i] = true;
             path.addLast(nums[i]);
-            dfs(nums, i+1, used, path, res);
+            dfs_test(nums, i+1, used, path, res);
             used[i] = false; // 回溯
             path.removeLast();
             System.out.println("2, dfs后 -- i = " + i + ", path:" + path);

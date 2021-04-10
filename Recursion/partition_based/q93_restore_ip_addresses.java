@@ -4,7 +4,8 @@ import java.util.*;
 
 public class q93_restore_ip_addresses {
     private List<String> res = new ArrayList<>();
-    private Deque<String> path = new ArrayDeque<>(4); // 长度为4段[0,255]的数字
+    // 长度为4段[0,255]的数字  [vs qo_38字符串的全排列II]
+    private Deque<String> path = new ArrayDeque<>(4);
 
     public List<String> restoreIpAddresses(String s) {
         int n = s.length();
