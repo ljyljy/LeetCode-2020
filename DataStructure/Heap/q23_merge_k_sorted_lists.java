@@ -1,4 +1,4 @@
-package out.Divide_Conquer.MergeSort_Heap;
+package DataStructure.Heap;
 
 
 import java.util.Comparator;
@@ -64,9 +64,9 @@ public class q23_merge_k_sorted_lists {
         if (lists == null || lists.length == 0)
             return null;
         PriorityQueue<ListNode> heap = new PriorityQueue<>(lists.length, listNodeComparator);
-        for (ListNode listNode : lists){
-            if (listNode == null) continue; // 勿漏！！！ 形如:[[]]
-            heap.add(listNode); // 加入的只有每个链表的头部
+        for (ListNode head : lists){
+            if (head == null) continue; // 勿漏！！！ 形如:[[]]
+            heap.add(head); // 加入的只有每个链表的头部
         }
 
         ListNode dummy = new ListNode(-1);
@@ -74,7 +74,7 @@ public class q23_merge_k_sorted_lists {
         while (!heap.isEmpty()) {
             ListNode cur = heap.poll(); // 不是pop！
             p.next = cur;
-            p = cur;
+            p = cur; // 指针后移，勿漏！
             if (cur.next != null)
                 heap.add(cur.next); // 每个链表的next
         }

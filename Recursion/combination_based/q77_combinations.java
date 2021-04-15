@@ -9,6 +9,7 @@ public class q77_combinations {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> res = new ArrayList<>();
         Deque<Integer> path = new ArrayDeque<>();
+        // ∵由题组合区间[1, n]，不含0，idx从1开始
         dfs(n, k, 1, path, res);
         return res;
     }

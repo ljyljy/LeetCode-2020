@@ -103,7 +103,8 @@ public class q179_largest_number {
     }
 
     public static void main(String[] args) {
-        String s1 = "abc", s2="abd";
+        String s1 = "ab c", s2="ab d";
         System.out.println(s1.compareTo(s2)); // -1
+
     }
 }
