@@ -14,7 +14,7 @@ public class q973_k_closest_points_ii {
     public Point[] kClosest (Point[] points, Point ori, int k) {
         if (points == null || points.length == 0) return null;
         int n = points.length;
-        /* // 大顶堆（降序排列，后减前）
+        /* // 大顶堆（降序排列，后减前） - Java默认是小根堆，实现大根堆需要重写一下比较器。
         PriorityQueue<Point> heap = new PriorityQueue<>(n, new Comparator<Point>() {
             @Override
             public int compare(Point p1, Point p2) {
@@ -49,5 +49,12 @@ public class q973_k_closest_points_ii {
     private long getDist(Point p, Point ori) {
         // 可能会超出int范围，dist应设为long
         return (p.x - ori.x) * (p.x - ori.x) + (p.y - ori.y) * (p.y - ori.y);
+    }
+
+    public static void main(String[] args) {
+        int num = 6;
+        System.out.println(num ^ 2);
+        System.out.println(num * num);
+        System.out.println(Math.pow(num, 2));
     }
 }
