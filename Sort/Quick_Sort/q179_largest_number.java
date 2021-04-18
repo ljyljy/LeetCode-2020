@@ -17,18 +17,21 @@ public class q179_largest_number {
         StringBuilder sb = new StringBuilder();
         for (String num_s : nums_str)
             sb.append(num_s);
-        // 去除前导'0'
+        // 去除前导'0'，如[0, 0, 0]  最大数为“0”,而非“000”
         for (int i = 0; sb.charAt(i) == '0' && i < sb.length()-1;)
             sb.deleteCharAt(i); // 写法2：i++
         return sb.toString(); // 写法2：sb.substring(i); （substring更慢）
     }
 
     private void sortStrArr(String[] nums_str) {
-        // 写法1：lambda 表达式
-        Arrays.sort(nums_str, (s1, s2) -> {
-            String s12 = s1 + s2, s21 = s2 + s1;
-            return s21.compareTo(s12); // (""+s2+s1).compareTo(...)
-        });
+
+        // 写法1：lambda 表达式 -- 最大数(大顶堆 - 降序排列，后减前)
+        Arrays.sort(nums_str, (s1, s2)-> ((s2+s1).compareTo(s1+s2)));
+        // 写法1-2
+//        Arrays.sort(nums_str, (s1, s2) -> {
+//            String s12 = s1 + s2, s21 = s2 + s1;
+//            return s21.compareTo(s12); // (""+s2+s1).compareTo(...)
+//        }); //      ↑ 降序排列，后减前
         /*
         // 写法2：Comparator 字符串比较器
         Arrays.sort(nums_str, new Comparator<String>() {
@@ -57,43 +60,25 @@ public class q179_largest_number {
         String[] nums_str = new String[n];
         for (int i = 0; i < n; i++)
             nums_str[i] = "" + nums[i];
-        quickSort_ok(nums_str, 0, n-1);
-        if (nums_str[0].equals("0")) return "0";
+        quickSort(nums_str, 0, n-1);
+        if (nums_str[0].equals("0")) return "0";//去除前导’0’（全0数组）
         StringBuilder sb = new StringBuilder();
         for (String num_s : nums_str)
             sb.append(num_s);
         return sb.toString();
     }
 
-    private void quickSort_ok(String[] nums, int start, int end) {
-        if (start >= end) return;
-        String pivot = nums[start];
-        int j = start;
-        for (int i = start + 1; i <= end; i++) {
-            if ((nums[i] + pivot).compareTo(pivot + nums[i]) > 0) {
-                j++;
-                swap(nums, i, j);
-            }
-        }
-        swap(nums, start, j);
-        quickSort_ok(nums, start, j - 1);
-        quickSort_ok(nums, j + 1, end);
-    }
-
-    private void quickSort(String[] nums, int l, int r) {
-        if (l >= r) return;
-        String pivot = nums[l + r >>1];
-        int i = l - 1, j = r + 1;
+    private void quickSort(String[] nums, int L, int R) {
+        if (L >= R) return;
+        String pivot = nums[L + R >>1];
+        int i = L - 1, j = R + 1;
         while (i < j) {
-            do i++; while ((nums[i] + pivot).compareTo(pivot + nums[i]) < 0);
-            do j--; while ((nums[j] + pivot).compareTo(pivot + nums[j]) < 0);
-            if (((nums[j]+nums[i]).equals(nums[i]+nums[j]))&&(i<j)){
-                i++;
-            } else if (i < j) swap(nums, i, j);
+            do i++; while ((nums[i] + pivot).compareTo(pivot + nums[i]) > 0);
+            do j--; while ((pivot + nums[j]).compareTo(nums[j] + pivot) > 0);
+            if (i < j) swap(nums, i, j);
         }
-
-        quickSort(nums, l, j);
-        quickSort(nums, j+1, r);
+        quickSort(nums, L, j);
+        quickSort(nums, j+1, R);
     }
 
     private void swap(String[] nums, int i, int j) {
