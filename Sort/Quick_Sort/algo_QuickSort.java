@@ -6,13 +6,13 @@ import Sort.Util_algo;
 public class algo_QuickSort {
     public void quickSort_v1(int[] arr, int start, int end) {
         if (start >= end) return;
-        int mid = partition_v0(arr, start, end); // pivot_idx
+        int mid = partition2(arr, start, end); // pivot_idx
 
         quickSort_v1(arr, start, mid); // 递归(分区+排序)
         quickSort_v1(arr, mid+1, end);
     }
 
-    // 法0：每次同时移动2根指针 i++ && j--
+    // 【推荐-模板1】法0：每次同时移动2根指针 i++ && j--
     // 返回pivot主元的下标
     private int partition_v0(int[] arr, int start, int end) {
         if (start >= end) return start;
@@ -30,7 +30,7 @@ public class algo_QuickSort {
         return j;
     }
 
-    // 模板0的合并 ↑
+    // 模板1的合并 ↑【推荐】
     private void quickSort_partition_v0(int[] nums, int start, int end) {
         if (start >= end)  {return;}
         int left = start, right = end;
@@ -49,8 +49,29 @@ public class algo_QuickSort {
         quickSort_partition_v0(nums, left, end);
     }
 
+    //【模板1-优化】在L,R,mid之间，选一个中间值作为主元
+    public int partition2(int[] A, int L, int R) {
+        int mid = L + ((R - L) >> 1);//中间下标
+        int mid_ = -1;//中值的下标
+        if ((A[R] <= A[L] && A[L] <= A[mid] ) || (A[mid] <= A[L] && A[L] <= A[R] )) {
+            mid_ = L; // p是中位数
+        } else if ((A[R] <= A[mid] && A[R] >= A[L]) || A[R] >= A[mid] && A[R] <= A[L]) {
+            mid_ = R;  // r是中位数
+        } else mid_ = mid;
+        swap(A, L, mid_); // 将最左元素L与mid交换, 使得pivot=arr[start]
+        // 常规模板1【推荐】↓
+        int pivot = A[L];
+        int i = L + 1, j = R;
+        while (i <= j) {
+            while (i <= j && A[i] <= pivot) i++;
+            while (i <= j && A[j] > pivot) j--;
+            if (i < j) swap(A, i, j);
+        } // 退出后，pivot(L) [L+1, (j)] [i, R]
+        swap(A, L, j); // [L, j-1] pivot(j) [i, R]
+        return j;
+    }
 
-    // 法1：一遍扫描：一次只移动一根指针 i 或 j
+    // 【模板2】法1：一遍扫描：一次只移动一根指针 i 或 j
     private int partition_v1(int[] arr, int start, int end) {
         if (start >= end) return start;
         int pivot = arr[start];
@@ -67,7 +88,8 @@ public class algo_QuickSort {
         return j;
     }
 
-    // 法0-2：一遍扫描：一次只移动一根指针 i 或 j
+
+    // 【模板0】法0-2：一遍扫描：一次只移动一根指针 i 或 j
     public void quickSort_v2(int[] arr, int start, int end) {
         if (start >= end) return;
         int mid = partition_v2(arr, start, end); // pivot_idx
@@ -86,7 +108,6 @@ public class algo_QuickSort {
         }
         return j; // i == j == pivot_idx
     }
-
 
     private void swap(int[] arr, int i, int j) {
         int tmp = arr[i];
