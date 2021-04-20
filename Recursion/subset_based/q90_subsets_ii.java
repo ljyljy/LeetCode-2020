@@ -2,7 +2,7 @@ package Recursion.subset_based;//package permutation_based;
 
 import java.util.*;
 
-// 推荐写法（即dfs3）
+// 推荐写法1（即dfs3）
 class Solution_q90 {
     List<List<Integer>> res = new ArrayList<>();
     Deque<Integer> path = new ArrayDeque<>();
@@ -24,6 +24,27 @@ class Solution_q90 {
             path.addLast(nums[i]);
             dfs(nums, i+1, used, path);
             used[i] = false;
+            path.removeLast();
+        }
+    }
+
+    // 法4 Set去重:1) 有序 2) dfs内部(某一节点的下一层)，而非类成员变量(控制整个树)！
+    public List<List<Integer>> subsetsWithDup4(int[] nums) {
+        if (nums == null || nums.length == 0) return res;
+        Arrays.sort(nums); // 去重前提(∵set内部{1,2}与{2,1}判定重复)
+        dfs4(nums, 0);
+        return res;
+    }
+
+    private void dfs4(int[] nums, int idx) {
+        res.add(new ArrayList<>(path));
+        Set<Integer> usedSet = new HashSet<>(); // dfs内部(控制某节点的下一层)
+        for (int i = idx; i < nums.length; i++) {
+            if (usedSet.contains(nums[i]))
+                continue; // 同一树层(由uset位置决定)-去重!
+            usedSet.add(nums[i]); // ∵定义在dfs内部 ∴只控制某一树层 ∴无需对称再写remove
+            path.addLast(nums[i]);
+            dfs4(nums, i+1);
             path.removeLast();
         }
     }

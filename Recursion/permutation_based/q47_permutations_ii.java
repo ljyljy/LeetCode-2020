@@ -34,6 +34,35 @@ public class q47_permutations_ii {
     }
 
 
+    // 法2（不推荐，但必须理解）- used数组 & set去重
+    public List<List<Integer>> permuteUnique2(int[] nums) {
+        if (nums == null || nums.length == 0) return res;
+        Arrays.sort(nums);
+        boolean[] used = new boolean[nums.length]; // 去重
+        dfs2(nums, 0, used);
+        return res;
+    }
+
+    private void dfs2(int[] nums, int idx, boolean[] used) {
+        if(path.size() == nums.length)
+            res.add(new ArrayList<>(path));
+
+        Set<Integer> usedSet = new HashSet<>(); // 定义在dfs内(只控制某结点的下一层)
+        for(int i = 0; i < nums.length; i++) {
+            if (used[i]) continue;  // 去重1) 同一树枝
+            // 去重2)同一树层
+            if (usedSet.contains(nums[i])) continue;
+            // 或 if (i > 0 && nums[i] == nums[i-1] && !used[i-1]) continue;
+
+            usedSet.add(nums[i]); // 无需对应写remove
+            used[i] = true;
+            path.addLast(nums[i]);
+            dfs2(nums, i+1, used);
+            used[i] = false;
+            path.removeLast();
+        }
+    }
+
     // TEST
     private void dfs_test(int[] nums, int idx, boolean[] used,
                      Deque<Integer> path, List<List<Integer>> res) {

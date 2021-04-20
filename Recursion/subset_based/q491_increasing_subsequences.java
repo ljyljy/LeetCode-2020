@@ -27,7 +27,7 @@ public class q491_increasing_subsequences {
                     || usedSet.contains(nums[i]) ) // 2) 去重 - 同一树层)
                 continue;
 
-            usedSet.add(nums[i]);
+            usedSet.add(nums[i]); // //不允许不同位置的重复数字！不可写i！
 //            System.out.println("1) usedSet.added: " + usedSet);
             path.addLast(nums[i]);
             dfs(nums, i+1, path);
