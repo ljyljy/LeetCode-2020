@@ -35,6 +35,22 @@ public class q91_decode_ways {
         return memo[idx];
     }
 
+    // dfs写法2 - 推荐
+    private int dfs2(char[] chars, int idx, int[] memo) {
+        if (idx == chars.length) return 1;//每次达到最后，就是一种解
+        if (memo[idx] != -1) return memo[idx];
+        if (chars[idx] == '0') return 0; // 去除'前导0'的情况
+
+        int ans = 0; // 只控制本层
+        for (int i = idx; i < idx + 2 && i < chars.length; i++) {
+            String numStr = new String(chars, idx, i-idx+1);
+            //若numStr < 26就符合要求
+            if (Integer.parseInt(numStr) > 26) continue;
+            ans += dfs2(chars, i+1, memo);
+        }
+        return memo[idx] = ans;
+    }
+
     // 法2-1：动归
     public int numDecodings_v2_1(String s) {
         if (s == null || s.length() == 0) return 0;
