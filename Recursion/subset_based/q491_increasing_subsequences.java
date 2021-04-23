@@ -15,8 +15,16 @@ public class q491_increasing_subsequences {
 
     private void dfs(int[] nums, int idx, Deque<Integer> path) {
         // 子集问题：保存所有结点(本题)！[而非only叶子(组合、排列问题)]
-        if (path.size() >= 2)
-            res.add(new ArrayList<>(path)); // 后续不可return，还需继续下探
+        if (path.size() >= 2) // idx == n 错！需要所有子集(路径的中间结果)！
+            res.add(new ArrayList<>(path));
+            /*  // 1) return; 错！ 后续不可return，还需继续下探!!!
+            ❤❤❤ 2) if (idx == n) 不可作为终止条件！
+            会漏掉形如: [1,3,6,7,9,4,10,5,6]中的子序列[1,3,6,7,9,10]
+            因为idx==n只会保存所有最终以nums[n-1](6)为结尾的递增子序列，
+            而无法保留idx < n就已经（被continue）终止的路径(如: [1,3,6,7,9,10])
+             */
+
+
         // if (idx == nums.length)  return; // 可不写，与for中i < n重复
 
         // ∵求递增子序列

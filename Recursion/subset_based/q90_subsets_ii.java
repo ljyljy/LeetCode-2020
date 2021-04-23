@@ -38,8 +38,8 @@ class Solution_q90 {
 
     private void dfs4(int[] nums, int idx) {
         res.add(new ArrayList<>(path));
-        Set<Integer> usedSet = new HashSet<>(); // dfs内部(控制某节点的下一层)
-        for (int i = idx; i < nums.length; i++) {
+        Set<Integer> usedSet = new HashSet<>(); // dfs内部(控制某节点的下一层--for循环の上层)
+        for (int i = idx; i < nums.length; i++) { // 遍历一个树层❤
             if (usedSet.contains(nums[i]))
                 continue; // 同一树层(由uset位置决定)-去重!
             usedSet.add(nums[i]); // ∵定义在dfs内部 ∴只控制某一树层 ∴无需对称再写remove
