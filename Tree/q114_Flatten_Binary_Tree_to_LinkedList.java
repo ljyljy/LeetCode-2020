@@ -1,20 +1,33 @@
-package DataStructure.Deque;
+package Tree;
 
 public class q114_Flatten_Binary_Tree_to_LinkedList {
+    //    Definition for a binary tree node.
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(int x) { val = x; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val; this.left = left; this.right = right;
+        }
+    }
     // 法1：递归
     private TreeNode lastNode = null;
     private void flatten1(TreeNode root) {
         if (root == null) return;
+        // 1. 根 - 前序遍历
         if (lastNode != null) {
             lastNode.left = null;
             lastNode.right = root;
         }
-        // 前序遍历
         lastNode = root;
         // ↓不设置可能栈溢出/RunTimeError！！！
-        TreeNode right = root.right;
-        flatten(root.left);
-        flatten(right); // 不可直接root.right!!!
+        TreeNode right = lastNode.right;
+        // 2. 左
+        flatten1(root.left);
+        // 3. 右 ❤ 不可直接root.right!!!
+        // ∵2.左回溯结束后，root.right(新)已变为先前的root.left(旧)！
+        flatten1(right);
     }
 
     // 法2：分治 以2-3-4为例
@@ -39,13 +52,5 @@ public class q114_Flatten_Binary_Tree_to_LinkedList {
             return leftLast;
         else
             return root;// 不是null！
-    }
-
-    //    Definition for a binary tree node.
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) { val = x; }
     }
 }

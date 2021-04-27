@@ -48,7 +48,8 @@ public class q42_trapping_rain_water {
         int n = height.length;
         if (n == 0 || height == null) return 0;
         int res = 0;
-        int[] l_maxH_dp = new int[n], r_maxH_dp = new int[n]; // 保存i左/右侧的最高柱子【包括自己i】
+        int[] l_maxH_dp = new int[n], r_maxH_dp = new int[n]; // 保存i左/右侧的最高柱子
+        // ↑ 【包括自己i，∵若自己最高，res += 0（抵消）】
         l_maxH_dp[0] = height[0]; r_maxH_dp[n-1] = height[n-1]; // 初始化dp
         for (int i = 1; i < n; i++) {  // 递推, 注意i从1开始
             l_maxH_dp[i] = Math.max(l_maxH_dp[i-1], height[i]); // L→R:取决于i柱高 & i左侧∈[0,i-1]最高柱子
@@ -56,7 +57,7 @@ public class q42_trapping_rain_water {
         } // ↑ 优化法1-1，合并2个for循环
 
         for (int i = 0; i < n; i++){
-            if (i == 0 || i == n-1) continue;  // 首尾柱子无法接雨水
+            if (i == 0 || i == n-1) continue;  // 【可不写, 等价于res += 0】首尾柱子无法接雨水
             res += Math.min(l_maxH_dp[i], r_maxH_dp[i]) - height[i];
         }
         return res;
@@ -80,19 +81,20 @@ public class q42_trapping_rain_water {
     // 法3：单调栈 —— 时间O(n), 空间O(n)
     public int trap_3(int[] height) {
         int res = 0;
+        if (height == null || height.length == 0) return res;
         int n = height.length;
-        if (height == null || n == 0) return res;
         Deque<Integer> stack = new ArrayDeque<>();
-        for (int i = 0; i < n; i++) { // 遍历每一列, ↓维护单调栈（递减,元素为idx）
-            while (!stack.isEmpty() && height[i] > height[stack.peek()]) {
-                int top = stack.pop(); // 左右边缘中间【最矮的柱子】
-                if (stack.isEmpty()) break;
-                int left = stack.peek();
-                int width = i - left - 1; // 宽度不包括左(left)/右(i)边缘
-                int h = Math.min(height[i], height[left]) - height[top];
-                res += width * h;
+        for (int r = 0; r < n; r++) { // 遍历每一列, ↓维护单调栈（递减,元素为idx）
+            while (!stack.isEmpty() && height[r] > height[stack.peek()]) {
+                int mid = stack.pop(); // 左右边缘中间【最矮的柱子】
+                if (!stack.isEmpty()){
+                    int l = stack.peek();
+                    int width = r - l - 1; // 宽度不包括左(left)/右(i)边缘
+                    int h = Math.min(height[r], height[l]) - height[mid];
+                    res += width * h;
+                }
             }
-                stack.push(i);
+            stack.push(r);
         }
         return res;
     }
