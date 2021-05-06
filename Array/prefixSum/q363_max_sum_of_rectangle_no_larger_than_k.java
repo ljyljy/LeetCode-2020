@@ -9,11 +9,11 @@ public class q363_max_sum_of_rectangle_no_larger_than_k {
         int[][] sum = getPrefixSum(matrix, n, m);
         int maxSum = Integer.MIN_VALUE;
 
-        for (int x1 = 1; x1 <= n; x1++) {
-            for (int y1 = 1; y1 <= m; y1++) {
-                for (int x2 = x1; x2 <= n; x2++) {
-                    for (int y2 = y1; y2 <= m; y2++) {
-                        int curSum = sum[x2][y2] - sum[x1-1][y2] - sum[x2][y1-1] + sum[x1-1][y1-1];
+        for (int row1 = 1; row1 <= n; row1++) {
+            for (int col1 = 1; col1 <= m; col1++) {
+                for (int row2 = row1; row2 <= n; row2++) {
+                    for (int col2 = col1; col2 <= m; col2++) {
+                        int curSum = sum[row2][col2] - sum[row1-1][col2] - sum[row2][col1-1] + sum[row1-1][col1-1];
                         if (curSum <= k)
                             maxSum = Math.max(maxSum, curSum);
                     }
@@ -30,7 +30,7 @@ public class q363_max_sum_of_rectangle_no_larger_than_k {
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= m; j++) { // matrix下标0起 - 需减1
                 sum[i][j] = sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1] + matrix[i-1][j-1];
-            }
+            } // sum[row_i][col_j]
         }
         return sum;
     }
@@ -41,8 +41,8 @@ public class q363_max_sum_of_rectangle_no_larger_than_k {
         int n = matrix.length, m = n == 0? 0: matrix[0].length;
         int[][] sum = getPrefixSum(matrix, n, m); // 预处理前缀和
         int maxSum = Integer.MIN_VALUE;
-        for (int top = 1; top <= n; top++) { // 上边界
-            for (int bottom = top; bottom <= n; bottom++) { // 下边界
+        for (int top = 1; top <= n; top++) { // 上边界: row1
+            for (int bottom = top; bottom <= n; bottom++) { // 下边界: row2
                 // 使用「有序集合」维护所有遍历到的右边界
                 TreeSet<Integer> treeSet = new TreeSet<>();
                 treeSet.add(0); // （最左边界）第0列-矩阵和为0
