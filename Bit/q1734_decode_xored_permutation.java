@@ -1,4 +1,4 @@
-package Array.bit;
+package Bit;
 
 public class q1734_decode_xored_permutation {
     public int[] decode(int[] encoded) {

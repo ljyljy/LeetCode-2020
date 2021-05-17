@@ -44,7 +44,7 @@ class Solution:
     ## Java
     # class Solution {
     # public:
-    #     priority_queue<int,vector<int>,greater<int> >q;
+    #     priority_queue<int,vector<int>,greater<int> >q1310_xor_queries_of_a_subarray;
     #
     #     static bool cmp(const Interval& a, const Interval& b){
     #         return a.start < b.start;
@@ -59,10 +59,10 @@ class Solution:
     #         int res = 0;
     #         int n = airplanes.size();
     #         for (int i = 0; i < n; i++) {
-    #             while (q.size() > 0 && q.top() <= airplanes[i].start)
-    #                 q.pop();
-    #             q.push(airplanes[i].end);
-    #             res = max(res, (int)q.size());
+    #             while (q1310_xor_queries_of_a_subarray.size() > 0 && q1310_xor_queries_of_a_subarray.top() <= airplanes[i].start)
+    #                 q1310_xor_queries_of_a_subarray.pop();
+    #             q1310_xor_queries_of_a_subarray.push(airplanes[i].end);
+    #             res = max(res, (int)q1310_xor_queries_of_a_subarray.size());
     #         }
     #         return res;
     #     }

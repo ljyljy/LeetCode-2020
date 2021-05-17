@@ -127,12 +127,12 @@ class Solution:
         #             p = self.parent[p]
         #         return p
         #
-        #     def is_connected(self, p, q):
-        #         return self.find(p) == self.find(q)
+        #     def is_connected(self, p, q1310_xor_queries_of_a_subarray):
+        #         return self.find(p) == self.find(q1310_xor_queries_of_a_subarray)
         #
-        #     def union(self, p, q):
+        #     def union(self, p, q1310_xor_queries_of_a_subarray):
         #         p_root = self.find(p)
-        #         q_root = self.find(q)
+        #         q_root = self.find(q1310_xor_queries_of_a_subarray)
         #         if p_root == q_root:
         #             return
         #

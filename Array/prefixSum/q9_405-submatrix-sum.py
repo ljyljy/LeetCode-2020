@@ -102,14 +102,14 @@ class Solution:
 #
 #
 # if __name__ == "__main__":
-#     n, m, q = list(map(int, input().split()))
+#     n, m, q1310_xor_queries_of_a_subarray = list(map(int, input().split()))
 #     mat = []
 #     for i in range(n):
 #         line = list(map(int, input().split()))
 #         mat.append(line)
-#     while q:
+#     while q1310_xor_queries_of_a_subarray:
 #         query = list(map(int, input().split()))
 #         rst = get_submatrix_sum(mat, *query)
 #         print(rst)
-#         q -= 1
+#         q1310_xor_queries_of_a_subarray -= 1
 #

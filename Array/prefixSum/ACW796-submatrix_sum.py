@@ -1,7 +1,7 @@
 # 	ACW796. 子矩阵的前缀和
 # https://www.acwing.com/problem/content/798/
 # 输入格式
-# 第一行包含三个整数n，m，q。
+# 第一行包含三个整数n，m，q1310_xor_queries_of_a_subarray。
 # 接下来n行，每行包含m个整数，表示整数矩阵。
 # 接下来q行，每行包含四个整数x1, y1, x2, y2，表示一组询问。
 # 输出格式

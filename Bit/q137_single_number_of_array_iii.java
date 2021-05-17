@@ -1,4 +1,4 @@
-package Array.bit;
+package Bit;
 
 import java.util.*;
 

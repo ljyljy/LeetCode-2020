@@ -28,5 +28,5 @@ public class acw785_quick_sort {
         nums[i] = nums[j];
         nums[j] = tmp;
     }
-    // 注意：why do-while？ - 避免死循环（i < j，且q[i] == q[j] == x时，死循环于swap）
+    // 注意：why do-while？ - 避免死循环（i < j，且q[i] == q1310_xor_queries_of_a_subarray[j] == x时，死循环于swap）
 }

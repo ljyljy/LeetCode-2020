@@ -1,4 +1,4 @@
-package Array.bit;
+package Bit;
 
 public class q1310_xor_queries_of_a_subarray {
     public int[] xorQueries(int[] arr, int[][] queries) {

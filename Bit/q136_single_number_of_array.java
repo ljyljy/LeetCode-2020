@@ -1,4 +1,4 @@
-package Array.bit;
+package Bit;
 
 public class q136_single_number_of_array {
     // 法2：位运算

@@ -3,14 +3,14 @@
 # 每个操作都要将选中的子矩阵中的每个元素的值加上c。
 # 请你将进行完所有操作后的矩阵输出。
 # 输入格式
-# 第一行包含整数n,m,q。
+# 第一行包含整数n,m,q1310_xor_queries_of_a_subarray。
 # 接下来n行，每行包含m个整数，表示整数矩阵。
 # 接下来q行，每行包含5个整数x1, y1, x2, y2, c，表示一个操作。
 # 输出格式
 # 共 n 行，每行 m 个整数，表示所有操作进行完毕后的最终矩阵。
 # 数据范围
 # 1≤n,m≤1000,
-# 1≤q≤100000,
+# 1≤q1310_xor_queries_of_a_subarray≤100000,
 # 1≤x1≤x2≤n,
 # 1≤y1≤y2≤m,
 # −1000≤c≤1000,
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     for i in range(1, n + 1):
         for j in range(1, m + 1):
             insert(diff_mat, i, j, i, j, mat[i][j])  # ❤
-    # q 次操作
+    # q1310_xor_queries_of_a_subarray 次操作
     while q > 0:
         q -= 1
         x1, y1, x2, y2, c = map(int, input().split())

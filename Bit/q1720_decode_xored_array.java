@@ -1,4 +1,4 @@
-package Array.bit;
+package Bit;
 
 public class q1720_decode_xored_array {
     public int[] decode(int[] encoded, int first) {

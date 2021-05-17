@@ -69,7 +69,7 @@ class Solution:
         q = Queue()
         q.put((0, 0))
         used = set()
-        while not q.empty():  # while q 会TLE!
+        while not q.empty():  # while q1310_xor_queries_of_a_subarray 会TLE!
             x, y = q.get()
             if (x, y) in used or not self.isBounded(x, y, m, n) \
                     or digitSum(x) + digitSum(y) > k:

@@ -22,10 +22,10 @@ class Solution(object):
         p = dummy
         while p.next:
             q = p.next
-            while q and p.next.val == q.val:  # 重复元素∈[p.next, q)
+            while q and p.next.val == q.val:  # 重复元素∈[p.next, q1310_xor_queries_of_a_subarray)
                 q = q.next  # 若不含重复，q至少向后一步↓
             if p.next.next == q:  # 不含重复
                 p = p.next
-            else:  # 有重复段∈[p.next, q) -- 删
+            else:  # 有重复段∈[p.next, q1310_xor_queries_of_a_subarray) -- 删
                 p.next = q
         return dummy.next
