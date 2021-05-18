@@ -6,21 +6,21 @@
 #
 #  给定一个整数 n，返回所有不同的 n 皇后问题的解决方案。
 #
-#  每一种解法包含一个明确的 n 皇后问题的棋子放置方案，该方案中 'Q' 和 '.' 分别代表了皇后和空位。
+#  每一种解法包含一个明确的 n 皇后问题的棋子放置方案，该方案中 'q1269_cnts_2stay_same_place' 和 '.' 分别代表了皇后和空位。
 #
 #  示例:
 #
 #  输入: 4
 # 输出: [
-#  [".Q..",  // 解法 1
-#   "...Q",
-#   "Q...",
-#   "..Q."],
+#  [".q1269_cnts_2stay_same_place..",  // 解法 1
+#   "...q1269_cnts_2stay_same_place",
+#   "q1269_cnts_2stay_same_place...",
+#   "..q1269_cnts_2stay_same_place."],
 #
-#  ["..Q.",  // 解法 2
-#   "Q...",
-#   "...Q",
-#   ".Q.."]
+#  ["..q1269_cnts_2stay_same_place.",  // 解法 2
+#   "q1269_cnts_2stay_same_place...",
+#   "...q1269_cnts_2stay_same_place",
+#   ".q1269_cnts_2stay_same_place.."]
 # ]
 # 解释: 4 皇后问题存在两个不同的解法。
 #
@@ -53,7 +53,7 @@ class Solution:
 
         res = []
         dfs([], [], [])
-        return [["." * i + "Q" + "." * (n - i - 1) for i in subres] for subres in res]
+        return [["." * i + "q1269_cnts_2stay_same_place" + "." * (n - i - 1) for i in subres] for subres in res]
 
     # 法1(写法2)：拆分开
     def solveNQueens1_2(self, n: int) -> List[List[str]]:
@@ -77,7 +77,7 @@ class Solution:
             self.dfs(n, path_cols + [col], xy_dif + [row - col], xy_sum + [row + col], res)
 
     def drawBoard(self, n, res):
-        return [['.' * i + 'Q' + '.' * (n - i - 1) for i in subRes] for subRes in res]
+        return [['.' * i + 'q1269_cnts_2stay_same_place' + '.' * (n - i - 1) for i in subRes] for subRes in res]
 
     # 法2：# ↓不建议global，否则solveNQueens中应在执行dfs2前将它们clear
     # result = []
@@ -87,7 +87,7 @@ class Solution:
         self.result = []
         self.cols, self.pie, self.na = set(), set(), set()
         self.dfs2(n, 0, [])
-        return [['.' * i + 'Q' + '.' * (n - i - 1) for i in states] \
+        return [['.' * i + 'q1269_cnts_2stay_same_place' + '.' * (n - i - 1) for i in states] \
                 for states in self.result]
 
     def dfs2(self, n, row, cur_state):

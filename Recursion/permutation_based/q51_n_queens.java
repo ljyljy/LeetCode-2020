@@ -47,7 +47,7 @@ public class q51_n_queens {
         for (Integer col_j : path) {
             StringBuilder row = new StringBuilder();
             row.append(".".repeat(Math.max(0, n))); // 共后缀n行(棋盘)
-            row.replace(col_j, col_j+1, "Q");
+            row.replace(col_j, col_j+1, "q1269_cnts_2stay_same_place");
             res_i.add(row.toString());
         }
         return res_i;
