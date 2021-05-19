@@ -1,4 +1,4 @@
-package Bit;
+package Array.prefixSum;
 
 public class q1734_decode_xored_permutation {
     public int[] decode(int[] encoded) {

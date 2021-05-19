@@ -1,4 +1,4 @@
-package Bit;
+package Array.prefixSum;
 
 public class q1442_count_triplet_equal_xor {
     // 法2：O(n^2) -- 当S[i]==S[k+1]时，[i+1,k] 的范围内的任意j 都是符合要求的，
