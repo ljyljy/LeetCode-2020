@@ -1,7 +1,7 @@
 package DP;
 
 public class hole_q1473_paint_house_iii {
-    // 法1：memo + dfs
+    // 法1：memo + dfs 【【存疑！！！】】
     private final int INF = 0x3f3f3f3f; // Integer.MAX_VALUE;
     private int[] hs; // 房子house[i]的颜色
     private int[][] cost;
@@ -26,7 +26,8 @@ public class hole_q1473_paint_house_iii {
                 // 2)否则：若上层颜色last_c与本层颜色c相同，则同街区/否则街区数+1
                 int cnt = idx == 0? 1: (last_c == c? last_cnt: last_cnt+1);
                 int curCost = dfs(idx+1, c, cnt, last_cost + cost[idx][c-1]);
-                ans = Math.min(ans, curCost + cost[idx][c-1]); // WHY 还加一次cost？
+                ans = Math.min(ans, curCost + cost[idx][c-1]);
+                // WHY 还加一次cost？ ↑ -- 这里是为了更新dfs的返回值ans（返回给上层，否则ans一直为0）
             }
         } else{
             int cnt = idx == 0? 1: (last_c == color? last_cnt: last_cnt+1);
@@ -38,7 +39,7 @@ public class hole_q1473_paint_house_iii {
         return ans;
     }
 
-    // 法2：dp
+    // 法2：dp 【推荐】
     public int minCost(int[] hs, int[][] cost, int m, int n, int t) {
         final int INF = 0x3f3f3f3f;
         int[][][] dp = new int[m+1][n+1][t+1];
@@ -58,26 +59,23 @@ public class hole_q1473_paint_house_iii {
                         continue;
                     }
 
-                    // 分情况: I) 第i间房间已经上色
+                    // 分情况: I) 第i间房间已经上色，则当前房子无需新增cost
+                    //  --  合法情况下(j==color),直接获取前i-1间房子的最小cost
                     if (color != 0) {
-//                        if (j != color) { // 3）状态无效，只有j=color才允许状态转移
-//                            dp[i][j][k] = INF;
-//                            continue;
-//                        }
-                        if (j == color){
-                            int tmp = INF;
-                            // I-1) 先从所有「第 i 间房形成新分区」方案中选最优（即与上一房间颜色不同）
-                            for (int p = 1; p <= n; p++) {
-                                if (p == j) continue;
-                                tmp = Math.min(tmp, dp[i-1][p][k-1]);
-                            }
-                            // I-2) 再结合「第 i 间房不形成新分区」方案中选最优（即与上一房间颜色相同）
-                            dp[i][j][k] = Math.min(tmp, dp[i-1][j][k]);
-                        } else {
+                        if (j != color) { // 3）状态无效，只有j=color才允许状态转移
                             dp[i][j][k] = INF;
+                            continue;
                         }
+                        int tmp = INF;
+                        // I-1) 先从所有「第 i 间房形成新分区」方案中选最优（即与上一房间颜色不同）
+                        for (int p = 1; p <= n; p++) {
+                            if (p == j) continue;
+                            tmp = Math.min(tmp, dp[i-1][p][k-1]);
+                        }
+                        // I-2) 再结合「第 i 间房不形成新分区」方案中选最优（即与上一房间颜色相同）
+                        dp[i][j][k] = Math.min(tmp, dp[i-1][j][k]);
 
-                    } else { // II) 第i间房间未上色 - 尝试上色，需+cost_ij
+                    } else { // II) 第i间房间未上色 - 尝试上色，需前i-1间的minCost+cost_ij
                         int cost_ij = cost[i-1][j-1];
                         int tmp = INF;
                         // II-1) 先从所有「第 i 间房形成新分区」方案中选最优（即与上一房间颜色不同）
@@ -87,7 +85,7 @@ public class hole_q1473_paint_house_iii {
                         }
                         // II-2) 再结合「第 i 间房不形成新分区」方案中选最优（即与上一房间颜色相同）
                         //                                  并累加 + [上色成本]
-                        dp[i][j][k] = Math.min(tmp, dp[i-1][j][k] + cost_ij);
+                        dp[i][j][k] = Math.min(tmp, dp[i-1][j][k]) + cost_ij;
                     }
                 }
             }
