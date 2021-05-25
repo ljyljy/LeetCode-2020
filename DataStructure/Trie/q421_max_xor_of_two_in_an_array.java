@@ -25,7 +25,7 @@ public class q421_max_xor_of_two_in_an_array {
             int bit1 = (num1 >> i) & 1, bit2 = 1-bit1; // 0/1
             if (p.child[bit2] != null) { // 优先找 bit2(∵相异的位 ∴该位XOR=1), 即~bit1
                 num2 |= (bit2 << i); // 1)或运算: 还原为num2的第i位
-                p = p.child[bit2]; // 指针下移
+                p = p.child[bit2]; // 指针下移, 勿漏！！
             } else { //
                 num2 |= (bit1 << i);
                 p = p.child[bit1];
