@@ -1,4 +1,4 @@
-package DP.G1_Backpack;
+package DP.G1_BagPack.q_01BagPack;
 
 import java.util.Scanner;
 

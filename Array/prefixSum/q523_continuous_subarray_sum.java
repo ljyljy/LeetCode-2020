@@ -8,13 +8,13 @@ public class q523_continuous_subarray_sum {
         int n = nums.length;
         if (n < 2) return false;
         Map<Integer, Integer> map = new HashMap<>();// <余数, idx>
-        map.put(0, -1); // 若前缀和直接被k整除(余数=0)，只需前缀和下标(从0开始)-(-1)>2即可满足
+        map.put(0, -1); // 若前缀和直接被k整除(余数=0)，只需前缀和下标(从0开始& >=1)-(-1)>=2即可满足
         // 1)同余定理：(a-b)%k=0, 则 a%k == b%k, 即 (sum[i]-sum[j])%k=0,则两数同余
         int reminder = 0;
         for (int i = 0; i < n; i++) {
             reminder = (reminder + nums[i]) % k;
             if (map.containsKey(reminder)) {
-                if (i - map.get(reminder) >= 2)
+                if (i - map.get(reminder) >= 2) //前缀和下标之差>=2!(sum[i]-sum【j-1】) |i-(j-1)|>=1, |i-j|>=2
                     return true;
             } else map.put(reminder, i);
         }
@@ -32,12 +32,12 @@ public class q523_continuous_subarray_sum {
         }
         Map<Integer, Integer> map = new HashMap<>(); // <余数, idx>
         map.put(0, -1); // 若前缀和直接被k整除(余数=0)，只需前缀和下标(从1开始)-0>2即可满足
-        // 1)同余定理：(a-b)%k=0, 则 a%k == b%k, 即 (sum[i]-sum[j])%k=0,则两数同余
+        // 同余定理：(a-b)%k=0, 则 a%k == b%k, 即 (sum[i]-sum[j])%k=0,则两数同余
         for (int i = 0; i < n; i++) {
             int reminder = preSum[i] % k;
             if(map.containsKey(reminder)) {
-                // 2)∵子数组和必须是k的倍数(还需满足前缀和>=k, 否则0%k=0)
                 int preIdx = map.get(reminder);
+//                System.out.println("j="+preIdx+", i="+i);
                 if (i - (preIdx) >= 2)
                     return true;
             } else map.put(reminder, i);
