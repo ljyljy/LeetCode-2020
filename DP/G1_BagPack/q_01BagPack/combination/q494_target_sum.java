@@ -1,4 +1,4 @@
-package DP.G1_BagPack.q_01BagPack;
+package DP.G1_BagPack.q_01BagPack.combination;
 
 import javafx.util.Pair;
 

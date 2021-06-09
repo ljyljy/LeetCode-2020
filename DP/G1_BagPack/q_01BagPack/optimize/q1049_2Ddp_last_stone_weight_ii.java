@@ -1,8 +1,8 @@
-package DP.G1_BagPack.q_01BagPack;
+package DP.G1_BagPack.q_01BagPack.optimize;
 
 import java.util.Arrays;
 
-public class q1049_last_stone_weight_ii {
+public class q1049_2Ddp_last_stone_weight_ii {
     public int lastStoneWeightII(int[] stones) {
         int n = stones.length;
         int sum = Arrays.stream(stones).sum();
