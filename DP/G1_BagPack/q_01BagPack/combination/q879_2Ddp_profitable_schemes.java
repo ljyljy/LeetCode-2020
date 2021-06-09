@@ -12,7 +12,7 @@ public class q879_2Ddp_profitable_schemes {
         dp[0][0] = 1; // 初始化：选0个员工,利润最少为0：只有1个方案--不工作 # dp[0][>0]=0
         for (int i = 1; i <= len; i++) { // 外-遍历物品（工作）
             int members = group[i-1], earn = profit[i-1]; // i从1起，需与下面下标一致
-            //❤ ↑WHY group[i-1]? (i=1:选择工作0--group[0]/profit[0])
+            //❤ ↑WHY group[i-1]? (dp[i=1]:选择工作0--group[0]/profit[0])
             for (int j = n; j >= members; j--) { // 内-背包（倒序！）
                 for (int k = minProfit; k >= 0; k--) {
                     dp[j][k] = (dp[j][k] // 不可+=,仅对加数dp取余(错)！
