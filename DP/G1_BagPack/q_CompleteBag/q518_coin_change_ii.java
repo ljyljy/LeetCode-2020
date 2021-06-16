@@ -11,7 +11,7 @@ public class q518_coin_change_ii {
         dp[0] = 1;
         for (int i = 0; i < n; i++) { // 外-遍历物品
             for (int j = coins[i]; j <= amount; j++) { // 完全背包-内(正序！)
-                dp[j] += dp[j - coins[i]]; 
+                dp[j] += dp[j - coins[i]];
             }
         }
         return dp[amount];
