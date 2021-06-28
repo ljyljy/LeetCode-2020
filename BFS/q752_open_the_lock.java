@@ -10,21 +10,25 @@ public class q752_open_the_lock {
         Collections.addAll(dead, deadends); // 法2
         if (dead.contains("0000")) return -1;
 
-        int step = 0;
+//        int step = 0; // 法01—s1
+        Map<String, Integer> map = new HashMap<>(); // 法02—s1 <"xxxx", step>
         Queue<String> queue = new LinkedList<>();
         Set<String> seen = new HashSet<>();
         queue.offer("0000");
         seen.add("0000");
+        map.put("0000", 0);// 法02—s2
 
         while (!queue.isEmpty()) {
-            step++; // ❤ 注意该句位置！！
+//            step++; // 法01-s2 ❤ 注意该句位置！！
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 String curState = queue.poll();
+                int step = map.get(curState); // 法02—s3
                 for (String nextState : getNextState(curState)) {
                     if (!seen.contains(nextState) && !queue.contains(nextState)){
-                        if (target.equals(nextState))
-                            return step;
+//                        if (target.equals(nextState)) return step; // 法01-s3
+                        if (nextState.equals(target)) return step+1;// 法02—s4
+                        map.put(nextState, step + 1);// 法02—s5
                         queue.offer(nextState);
                         seen.add(nextState);
                     }
@@ -35,6 +39,7 @@ public class q752_open_the_lock {
     }
 
     private char getPrevChar(char x) {
+        // ❤ (char)(char+数字)=↓‘加法后的char’
         return x == '0'? '9': (char)(x-1);
     }
 
