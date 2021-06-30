@@ -35,7 +35,7 @@ from typing import List
 class Solution:
     def findContinuousSequence(self, target: int) -> List[List[int]]:
         i, j = 1, 1  # ∵正整数序列，∴滑动窗口的左右边界均从1开始；
-        sum, rst = 0, []  # sum：滑动窗口内数字和
+        sum, rst = 0, []  # cnt：滑动窗口内数字和
         while i <= target // 2:  # [i, j]: 递增序列，故
             if sum < target:  # 右边界右移
                 sum += j
@@ -43,7 +43,7 @@ class Solution:
             elif sum > target:  # 左边界右移
                 sum -= i
                 i += 1
-            else:  # sum == target
+            else:  # cnt == target
                 sub_rst = list(range(i, j))
                 rst.append(sub_rst)
                 sum -= i  # 左边界右移

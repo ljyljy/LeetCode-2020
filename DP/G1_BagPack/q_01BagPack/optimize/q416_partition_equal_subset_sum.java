@@ -23,7 +23,7 @@ public class q416_partition_equal_subset_sum {
         int n = nums.length;
         int sum = Arrays.stream(nums).sum();
         if (sum % 2 != 0) return false; // 俩子集和均为sum/2
-        // 转化01背包: 选/不选, s.t.最终背包最大价值==sum/2(体积/价值),
+        // 转化01背包: 选/不选, s.t.最终背包最大价值==cnt/2(体积/价值),
         int[][] dp = new int[n+1][sum/2+1]; // 初始化: dp[0][:]=0, dp[:][0]=0
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= sum/2; j++) {

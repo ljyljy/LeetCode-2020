@@ -29,7 +29,7 @@ class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         nums = sorted(nums)
         rst = []
-        # 假设 a <= b <= c：for 循环 a ，找 b + c = -a 即可调用 two sum 的算法来解决。
+        # 假设 a <= b <= c：for 循环 a ，找 b + c = -a 即可调用 two cnt 的算法来解决。
         for i in range(len(nums)):
             if i > 0 and nums[i] == nums[i - 1]: continue
             self.find_two_sum(nums, i + 1, len(nums) - 1, -nums[i], rst)

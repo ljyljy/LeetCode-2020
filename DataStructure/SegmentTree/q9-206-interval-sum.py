@@ -36,7 +36,7 @@ class SegmentTree(object):
             return 0
         # WHY 【包含∈】而非【=≠】:
         # 1) query查询区间范围∈±∞, 当查询区间超过arr区间时，返回0即可（合法）
-        # 2) sum = 左子树sum + 右子树sum
+        # 2) cnt = 左子树sum + 右子树sum
         if start <= root.start and root.end <= end:
             return root.sum
         return cls.query(root.left, start, end) + \
@@ -72,7 +72,7 @@ class Solution:
 
 # def print_root(root: SegmentTree):
 #     if root:
-#         print(f'{root.start}, {root.end}, sum={root.sum}')
+#         print(f'{root.start}, {root.end}, cnt={root.cnt}')
 
 # if __name__ == "__main__":
 #     arr = [1, 2, 7, 8, 5]

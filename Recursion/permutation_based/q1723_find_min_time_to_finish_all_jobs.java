@@ -10,7 +10,7 @@ public class q1723_find_min_time_to_finish_all_jobs {
     // 时间 O(k^n) 空间O(k)
     private int[] jobs;
     private int n, k;
-    private int ans = Integer.MAX_VALUE; // min{maxWorkTime} // Arrays.stream(jobs).sum();
+    private int ans = Integer.MAX_VALUE; // min{maxWorkTime} // Arrays.stream(jobs).cnt();
     public int minimumTimeRequired1(int[] jobs, int k) {
         this.jobs = jobs;
         this.k = k;

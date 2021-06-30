@@ -1,5 +1,5 @@
 //Given an array nums of n integers, are there elements a, b, c in nums such tha
-//t a + b + c = 0? Find all unique triplets in the array which gives the sum of ze
+//t a + b + c = 0? Find all unique triplets in the array which gives the cnt of ze
 //ro.
 //
 // Note:

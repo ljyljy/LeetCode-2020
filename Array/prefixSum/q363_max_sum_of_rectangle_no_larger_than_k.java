@@ -30,7 +30,7 @@ public class q363_max_sum_of_rectangle_no_larger_than_k {
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= m; j++) { // matrix下标0起 - 需减1
                 sum[i][j] = sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1] + matrix[i-1][j-1];
-            } // sum[row_i][col_j]
+            } // cnt[row_i][col_j]
         }
         return sum;
     }
@@ -49,8 +49,8 @@ public class q363_max_sum_of_rectangle_no_larger_than_k {
                 // 遍历子矩阵右边界
                 for (int r = 1; r <= m; r++) {
                     int sum_rt = sum[bottom][r] - sum[top-1][r];
-                    // 二分查找 左边界: sum[r] – k ⩽ min{sum[l−1]}
-                    Integer sum_lf = treeSet.ceiling(sum_rt - k); // ≥(sum[r]-k)max
+                    // 二分查找 左边界: cnt[r] – k ⩽ min{cnt[l−1]}
+                    Integer sum_lf = treeSet.ceiling(sum_rt - k); // ≥(cnt[r]-k)max
                     if (sum_lf != null) {
                         int curSum = sum_rt - sum_lf;
                         maxSum = Math.max(maxSum, curSum);
@@ -75,7 +75,7 @@ public class q363_max_sum_of_rectangle_no_larger_than_k {
                 ts.add(0); // 左/上の起始边界,前缀和=0
                 for (int r_down = 1; r_down <= (fixR? m:n); r_down++) { // 右or下边界
                     int sum_r_down = fixR? sum[bot_R][r_down] - sum[top_L-1][r_down]
-                            : sum[r_down][bot_R] - sum[r_down][top_L-1]; // sum[下][R] - sum[下][L-1]
+                            : sum[r_down][bot_R] - sum[r_down][top_L-1]; // cnt[下][R] - cnt[下][L-1]
                     Integer sum_l_up = ts.ceiling(sum_r_down - k);
                     if (sum_l_up != null)
                         maxSum = Math.max(maxSum, sum_r_down - sum_l_up);

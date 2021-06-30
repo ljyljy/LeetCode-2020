@@ -37,7 +37,7 @@ class Solution:
             prefix_sum.append(prefix_sum[-1] + nums[i])
         # 二分 v1 -- bisect.bisect_left
         # for j in range(n):
-        #     target = sum + prefix_sum[j]
+        #     target = cnt + prefix_sum[j]
         #     pos_rt = bisect.bisect_left(prefix_sum, target)
         #     if pos_rt != len(prefix_sum):
         #         min_len = min(min_len, pos_rt - j)

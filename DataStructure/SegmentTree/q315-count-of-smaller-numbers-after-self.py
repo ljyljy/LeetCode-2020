@@ -16,7 +16,7 @@
 # 求得max和min之后，把整个数组解空间往右shift min位(min<0时)就可以了。
 # 注意如果min > 0, 那么没必要shift; 那么segment tree的class一点都不需要改变，
 # 只需要把sum的代码，每次+ Math.abs(min);把before的代码稍微改改就可以用了。
-# 由题需逆着sum，故list add的时候是add(0,sum) – deque：addFirst;
+# 由题需逆着sum，故list add的时候是add(0,cnt) – deque：addFirst;
 
 # 通过64%
 class SegmentTree:
@@ -24,7 +24,7 @@ class SegmentTree:
         self.start, self.end, self.sum = start, end, sum
         self.left, self.right = None, None
 
-    # 模板の改：去掉初始化用的array->初始化各结点.sum=0
+    # 模板の改：去掉初始化用的array->初始化各结点.cnt=0
     @classmethod
     def build(cls, start, end):
         if start > end: return None
@@ -104,7 +104,7 @@ class Solution:
 #             if(A[i] == min) { // 比min小的数没有了，所以是0；
 #                 list.add(0, 0);
 #             } else {
-#                 list.add(0, tree.querySum(0, A[i]-1 + Math.abs(min)));
+#                 list.add(0, tree.queryCnt(0, A[i]-1 + Math.abs(min)));
 #             }
 #             tree.add(A[i] + Math.abs(min), 1);
 #         }
@@ -128,14 +128,14 @@ class Solution:
 #     }
 #
 #     private class SegmentTreeNode {
-#         public int sum;
+#         public int cnt;
 #         public int start;
 #         public int end;
 #         public SegmentTreeNode left, right;
 #         public SegmentTreeNode(int start, int end) {
 #             this.start = start;
 #             this.end = end;
-#             this.sum = 0;
+#             this.cnt = 0;
 #             this.left = null;
 #             this.right = null;
 #         }
@@ -153,13 +153,13 @@ class Solution:
 #             int mid = start + (end - start) / 2;
 #             node.left = buildTree(start, mid);
 #             node.right = buildTree(mid+1, end);
-#             node.sum = node.left.sum + node.right.sum;
+#             node.cnt = node.left.cnt + node.right.cnt;
 #             return node;
 #         }
 #
 #         private void add(SegmentTreeNode node, int index, int value) {
 #             if(node.start == node.end && node.end == index){
-#                 node.sum += value;
+#                 node.cnt += value;
 #                 return;
 #             }
 #
@@ -171,21 +171,21 @@ class Solution:
 #                 add(node.right, index, value);
 #             }
 #
-#             node.sum = node.left.sum + node.right.sum;
+#             node.cnt = node.left.cnt + node.right.cnt;
 #         }
 #
-#         private int querySum(SegmentTreeNode node, int start, int end) {
+#         private int queryCnt(SegmentTreeNode node, int start, int end) {
 #             if(node.start == start && node.end == end) {
-#                 return node.sum;
+#                 return node.cnt;
 #             }
 #
 #             int mid = node.start +(node.end - node.start) / 2;
 #             int leftsum = 0, rightsum = 0;
 #             if(start <= mid) {
-#                 leftsum = querySum(node.left, start, Math.min(mid, end));
+#                 leftsum = queryCnt(node.left, start, Math.min(mid, end));
 #             }
 #             if(end > mid) {
-#                 rightsum = querySum(node.right, Math.max(mid+1, start), end);
+#                 rightsum = queryCnt(node.right, Math.max(mid+1, start), end);
 #             }
 #             return leftsum + rightsum;
 #         }
@@ -194,8 +194,8 @@ class Solution:
 #             root = buildTree(0, size-1);
 #         }
 #
-#         public int querySum(int start, int end) {
-#             return querySum(root, start, end);
+#         public int queryCnt(int start, int end) {
+#             return queryCnt(root, start, end);
 #         }
 #
 #         public void add(int index, int value) {

@@ -43,7 +43,7 @@ public class q9_405_submatrix_sum {
         for (int top = 1; top <= n; top++) { // 上边界
             for (int bottom = top; bottom <= n; bottom++) { // 下边界
                 // hash存储前缀和，每下边界重置
-                Map<Integer, Integer> sumColMap = new HashMap<>(); // <sum, col-R/L>
+                Map<Integer, Integer> sumColMap = new HashMap<>(); // <cnt, col-R/L>
                 sumColMap.put(0, 0);
                 for (int r = 1; r <= m; r++) {
                     int sum_rt = sum[bottom][r] - sum[top-1][r];
@@ -76,13 +76,13 @@ public class q9_405_submatrix_sum {
                 // 遍历子矩阵右边界
                 for (int r = 1; r <= m; r++) {
                     int sum_rt = sum[bottom][r] - sum[top-1][r];
-                    // 二分查找 左边界: sum[r] – k ⩽ min{sum[l−1]}
-                    Integer sum_lf = treeSet.ceiling(sum_rt); // ≥(sum[r])max
+                    // 二分查找 左边界: cnt[r] – k ⩽ min{cnt[l−1]}
+                    Integer sum_lf = treeSet.ceiling(sum_rt); // ≥(cnt[r])max
                     if (sum_lf != null && sum_lf == sum_rt) {
                         int l = sumColMap.get(sum_lf); // l-1: 左边界列，但和为0需要左边界+1
                         if (l == r && top == bottom) continue;
                         return new int[][]{{top-1, l}, {bottom-1, r-1}};
-                        // 固定上下边界：sum[l-1] == sum[r] -> sum[l,r]=0(左边界++才是零矩阵)
+                        // 固定上下边界：cnt[l-1] == cnt[r] -> cnt[l,r]=0(左边界++才是零矩阵)
                     }
                     treeSet.add(sum_rt); // 遍历过的sum_rt加入TreeSet
                     sumColMap.put(sum_rt, r);
@@ -95,12 +95,12 @@ public class q9_405_submatrix_sum {
     // 法4（写法同py）【荐,最优】 - O(n^2 * m)
     public int[][] submatrixSum_v21(int[][] matrix) {
         int n = matrix.length, m = n == 0? 0: matrix[0].length;
-        // int[][] sum = getPrefixSum(matrix, n, m); // 预处理前缀和
+        // int[][] cnt = getPrefixSum(matrix, n, m); // 预处理前缀和
         for (int top = 1; top <= n; top++) { // 上边界
             int[] rowSum = new int[m + 1]; // 累加，压缩一维; 每上边界重置
             for (int bottom = top; bottom <= n; bottom++) { // 下边界
                 // hash存储前缀和，    每下边界重置
-                Map<Integer, Integer> sumColMap = new HashMap<>(); // <sum, col-R/L>
+                Map<Integer, Integer> sumColMap = new HashMap<>(); // <cnt, col-R/L>
                 int prefixSum = 0; // 每下边界重置
                 sumColMap.put(prefixSum, 0);
                 for (int r = 1; r <= m; r++) {

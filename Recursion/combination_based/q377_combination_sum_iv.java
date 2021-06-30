@@ -23,10 +23,10 @@ public class q377_combination_sum_iv {
 
         int len = target; // nums[i]最小为1，∴答案最大长度为 target
         // ❤ dp[i][j]:组合长度为 i，凑成总和为 j 的方案数↓
-        int[][] dp = new int[len+1][target+1]; // dp[len][sum]
+        int[][] dp = new int[len+1][target+1]; // dp[len][cnt]
         dp[0][0] = 1; // dp[0][1:] = 0
         int cnt = 0;
-        // 状态转移方程：dp[len][sum] = ∑dp[len-1][sum-nums[i]]
+        // 状态转移方程：dp[len][cnt] = ∑dp[len-1][cnt-nums[i]]
         for (int i = 1; i <= len; i++) {
             for (int j = 0; j <= target; j++) {
                 for (int num: nums)

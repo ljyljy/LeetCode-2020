@@ -9,7 +9,7 @@ public class q304_range_sum_query_2d_immutable {
             sum = new int[n+1][m+1];
 
             for (int i = 1; i <= n; i++) {
-                for (int j = 1; j <= m; j++) { // sum[i][j]下标1起 -- matrix[i-1][j-1]下标0起
+                for (int j = 1; j <= m; j++) { // cnt[i][j]下标1起 -- matrix[i-1][j-1]下标0起
                     sum[i][j] = sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1] + matrix[i-1][j-1];
                 }
             }
@@ -35,6 +35,6 @@ public class q304_range_sum_query_2d_immutable {
 
         NumMatrix numMatrix = sol.new NumMatrix(matrix);
         int sum = numMatrix.sumRegion(2,1,4,3);
-        System.out.println("sum = " + sum);
+        System.out.println("cnt = " + sum);
     }
 }

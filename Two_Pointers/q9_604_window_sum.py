@@ -16,7 +16,7 @@
 class Solution:
     # @param nums {int[]} a list of integers
     # @param k {int} 滑动窗口大小
-    # @return {int[]} the sum of element inside the window at each moving
+    # @return {int[]} the cnt of element inside the window at each moving
     def winSum(self, nums, k):
         n = len(nums)
         if k <= 0 or n < k: return []

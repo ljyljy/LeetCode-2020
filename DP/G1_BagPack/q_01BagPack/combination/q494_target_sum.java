@@ -50,12 +50,12 @@ public class q494_target_sum {
         int minus = dfs(nums, S, sum-nums[idx], idx+1);
         res = res + plus + minus;
         memo2.put(key, res);
-        // memo2.put(new Pair<>(sum, idx), res);
-        // memo2[idx][sum] = res;
+        // memo2.put(new Pair<>(cnt, idx), res);
+        // memo2[idx][cnt] = res;
         return res;
     }
 
-    // 法1：DFS+memo(面试不能用pair!)   ↓ <key=<sum, idx>, val=cnt>
+    // 法1：DFS+memo(面试不能用pair!)   ↓ <key=<cnt, idx>, val=cnt>
     Map<Pair<Integer, Integer>, Integer> memo = new HashMap<>();
     public int findTargetSumWays1(int[] nums, int S) {
         return dfs(nums, S,0, 0);

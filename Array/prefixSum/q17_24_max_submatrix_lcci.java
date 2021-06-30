@@ -24,7 +24,7 @@ public class q17_24_max_submatrix_lcci {
                         int curSum = sum_rt - sum_lf;
                         if (maxSum < curSum) {
                             maxSum = curSum;
-                            System.out.println("sum=" + maxSum);
+                            System.out.println("cnt=" + maxSum);
                             res[0] = top-1; res[1] = l;
                             res[2] = bottom-1; res[3] = r-1;
                         }

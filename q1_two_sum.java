@@ -31,7 +31,7 @@ class q1_two_sum {
             map.put(nums[i], i); // num:idx
         }
         // 不合法参数异常
-        throw new IllegalArgumentException("No two sum solution");
+        throw new IllegalArgumentException("No two cnt solution");
     }
 
     // 2. 二遍哈希 时间O(n), 空间O(n)
