@@ -34,16 +34,20 @@ public class q315_count_of_smaller_numbers_after_self {
         int k = L;
         if (nums[mid] <= nums[mid+1]) return; // 整体有序 直接返回
 
-        while (i <= mid && j <= R) { // [8,12,29,50, 100] & [7,9,9,9,15]
+        while (i <= mid && j <= R) { // [8,12,29,50, 100] & [7,9,9,9,12,15]
             if (nums[i] <= nums[j]) { // 右[(mid+1) ~ (j-1)] < 左[i] <= 右[j]
+                // ❤❤❤ 等于的时候，也需要算逆序对！(如左i=右j=12,此时左i有逆序对<i-12,j-[7~12]>)
                 temp[k] = nums[i];
-                tempIndex[k] = index[i];
+                tempIndex[k] = index[i]; // index[i]为nums[i]的原始下标
                 // 进阶-逆序对(q315)在【左区间小】时计算-法2
                 // 即一次性将【右[R_start(mid+1)~(j-1)]】<左[i]<右[j]加入结果
                 ans[index[i]] += (j-1-mid); // (j-1)-(mid+1)+1
+//                System.out.println("i="+ i+", index[i]="+index[i]+", nums[i]="+nums[i]);
                 k++; // ↑ 右侧比自己[nums[i]]小的元素个数
-                i++;
-            } else{ // 左[i] > 右[j]
+                i++; // ”一举拿下” ↑
+            } else{ // 左[i] > 右[j](此时右侧比自己(左i)小，'养成'↓
+                // '养成': 此时不算逆序对，等自己(左i)比右侧j+=n小后，
+                //         一举拿下[mid+1, j-1]所有逆序对
                 temp[k] = nums[j];
                 tempIndex[k] = index[j];
                 k++;

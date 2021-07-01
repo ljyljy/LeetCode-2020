@@ -1,13 +1,15 @@
 package Binary_Search;
 
 public class q4_median_of_two_sorted_arrays {
+    // 图文并茂[解法3-最优]：
+    //   https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by-w-2/
     // 时间O(log(m+n)) - 二分查找（but二分排序是NlogN，勿混淆！）
     public double findMedianSortedArrays(int[] A, int[] B) {
         int m = A.length, n = B.length;
         int N = m + n;
         // 俩升序的中位数 <=> 第k小, k=N/2(奇)或中间俩数 [再求平均(偶)]
-        if (N % 2 != 0) { // 奇数 - 中位数第N/2个 (len=3, 中位数=2nd=N/2+1)
-            int k = N/2+1; // 是第几个！而非idx! 无需-1！！
+        if (N % 2 != 0) { // 奇数-中位数=第N/2小 (len=3, Med为第2小,即N/2+1)
+            int k = N/2+1; // 找第k小！而非idx! 无需-1！！
             return getKth(A, 0, m-1, B, 0, n-1, k);
         }else { // 如: N=4, 中位数为第2,3的均值
             int k1 = N/2, k2 = N/2+1; // k1、k2分别为中间靠左、右
@@ -28,8 +30,8 @@ public class q4_median_of_two_sorted_arrays {
         // 已经找到第k小的数(俩数组中第k=1小的数)
         if (k == 1) return Math.min(A[L1], B[L2]);
         // 【边界完毕↑】 开始二分（每次最多排除k/2个结点）↓
-        int c1 = L1 + Math.min(k / 2, len1) - 1; // 下一轮的中点
-        int c2 = L2 + Math.min(k / 2, len2) - 1;
+        int c1 = L1 + Math.min(k / 2, len1) - 1; // ∵下一轮中点idx
+        int c2 = L2 + Math.min(k / 2, len2) - 1; // ∴idx--减1
         if (A[c1] <= B[c2]) { // A[L1:c1]不可能有解-> 剪枝
             int newK = k - (c1 - L1 + 1);  // k/2 # 错！因为k/2可能超出A的下标！越界！
             return getKth(A, c1 + 1, R1, B, L2, R2, newK);
@@ -37,6 +39,5 @@ public class q4_median_of_two_sorted_arrays {
             int newK = k - (c2 - L2 + 1);
             return getKth(A, L1, R1, B, c2+1, R2, newK);
         }
-
     }
 }

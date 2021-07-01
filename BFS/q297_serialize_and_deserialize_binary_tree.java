@@ -48,8 +48,8 @@ public class q297_serialize_and_deserialize_binary_tree {
             //     res += INF + ",";
             //     continue;
             // } // 可合并到下句↓
-            res += String.valueOf(node.val) + ",";
-            if (!node.equals(nullNode)) {
+            res += node.val + ",";
+            if (!node.equals(nullNode)) { // ❤
                 deq.offer(node.left != null? node.left : nullNode);
                 deq.offer(node.right != null? node.right : nullNode);
             }
@@ -87,9 +87,9 @@ public class q297_serialize_and_deserialize_binary_tree {
     // DFS 前序, 空结点"null", 分割","
     private String serialize_dfs(TreeNode root, String str) {
         if (root == null) // serialize已特判，此处一定不是头结点为空
-            str += "null,";
+            str += INF + ",";
         else { // 前序：根左右
-            str += String.valueOf(root.val) + ",";
+            str += root.val + ",";
             str = serialize_dfs(root.left, str); // ↓函数内嵌sb.append
             str = serialize_dfs(root.right, str);// 不可'+=', 直接'='即可
             // str += str_L + str_R;
@@ -97,17 +97,14 @@ public class q297_serialize_and_deserialize_binary_tree {
         return str;
     }
 
-    private TreeNode deserialize_dfs(Deque<String> nodesDeq) {
-        if (nodesDeq == null || nodesDeq.isEmpty())
-            return null;
-        String node_str = nodesDeq.poll();
-        if (node_str.equals("null"))
-            return null;
-        else {
-            TreeNode root = new TreeNode(Integer.valueOf(node_str));
-            root.left = deserialize_dfs(nodesDeq);
-            root.right = deserialize_dfs(nodesDeq);
-            return root;
-        }
+    private TreeNode deserialize_dfs(Deque<String> nodesDeq) {// ❤
+        if (nodesDeq == null || nodesDeq.isEmpty()) return null;
+        int val = Integer.valueOf(nodesDeq.poll());
+        if (val == INF) return null;
+
+        TreeNode node = new TreeNode(val);
+        node.left = deserialize_dfs(nodesDeq);
+        node.right = deserialize_dfs(nodesDeq);
+        return node;
     }
 }
