@@ -19,6 +19,30 @@ public class q144_binary_tree_preorder_traversal {
         if (root.right != null) helper(root.right, res);
     }
 
+    // 【大一统迭代(推荐模板)】
+    // 法0：❤迭代写法 - 前序(中左右) - 压栈:右左中
+    TreeNode nullNode = new TreeNode(Integer.MIN_VALUE);
+    public List<Integer> preorderTraversal_stack(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            if (!node.equals(nullNode)) { // 压栈:右左(中+NULL)
+                if (node.right != null) stack.push(node.right);
+                if (node.left != null) stack.push(node.left);
+                stack.push(node);
+                stack.push(nullNode); // 作为根的标记
+            }else { // 说明下一个pop的是根
+                node = stack.pop(); // node(之前是NULL)接收一下无伤大雅
+                res.add(node.val);
+            }
+        }
+        return res;
+    }
+
     // 法2：非递归
     public List<Integer> preorderTraversal_2(TreeNode root) {
         Deque<TreeNode> stack = new ArrayDeque<>();

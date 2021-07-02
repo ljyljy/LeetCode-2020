@@ -11,20 +11,46 @@ public class q590_n_ary_tree_postorder_traversal {
         Node(int x) { val = x; }
     }
 
-    // 1. 递归
-    public List<Integer> postorder1(Node root) {
+    // 法1：递归 （左右根）- 左右：孩子顺序递归
+    public List<Integer> postorder_dfs(Node root) {
         List<Integer> res = new ArrayList<>();
-        helper(root, res);
+        if (root == null) return res;
+        dfs(root, res);
         return res;
     }
 
-    private void helper(Node root, List<Integer> res) {
-        if (root != null) {
-            if (root.children != null)
-                for (Node children : root.children)
-                    helper(children, res);
-            res.add(root.val);
+    private void dfs(Node root, List<Integer> res) {
+        if (root == null) return;
+        List<Node> children = root.children;
+        for (Node child : children) {
+            dfs(child, res);
         }
+        res.add(root.val);
+    }
+
+    // 【大一统迭代(推荐模板1)】
+    // 法0：❤迭代写法 - 后序(左右中) - 压栈:中右左(右左：即孩子逆序压栈❤)
+    Node nullNode = new Node(Integer.MIN_VALUE);
+    public List<Integer> postorder_stack(Node root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        Deque<Node> stack = new ArrayDeque<>();
+        stack.push(root);
+        while (!stack.isEmpty()) { // 压栈：根右左
+            Node node = stack.pop();
+            if (!node.equals(nullNode)) {
+                stack.push(node);
+                stack.push(nullNode);
+                List<Node> children = node.children;
+                int size = children.size();
+                for (int i = size-1; i >= 0; i--) { // ❤孩子逆序压栈
+                    stack.push(children.get(i));
+                }
+            } else{// 说明下一个pop的是根
+                res.add(stack.pop().val);
+            }
+        }
+        return res;
     }
 
     // 2.迭代（栈）-- 逆（child, self）+ ∴【反向链表保存】 <-- ∵(self, child)

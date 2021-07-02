@@ -21,6 +21,28 @@ public class q94_binary_tree_inorder_traversal {
         if (root.right != null) helper(root.right, res);
     }
 
+    // 【大一统迭代(推荐模板)】
+    // 法0：❤迭代写法 - 中序(左中右) - 压栈:右中左
+    TreeNode nullNode = new TreeNode(Integer.MIN_VALUE);
+    public List<Integer> inorderTraversal_stack(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+        while (!stack.isEmpty()) { // 压栈:右(中+NULL)左
+            TreeNode node = stack.pop();
+            if (!node.equals(nullNode)) { // ↓ if: 空节点不压栈
+                if (node.right != null) stack.push(node.right);
+                stack.push(node);
+                stack.push(nullNode); // 标记根
+                if (node.left != null) stack.push(node.left);
+            }else { // 说明下一个pop的是根
+                res.add(stack.pop().val);
+            }
+        }
+        return res;
+    }
+
     // 2.栈 - 逆（左中右）
     public List<Integer> inorderTraversal_2(TreeNode root) {
         List<Integer> res = new ArrayList<>();

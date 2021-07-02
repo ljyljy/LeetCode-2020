@@ -17,6 +17,31 @@ public class q145_binary_tree_postorder_traversal {
         res.add(root.val);
     }
 
+    // 【大一统迭代(推荐模板1)】
+    // 法0：❤迭代写法 - 后序(左右中) - 压栈:中右左
+    TreeNode nullNode = new TreeNode(Integer.MIN_VALUE);
+    public List<Integer> postorderTraversal_stack(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            if (!node.equals(nullNode)) { // 压栈:(中+NULL)右左
+                stack.push(node);
+                stack.push(nullNode);
+                if (node.right != null) stack.push(node.right);
+                if (node.left != null) stack.push(node.left);
+            }else { // 说明下一个pop的是根
+                res.add(stack.pop().val);
+            }
+        }
+        return res;
+    }
+
+
+
     // 法2.非递归v1 【一个栈搞定 -- 不用逆序压栈！】
     // 思路：
     //    顺序压栈【左右根】, 找到最左叶子->弹栈(记last_pop)
