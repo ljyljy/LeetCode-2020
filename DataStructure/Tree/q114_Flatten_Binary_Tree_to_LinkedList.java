@@ -1,4 +1,4 @@
-package Tree;
+package DataStructure.Tree;
 
 public class q114_Flatten_Binary_Tree_to_LinkedList {
     //    Definition for a binary tree node.

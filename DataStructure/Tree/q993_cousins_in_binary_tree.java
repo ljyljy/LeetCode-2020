@@ -1,4 +1,4 @@
-package Tree;
+package DataStructure.Tree;
 
 public class q993_cousins_in_binary_tree {
     private int x_val, y_val;

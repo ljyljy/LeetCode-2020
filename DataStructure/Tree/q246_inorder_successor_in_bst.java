@@ -1,4 +1,4 @@
-package Tree;
+package DataStructure.Tree;
 
 //    Definition for a binary tree node.
 //class TreeNode {

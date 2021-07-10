@@ -1,23 +1,26 @@
-package Tree;
+package DataStructure.Tree;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
 
-public class q515_find_largest_value_in_each_tree_row {
-    public List<Integer> largestValues(TreeNode root) {
-        List<Integer> res = new ArrayList<>();
+public class q637_average_of_levels_in_binary_tree {
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> res = new ArrayList<>();
         if (root == null) return res;
         Deque<TreeNode> queue = new ArrayDeque<>();
         queue.offer(root);
         while (!queue.isEmpty()) {
             int size = queue.size();
-            int maxNum = Integer.MIN_VALUE;
+            double sum = 0;
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
-                maxNum = node.val > maxNum? node.val : maxNum;
+                sum += node.val;
                 if (node.left != null) queue.offer(node.left);
                 if (node.right != null) queue.offer(node.right);
             }
-            res.add(maxNum);
+            res.add((double)sum / (double)size);
         }
         return res;
     }
