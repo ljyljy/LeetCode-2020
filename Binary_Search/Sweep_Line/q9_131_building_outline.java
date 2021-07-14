@@ -57,7 +57,7 @@ public class q9_131_building_outline {
 //                System.out.println(entry.getKey() + " -- " + entry.getValue());
 //            }
 
-            if (curH != prevH) {
+            if (curH != prevH) { // 还防止有同高的高楼但不重叠 - 需要合并起止点
                 if (prevH != 0) {// 当前的起点 node.time == 上一轮的终点
                     res.add(Arrays.asList(startTime, node.time, prevH));
                 }
