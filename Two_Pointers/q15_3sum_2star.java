@@ -1,26 +1,4 @@
-//Given an array nums of n integers, are there elements a, b, c in nums such tha
-//t a + b + c = 0? Find all unique triplets in the array which gives the cnt of ze
-//ro.
-//
-// Note:
-//
-// The solution set must not contain duplicate triplets.
-//
-// Example:
-//
-//
-//Given array nums = [-1, 0, 1, 2, -1, -4],
-//
-//A solution set is:
-//[
-//  [-1, 0, 1],
-//  [-1, -1, 2]
-//]
-//
-// Related Topics 数组 双指针
-
-// 两数之和的升级版
-// a + b == -c
+package Two_Pointers;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -40,19 +18,19 @@ class q15_3sum_2star {
         for (int i = 0; i < nums.length-2; ++i) {
             // tips: num[i-1] (而非i+1)
             //                      ↓去重！！！避免target一样。
-            if (i == 0 || (i > 0 && nums[i] != nums[i-1])) {
-                // lo = i+1(而非1)
-                int lo = i+1, hi = nums.length-1, sum = 0 - nums[i];
-                while (lo < hi) {
-                    if (nums[lo] + nums[hi] == sum) {
-                        res.add(Arrays.asList(nums[i], nums[lo], nums[hi]));
-                        while (lo < hi && nums[lo] == nums[lo+1]) lo++; // 去重
-                        while (lo < hi && nums[hi] == nums[hi-1]) hi--; // 去重
-                        lo++; hi--; // 很重要！勿忘！
-                    }else if (nums[lo] + nums[hi] < sum) lo++;
-                    else hi--;
-                }
+            if (i >= 1 && nums[i] == nums[i-1]) continue; // 去重1
+            // lo = i+1(而非1)
+            int lo = i+1, hi = nums.length-1, sum = 0 - nums[i]; // ❤❤❤
+            while (lo < hi) {
+                if (nums[lo] + nums[hi] == sum) {
+                    res.add(Arrays.asList(nums[i], nums[lo], nums[hi]));
+                    while (lo < hi && nums[lo] == nums[lo+1]) lo++; // 去重2
+                    while (lo < hi && nums[hi] == nums[hi-1]) hi--; // 去重3
+                    lo++; hi--; // 摆脱重复
+                }else if (nums[lo] + nums[hi] < sum) lo++;
+                else hi--;
             }
+
         }
         return res;
     }
