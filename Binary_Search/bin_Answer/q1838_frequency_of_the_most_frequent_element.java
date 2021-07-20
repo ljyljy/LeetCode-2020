@@ -3,7 +3,7 @@ package Binary_Search.bin_Answer;
 import java.util.*;
 
 public class q1838_frequency_of_the_most_frequent_element {
-    // 【荐】 法2： 二分 O(nlogn)
+    // 【荐】  法2： 二分 O(nlogn)
     private int[] nums, sum;
     private int n, k;
     public int maxFrequency(int[] nums, int k) {
