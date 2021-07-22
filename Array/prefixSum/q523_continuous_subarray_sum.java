@@ -21,29 +21,32 @@ public class q523_continuous_subarray_sum {
         return false;
     }
 
-    // 法2-写法2：前缀和idx必须从0开始！且map哨兵为<余数为0,idx为-1>！
+    // 【荐】法2-写法2：
+    // 前缀和idx必须从0开始！且map哨兵为<余数为0,idx为0>！
     public boolean checkSubarraySum(int[] nums, int k) {
         int n = nums.length;
         if (n < 2) return false;
         int[] preSum = new int[n+1];
-        preSum[0] = nums[0];
-        for (int i = 1; i <n; i++) {
-            preSum[i] = preSum[i-1] + nums[i];
+        for (int i = 1; i <= n; i++) {
+            preSum[i] = preSum[i-1] + nums[i-1];
         }
-        Map<Integer, Integer> map = new HashMap<>(); // <余数, idx>
-        map.put(0, -1); // 若前缀和直接被k整除(余数=0)，只需前缀和下标(从1开始)-0>2即可满足
-        // 同余定理：(a-b)%k=0, 则 a%k == b%k, 即 (cnt[i]-cnt[j])%k=0,则两数同余
-        for (int i = 0; i < n; i++) {
-            int reminder = preSum[i] % k;
+        // <余数,最早出现的sum下标min_idx>
+        Map<Integer, Integer> map = new HashMap<>(); // <余数, min_idx>
+        map.put(0, 0); // 哨兵<余数0, sum中最早出现在idx=0处>
+        // 若前缀和直接被k整除(余数=0)，只需前缀和下标(从1开始)-0>2即可满足
+        // 1)同余定理：(a-b)%k=0, 则 a%k == b%k, 即 (sum[i]-sum[j])%k=0,则两数同余
+        for (int i = 1; i <= n; i++) {
+            int reminder = preSum[i] % k;// ∵元素非负 ∴mod>=0, 无需修正['负余'](q974)
             if(map.containsKey(reminder)) {
                 int preIdx = map.get(reminder);
-//                System.out.println("j="+preIdx+", i="+i);
+                // System.out.println("j="+preIdx+", i="+i+", mod="+reminder);
                 if (i - (preIdx) >= 2)
                     return true;
-            } else map.put(reminder, i);
+            } else map.put(reminder, i); // 只记录mod对应的最早idx!
         }
         return false;
     }
+
 
     // 法1：朴素前缀和 - TLE -- O(n^2)
     public boolean checkSubarraySum_TLE(int[] nums, int k) {
