@@ -51,7 +51,26 @@ public class acw786_topKthSmallest {
     // 法2-2：快速选择 quickSelect 【模板2-荐】          idx需k-1↓
     private int quickSelect2(int[] arr, int start, int end, int k) {
         if (start == end) return arr[start];
-        int x = arr[start + end >> 1];
+        int x = arr[start];
+        int i = start+1, j = end;
+        while (i <= j) {
+            while (i <= j && arr[i] < x) i++;
+            while (i <= j && x < arr[j]) j--;
+            if (i <= j) { // ∵ 非do-while ∴ if内勿漏双指针移动！
+                swap(arr, i, j); i++; j--;
+            }
+        }
+        swap(arr, start, j);
+        // 退出后 [L, j] pivot_x(k) [i, R]
+        if (k <= j) return quickSelect2(arr, start, j, k);
+        else if (k >= i) return quickSelect2(arr, i, end, k);
+        else return arr[k];
+    }
+
+    // 法2-3：快速选择 quickSelect 【模板3-荐】
+    private int quickSelect3(int[] arr, int start, int end, int k) {
+        if (start == end) return arr[start];
+        int x = arr[start + end >> 1];// 最后无需swap【only合并可写】【单独partition()不可设pivot=[mid]，易错！】
         int i = start, j = end;
         while (i <= j) {
             while (i <= j && arr[i] < x) i++;
@@ -60,10 +79,11 @@ public class acw786_topKthSmallest {
                 swap(arr, i, j); i++; j--;
             }
         } // 退出后 [L, j] pivot_x(k) [i, R]
-        if (k <= j) return quickSelect2(arr, start, j, k);
-        else if (k >= i) return quickSelect2(arr, i, end, k);
+        if (k <= j) return quickSelect3(arr, start, j, k);
+        else if (k >= i) return quickSelect3(arr, i, end, k);
         else return arr[k];
     }
+
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
