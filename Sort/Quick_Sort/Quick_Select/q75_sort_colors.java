@@ -1,13 +1,31 @@
 package Sort.Quick_Sort.Quick_Select;
 
 public class q75_sort_colors {
-    // 法2：O(n) - 2次快选（只分区，不排序）
+    // 法3：O(n) - 1次遍历（三指针）
     public void sortColors(int[] nums) {
+        int n = nums.length;
+        int left = 0, i = 0, right = n-1;
+        while (i <= right) {
+            if (nums[i] == 1) i++; // 跳过
+            else if (nums[i] == 0) {
+                swap(nums, left, i);
+                left++;
+                i++;
+            }
+            else if (nums[i] == 2) {
+                swap(nums, right, i);
+                right--;
+            }
+        }
+    }
+
+    // 【快选，荐】法2：O(n) - 2次快选（只分区，不排序）
+    public void sortColors2(int[] nums) {
         int n = nums.length;
         if (n <= 1) return;
         int cnt_0 = partition_pivot(nums, 0, n-1, 1); // 分区1：[<1, >=1], 【0, (1&2)】
         // ↓ 下一段分区startIdx = (左区间个数-1)+1 = cnt_0
-        int cnt_1 = partition_pivot(nums, cnt_0, n-1, 2); // 分区2：[<2, >=2], [0, 【1, 2】]
+        partition_pivot(nums, cnt_0, n-1, 2); // 分区2：[<2, >=2], [0, 【1, 2】]
     }
 
     private int partition_pivot(int[] nums, int i, int j, int pivot) {
@@ -41,14 +59,14 @@ public class q75_sort_colors {
         int i = start + 1, j = end;
         while (i <= j) {
             while (i <= j && nums[i] < pivot) i++;
-            while (i <= j && nums[j] > pivot) j--;
+            while (i <= j && nums[j] > pivot) j--;// 严格>, 不带=！❤
             if (i <= j) {
                 swap(nums, i, j);
                 i++; j--;
             }
         }
         swap(nums, start, j);
-        return j;
+        return i; // 或j+1
     }
 
     private void swap(int[] A, int left, int right) {
