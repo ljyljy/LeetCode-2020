@@ -22,17 +22,20 @@ package Two_Pointers;//Given an array nums, write a function to move all 0's to 
 
 //leetcode submit region begin(Prohibit modification and deletion)
 public class q283_move_zeros {
-    // 解法3
+    // 【荐】解法3 - 【优化写次数】
     public void moveZeroes(int[] nums) {
-        int j = 0; // j处的num为0, 记录待填充的非零数的下标
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] != 0) { // 将i处的num赋值给j处
-                nums[j] = nums[i];
-                if (i != j) {
-                    nums[i] = 0; // 将原来i处填补上0
-                }
-                j++; // 待填充的非零数的下标++
+        int write = 0, n = nums.length; // write处的num【不论是否为0】, 都是【待填充】下标
+        for (int read = 0; read < n; read++) {
+            // ❤判断nums【read】是否为零，而非nums[write]
+            if (nums[read] != 0) {
+                if (read != write) // 优化写.1
+                    nums[write] = nums[read];
             }
+            write++; // 合并：nums[read]不论是否为0，write都需++
+        } // 退出后, 将[write, n)的元素全置0
+        for (int w = write; w < n; w++) {
+            if (nums[w] != 0) // 优化写.2
+                nums[w] = 0;
         }
     }
 }
