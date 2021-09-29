@@ -34,9 +34,9 @@ public class q133_clone_graph {
 
         // 3. 克隆邻居，遍历该节点的邻居并更新克隆节点的邻居列表
         for (Node neighbor : node.neighbors) {
-            cloneNode.neighbors.add(cloneGraph_dfs(neighbor));
+            visited.get(node).neighbors.add(cloneGraph_dfs(neighbor));
         }
-        return cloneNode;
+        return visited.get(node);
     }
 
     // 法2：BFS
