@@ -1,12 +1,14 @@
-package DataStructure.Deque;
+package DataStructure.Tree;
+
+import DataStructure.Deque.TreeNode;
 
 import java.util.*;
 
 public class qo_32_q103_level_order_zigzag {
-    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+    public List<List<Integer>> zigzagLevelOrder(DataStructure.Deque.TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
         if (root == null) return res;
-        Deque<TreeNode> queue = new ArrayDeque<>();
+        Deque<DataStructure.Deque.TreeNode> queue = new ArrayDeque<>();
         queue.offer(root);
         boolean isReverse = false;
         while (!queue.isEmpty()) {

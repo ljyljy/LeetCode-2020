@@ -1,17 +1,11 @@
-package BFS;
+package DataStructure.Tree;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+//import BFS.TreeNode;
 
-public class q102_binary_tree_level_order_traversal {
-    class TreeNode {
-        int val;
-        TreeNode left, right;
-        public TreeNode(int val) {this.val = val;}
-    }
-    public List<List<Integer>> levelOrder(TreeNode root) {
+import java.util.*;
+
+public class q107_binary_tree_level_order_traversal_ii {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
         if (root == null) return res;
 
@@ -19,7 +13,7 @@ public class q102_binary_tree_level_order_traversal {
         queue.offer(root);
         while (!queue.isEmpty()) {
             List<Integer> level = new ArrayList<>();
-            int size = queue.size(); // size动态变！必须for外固定！
+            int size = queue.size();
             for (int i = 0; i < size; i++) {
                 TreeNode cur = queue.poll();
                 level.add(cur.val);
@@ -28,6 +22,7 @@ public class q102_binary_tree_level_order_traversal {
             }
             res.add(level);
         }
+        Collections.reverse(res);
         return res;
     }
 }

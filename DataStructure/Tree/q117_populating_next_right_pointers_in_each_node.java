@@ -30,8 +30,8 @@ public class q117_populating_next_right_pointers_in_each_node {
         // 层序 - queue根左右
         while (!queue.isEmpty()) {
             int size = queue.size();
-            Node pre = new Node();
-            Node cur = new Node();
+            Node pre = new Node(); // only for 每层的头部(node的本层祖宗)
+            Node cur = new Node(); // ❤ 务必与node区分！不可视为同一个Node！(cur: node的左节点)
             for (int i = 0; i < size; i++) {
                 // 1. 根
                 Node node = queue.poll();

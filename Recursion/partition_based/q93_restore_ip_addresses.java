@@ -4,7 +4,7 @@ import java.util.*;
 
 public class q93_restore_ip_addresses {
     private List<String> res = new ArrayList<>();
-    // 长度为4段[0,255]的数字  [vs qo_38字符串的全排列II]
+    // 长度�?4段[0,255]的数�?  [vs qo_38字符串的全排列II]
     private Deque<String> path = new ArrayDeque<>(4);
 
     public List<String> restoreIpAddresses(String s) {
@@ -17,17 +17,17 @@ public class q93_restore_ip_addresses {
     private void dfs(String s, int n, int idx, int SplitNum, Deque<String> path) {
         if (idx == n) { // 若分割idx==n
             System.out.println("idx==n");
-            if (SplitNum == 4) // 合法分段数=4
+            if (SplitNum == 4) // 合法分段�?=4
                 res.add(String.join(".", path)); // py: '.'.join(path)
             return;
         }
-        // 剪枝1：剩余数字个数/长度 ∉ (合法)待遍历数字个数区间[remainSplit, 3*remainSplit]
+        // 剪枝1：剩余数字个�?/长度 �? (合法)待遍历数字个数区间[remainSplit, 3*remainSplit]
         int remainLen = n - idx; // 剩余待搜索的数字个数/长度
-        int remainSplit = 4 - SplitNum;    // ↓ 子段[0, 255], 长度∈[1, 3]
+        int remainSplit = 4 - SplitNum;    // �? 子段[0, 255], 长度∈[1, 3]
         if (remainLen < remainSplit || remainLen > 3 * remainSplit)
             return;
 
-        // ∵ 不是排列 ∴ i从idx起始
+        // �? 不是排列 �? i从idx起始
         for (int i = idx; i < n; i++) {
             int curSeg = check(s, idx, i);
             if (curSeg == -1) continue; // 剪枝2：子段s[idx, i]非法跳过
@@ -39,12 +39,12 @@ public class q93_restore_ip_addresses {
 
     private int check(String s, int start, int end) {
         int len = end - start + 1;
-        // 1) 长度∈ [1, 3]
+        // 1) 长度�? [1, 3]
         if (len < 1 || len > 3) return -1;
-        // 2) 允许单独'0'分段, 但长度>1时 不允许有"前导0"(形如"011" ×)
+        // 2) 允许单独'0'分段, 但长�?>1�? 不允许有"前导0"(形如"011" ×)
         if (s.charAt(start) == '0' && len != 1) return -1;
         // 3) 子段 数字res∈[0, 255]
-        /*// 法2: 求res
+        /*// �?2: 求res
         res = 0;
         for (int i = start; i <= end; i++)
             res = res * 10 + (s.charAt(i) - '0');

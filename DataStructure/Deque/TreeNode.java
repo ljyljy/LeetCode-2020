@@ -1,8 +1,8 @@
 package DataStructure.Deque;
 
 public class TreeNode {
-    int val;
-    TreeNode left, right;
+    public int val;
+    public TreeNode left, right;
     public TreeNode(int val) { this.val = val; }
     public TreeNode(int val, TreeNode left, TreeNode right) {
         this.val = val;
