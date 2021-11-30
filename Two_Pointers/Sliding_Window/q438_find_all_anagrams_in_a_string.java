@@ -24,9 +24,10 @@ public class q438_find_all_anagrams_in_a_string {
                     valid++;
             }
 
-            // 找到可行解，最优化-缩小窗口
-            while (right - left + 1 > tar.length()) {
+            // 找到可行解↓(窗口长度，左闭右开❤)，最优化-缩小窗口
+            while (right - left >= tar.length()) { // ❤ 取等！
                 if (valid == need.size()) {
+                    // System.out.println(left + ", " + right + "; valid = " +valid);
                     res.add(left);
                 }
                 char char2Del = src.charAt(left);

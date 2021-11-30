@@ -32,7 +32,7 @@ public class q76_minimum_window_substring {
             while (valid == need.size()) {
                 // 在这里更新最小覆盖子串()
                 if (right - left < ans_len) {
-                    ans_len = right - left;
+                    ans_len = right - left; // 窗口左闭右开，这就是长度！无需+1！
                     ans_start = left;
                 }
 
