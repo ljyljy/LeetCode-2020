@@ -4,9 +4,47 @@ import java.util.*;
 
 public class q93_restore_ip_addresses {
     private List<String> res = new ArrayList<>();
-    // 闀垮害涓?4娈礫0,255]鐨勬暟瀛?  [vs qo_38瀛楃涓茬殑鍏ㄦ帓鍒桰I]
-    private Deque<String> path = new ArrayDeque<>(4);
+    private Deque<String> path = new ArrayDeque<>(4); // 长度为4段[0,255]的数字
 
+    // 写法2
+    public List<String> restoreIpAddresses_v2(String s) {
+        int n = s.length();
+        if (n < 4 || n > 12) return res;
+        dfs2(s, n, 0, 0, path);
+        return res;
+    }
+
+    private void dfs2(String s, int len, int idx, int validSplitNum, Deque<String> path) {
+        if (idx == len) {
+            if (validSplitNum == 4)
+                res.add(String.join(".", path));
+            return;
+        }
+
+        int remainLen = len - idx;
+        int remainSplit = 4 - validSplitNum;
+        if (remainLen < remainSplit || remainLen > remainSplit * 3)
+            return;
+
+        for (int i = idx; i < s.length(); i++) {
+            String curSeg = s.substring(idx, i+1);
+            if (isValidIP(curSeg)) {
+                path.addLast(curSeg);
+                dfs2(s, len, i+1, validSplitNum+1, path);
+                path.removeLast();
+            } else continue;
+        }
+    }
+
+    private boolean isValidIP(String curSeg) {
+        if (curSeg.length() < 1 || curSeg.length() > 3) return false;
+        if (curSeg.charAt(0) == '0' && curSeg.length() != 1) return false;
+
+        int val = Integer.valueOf(curSeg);
+        return 0 <= val && val <= 255;
+    }
+
+    // 写法1
     public List<String> restoreIpAddresses(String s) {
         int n = s.length();
         if (n < 4 || n > 12) return res;
@@ -14,37 +52,36 @@ public class q93_restore_ip_addresses {
         return res;
     }
 
-    private void dfs(String s, int n, int idx, int SplitNum, Deque<String> path) {
-        if (idx == n) { // 鑻ュ垎鍓瞚dx==n
-            System.out.println("idx==n");
-            if (SplitNum == 4) // 鍚堟硶鍒嗘鏁?=4
+    private void dfs(String s, int n, int idx, int validSplitNum, Deque<String> path) {
+        if (idx == n) { // 若分割idx==n
+            if (validSplitNum == 4) // 合法分段数=4
                 res.add(String.join(".", path)); // py: '.'.join(path)
             return;
         }
-        // 鍓灊1锛氬墿浣欐暟瀛椾釜鏁?/闀垮害 鈭? (鍚堟硶)寰呴亶鍘嗘暟瀛椾釜鏁板尯闂碵remainSplit, 3*remainSplit]
-        int remainLen = n - idx; // 鍓╀綑寰呮悳绱㈢殑鏁板瓧涓暟/闀垮害
-        int remainSplit = 4 - SplitNum;    // 鈫? 瀛愭[0, 255], 闀垮害鈭圼1, 3]
+        // 剪枝1：剩余数字个数/长度 ? (合法)待遍历数字个数区间[remainSplit, 3*remainSplit]
+        int remainLen = n - idx; // 剩余待搜索的数字个数/长度
+        int remainSplit = 4 - validSplitNum;    // ↓ 子段[0, 255], 长度∈[1, 3]
         if (remainLen < remainSplit || remainLen > 3 * remainSplit)
             return;
 
-        // 鈭? 涓嶆槸鎺掑垪 鈭? i浠巌dx璧峰
+        // ∵ 不是排列 ∴ i从idx起始
         for (int i = idx; i < n; i++) {
             int curSeg = check(s, idx, i);
-            if (curSeg == -1) continue; // 鍓灊2锛氬瓙娈祍[idx, i]闈炴硶璺宠繃
-            path.addLast(curSeg + ""); // 鎴朣tring.valueOf(curSeg)
-            dfs(s, n, i + 1, SplitNum + 1, path);
+            if (curSeg == -1) continue; // 剪枝2：子段s[idx, i]非法跳过
+            path.addLast(curSeg + ""); // 或String.valueOf(curSeg)
+            dfs(s, n, i+1, validSplitNum+1, path); // ∵不可重复取数 ∴i+1
             path.removeLast();
         }
     }
 
     private int check(String s, int start, int end) {
         int len = end - start + 1;
-        // 1) 闀垮害鈭? [1, 3]
+        // 1) 长度∈ [1, 3]
         if (len < 1 || len > 3) return -1;
-        // 2) 鍏佽鍗曠嫭'0'鍒嗘, 浣嗛暱搴?>1鏃? 涓嶅厑璁告湁"鍓嶅0"(褰㈠"011" 脳)
+        // 2) 允许单独'0'分段, 但长度>1时 不允许有"前导0"(形如"011" ×)
         if (s.charAt(start) == '0' && len != 1) return -1;
-        // 3) 瀛愭 鏁板瓧res鈭圼0, 255]
-        /*// 娉?2: 姹俽es
+        // 3) 子段 数字res∈[0, 255]
+        /*// 法2: 求res
         res = 0;
         for (int i = start; i <= end; i++)
             res = res * 10 + (s.charAt(i) - '0');
