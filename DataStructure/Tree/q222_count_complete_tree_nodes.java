@@ -46,7 +46,7 @@ public class q222_count_complete_tree_nodes {
         }
         if (height_L == height_R) // 满二叉(子)树
             return (2 << (height_L-1)) - 1;
-        // 否则，下探 直到满二叉子树
+        // 否则，下探 直到满二叉子树 // ↓ 不可写left和right（被更新了）
         return 1 + countNodes(root.left) + countNodes(root.right);
     }
 

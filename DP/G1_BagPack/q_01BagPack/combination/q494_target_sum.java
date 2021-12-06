@@ -12,8 +12,8 @@ public class q494_target_sum {
         int n = nums.length;
         int SUM = Arrays.stream(nums).sum();
         if (S > SUM) return 0;
-        // ∵ plus - (minus) = S, minus = SUM - plus; -->
-        // ∴ plus = bagsize = (SUM + S) / 2
+        // 正和P + 负和N = SUM, P - N = S ->
+        // P = SUM - N = SUM - (P - S) -> P = (SUM + S)/2 == bagsize
         if ((SUM + S) % 2 != 0) return 0; // 背包容量
         int bagsize = (SUM + S) / 2;
         int[] dp = new int[bagsize+1];
@@ -45,15 +45,16 @@ public class q494_target_sum {
         }
         if (memo2.containsKey(key)) return memo2.get(key);
 
-        int res = 0;
+        int res = 0; // 只有纵向遍历，没有横向遍历for❤ -> 总体只横向枚举一次nums
         int plus = dfs(nums, S, sum+nums[idx], idx+1);
         int minus = dfs(nums, S, sum-nums[idx], idx+1);
-        res = res + plus + minus;
+        res += plus + minus;
         memo2.put(key, res);
         // memo2.put(new Pair<>(cnt, idx), res);
         // memo2[idx][cnt] = res;
         return res;
     }
+
 
     // 法1：DFS+memo(面试不能用pair!)   ↓ <key=<cnt, idx>, val=cnt>
     Map<Pair<Integer, Integer>, Integer> memo = new HashMap<>();
@@ -75,6 +76,37 @@ public class q494_target_sum {
         memo.put(new Pair<>(sum, idx), res);
         return res;
     }
+
+
+//    // 法1-3：DFS+memo()[WA]
+//    Map<String, Integer> memo3 = new HashMap<>();
+//    public int findTargetSumWays3_DFS_dp_WA!!!!!!!!(int[] nums, int S) {
+//        // 正和P + 负和N = SUM, P - N = S ->
+//        // P = SUM - N = SUM - (P - S) -> P = (SUM + S)/2
+//        int SUM = Arrays.stream(nums).sum();
+//        if (S > SUM) return 0; // 剪枝
+//        if ((SUM + S) % 2 != 0) return 0;
+//        int positiveSum = (SUM + S) / 2;
+//        return dfs3(nums, positiveSum,0, 0);
+//    }
+//
+//    private int dfs3(int[] nums, int targetSum, int sum, int idx) {
+//        String key = idx + "_" + sum;
+//        if (idx >= nums.length) {
+//            if (sum == targetSum) return 1;
+//            else return 0;
+//        }
+//        if (memo3.containsKey(key)) return memo3.get(key);
+//
+//        int res = 0;
+//        for (int i = idx; i < nums.length; i++) {
+//            res += dfs3(nums, targetSum, targetSum + nums[i], i+1);
+//        }
+//        memo3.put(key, res);
+//        // memo2.put(new Pair<>(cnt, idx), res);
+//        // memo2[idx][cnt] = res;
+//        return res;
+//    }
 
     public static void main(String[] args) {
         int[] nums = {1,1,1,1,1};

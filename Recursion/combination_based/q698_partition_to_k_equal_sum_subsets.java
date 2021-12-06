@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public class q698_partition_to_k_equal_sum_subsets {
     // 法2（面试写，对比分析复杂度）：枚举桶，对每个num执行选or不选【不可重复放桶】 -- 推荐-O(k桶*(2^n))
+    // 普通的组合总和 【+ 枚举桶】
     public boolean canPartitionKSubsets(int[] nums, int k) {
         int n = nums.length;
         if (k > n) return false;
@@ -18,6 +19,7 @@ public class q698_partition_to_k_equal_sum_subsets {
         // 所有桶都被装满了，而且 nums 一定全部用完了
         if (k == 0) return true;
 
+        // if (idx == nums.length) { // ← 错！
         if (curSum == targetSum) {
             // 装满了当前桶，递归穷举下一个桶的选择
             // ?递归1：让下一个桶从 nums[0] 开始选数字
