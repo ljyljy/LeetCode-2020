@@ -7,24 +7,23 @@ import java.util.List;
 
 public class q257_binary_tree_paths {
     // 法1：Traverse
+    List<String> res = new ArrayList<>();
     public List<String> binaryTreePaths(TreeNode root) {
-        List<String> res = new ArrayList<>();
         if (root == null) return res;
-        helper(root, String.valueOf(root.val), res);
+        dfs(root, root.val + "");
         return res;
     }
 
-    private void helper(TreeNode root, String path, List<String> res) {
+    private void dfs(TreeNode root, String path) {
         if (root == null) return;
-        if (root.left == null && root.right == null) { // 是&& 而非||！！！
+        if (root.left == null && root.right == null) {
             res.add(path);
             return;
         }
-
         if (root.left != null)
-            helper(root.left, path + "->" + String.valueOf(root.left.val), res);
+            dfs(root.left, path + "->" + root.left.val);
         if (root.right != null)
-            helper(root.right, path + "->" + String.valueOf(root.right.val), res);
+            dfs(root.right, path + "->" + root.right.val);
     }
 
     // 法2：分治

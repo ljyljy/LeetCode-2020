@@ -11,7 +11,7 @@ public class q494_target_sum {
     public int findTargetSumWays(int[] nums, int S) {
         int n = nums.length;
         int SUM = Arrays.stream(nums).sum();
-        if (S > SUM) return 0;
+        if (Math.abs(S) > Math.abs(SUM)) return 0;
         // 正和P + 负和N = SUM, P - N = S ->
         // P = SUM - N = SUM - (P - S) -> P = (SUM + S)/2 == bagsize
         if ((SUM + S) % 2 != 0) return 0; // 背包容量
@@ -33,7 +33,7 @@ public class q494_target_sum {
     Map<String, Integer> memo2 = new HashMap<>();
     public int findTargetSumWays2(int[] nums, int S) {
         int SUM = Arrays.stream(nums).sum();
-        if (S > SUM) return 0; // 剪枝
+        if (Math.abs(S) > Math.abs(SUM)) return 0; // 剪枝
         return dfs2(nums, S,0, 0);
     }
 
@@ -78,13 +78,39 @@ public class q494_target_sum {
     }
 
 
+    // 法1-3：和DP思想一样: 计算出left/plus的和（targetSum），然后遍历nums，对其选/不选。
+    private Map<String, Integer> memo4 = new HashMap<>();
+    public int findTargetSumWays_dfs_same_as_dp(int[] nums, int S) {
+        int SUM = Arrays.stream(nums).sum();
+        if (Math.abs(S) > Math.abs(SUM)) return 0; // 剪枝
+        if ((SUM + S) % 2 != 0) return 0;
+        int targetSum = (SUM + S) / 2;
+        Arrays.sort(nums);
+        return dfs4(nums, 0, 0, targetSum, memo4);
+    }
+
+    private int dfs4(int[] nums, int idx, int curSum, int targetSum, Map<String, Integer> memo) {
+        String key = idx + "_" + curSum;
+        if (memo.containsKey(key)) return memo.get(key);
+        if (idx == nums.length) {
+            if (curSum == targetSum) return 1;
+            else return 0;
+        }
+
+        int choose = dfs4(nums, idx+1, curSum+nums[idx], targetSum, memo);
+        int notChoose = dfs4(nums, idx+1, curSum, targetSum, memo);
+        int res = choose + notChoose;
+        memo.put(key, res);
+        return res;
+    }
+
 //    // 法1-3：DFS+memo()[WA]
 //    Map<String, Integer> memo3 = new HashMap<>();
 //    public int findTargetSumWays3_DFS_dp_WA!!!!!!!!(int[] nums, int S) {
 //        // 正和P + 负和N = SUM, P - N = S ->
 //        // P = SUM - N = SUM - (P - S) -> P = (SUM + S)/2
 //        int SUM = Arrays.stream(nums).sum();
-//        if (S > SUM) return 0; // 剪枝
+//        if (Math.abs(S) > Math.abs(SUM)) return 0; // 剪枝
 //        if ((SUM + S) % 2 != 0) return 0;
 //        int positiveSum = (SUM + S) / 2;
 //        return dfs3(nums, positiveSum,0, 0);
