@@ -7,6 +7,7 @@ public class q518_coin_change_ii {
     public int change(int amount, int[] coins) {
         int n = coins.length;
 //        Arrays.sort(coins); // 似乎可以不写！WHY？
+//        ↑ RE -- 遍历j(背包质量)本就是从小到大，物品质量次序无所谓，不影响dp的生成
         int[] dp = new int[amount+1]; // 背包大小
         dp[0] = 1;
         for (int i = 0; i < n; i++) { // 外-遍历物品

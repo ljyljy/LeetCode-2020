@@ -38,19 +38,42 @@ public class q377_combination_sum_iv {
         return cnt;
     }
 
-    // 法3-2【荐！】：DP动归2 - 时间O(target*n), 空间O(target)
+    // 法3-2【荐！】：DP动归2【完全背包 组合】 - 时间O(target*n), 空间O(target)
     public int combinationSum4(int[] nums, int target) {
-        int[] dp = new int[target+1];
+        int bagsize = target;
+        int[] dp = new int[bagsize+1];
         dp[0] = 1;
-        for (int i = 1; i <= target; i++) {
-            for (int num: nums)
-                if (i - num >= 0)
-                dp[i] += dp[i - num];
+        for (int i = 1; i <= bagsize; i++) {
+            for (int j = 0; j < nums.length; j++) {
+                if (i - nums[j] >= 0)
+                    dp[i] += dp[i-nums[j]]; // 组合类
+            }
         }
-        return dp[target];
+        return dp[bagsize];
     }
 
-    // 法2: DFS + memo
+    // 法2-1（可）: DFS + memo
+    Map<String, Integer> memo = new HashMap<>();
+    public int combinationSum4_memo0(int[] nums, int target) {
+        return dfs_memo(nums, 0, target, memo);
+    }
+
+    private int dfs_memo(int[] nums, int idx, int target,
+                         Map<String, Integer> memo){
+        String key = idx + "_" + target;
+        if (memo.containsKey(key)) return memo.get(key);
+        if (target == 0)  return 1;
+
+        int cnt_ = 0;
+        for (int i = idx; i < nums.length; i++) {
+            if (target-nums[i] < 0) continue;
+            cnt_ += dfs_memo(nums, idx, target-nums[i], memo);
+        }
+        memo.put(key, cnt_);
+        return cnt_;
+    }
+
+    // 法2-2: DFS + memo
     public int combinationSum4_memo(int[] nums, int target) {
         Map<Integer, Integer> memo = new HashMap<>(); // <剩余和, cnt>
         // 1. nums元素不重复 2.元素可以重复取！ -- 下探仍为idx

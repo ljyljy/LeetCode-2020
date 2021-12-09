@@ -25,7 +25,7 @@ public class q474_ones_and_zeroes {
         return dp[m][n];
     }
 
-    // 法1：DFS + memo
+    // 法1【数组优化memo】：DFS + memo
     private int[][][] memo;
     public int findMaxForm1(String[] strs, int m, int n) {
         int len = strs.length;
@@ -54,5 +54,31 @@ public class q474_ones_and_zeroes {
         return memo[idx][m][n];
     }
 
+    // 法1-2：memo
+    Map<String, Integer> memo2 = new HashMap<>();
+    public int findMaxForm2(String[] strs, int m, int n) {
+        return dfs(strs, 0, m, n, memo2);
+    }
+
+    private int dfs(String[] strs, int idx, int m, int n,
+                    Map<String, Integer> memo2) {
+        if (idx >= strs.length) return 0;
+        if (m < 0 || n < 0) return 0;
+        String key = idx + "_" + m + "_" + n;
+        if (memo2.containsKey(key)) return memo2.get(key);
+
+        String curStr = strs[idx];
+        int[] cnt = new int[2];
+        for (char ch: curStr.toCharArray()) {
+            cnt[ch - '0']++;
+        }
+        int choose = 0, notChoose = 0;
+        choose = dfs(strs, idx+1, m, n, memo2); // 不选
+        if (cnt[0] <= m && cnt[1] <= n)
+            notChoose = dfs(strs, idx+1, m-cnt[0], n-cnt[1], memo2)+1;
+        int res = Math.max(choose, notChoose);
+        memo2.put(key, res);
+        return res;
+    }
 
 }
