@@ -3,7 +3,7 @@ package Sort.Quick_Sort;
 
 import Sort.Util_algo;
 
-public class algo_QuickSort {
+public class acw785_algo_QuickSort {
     /*
     ==================== 典 型 错 误 ↓  ==============================
      */
@@ -166,7 +166,7 @@ public class algo_QuickSort {
     public static void main(String[] args) {
         int[] arr = Util_algo.getRandomArr(10, 1, 20);
         Util_algo.print(arr);
-        algo_QuickSort sol = new algo_QuickSort();
+        acw785_algo_QuickSort sol = new acw785_algo_QuickSort();
 //        sol.quickSort_v2(arr, 0, arr.length-1);
         sol.quickSort_partition_v0(arr, 0, arr.length-1);
         Util_algo.print(arr);

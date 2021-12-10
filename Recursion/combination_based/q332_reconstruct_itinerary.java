@@ -16,8 +16,8 @@ public class q332_reconstruct_itinerary {
         Collections.sort(tickets, new Comparator<>(){
             @Override
             public int compare(List<String> o1, List<String> o2) {
-                return o1.get(0).equals(o2.get(0))? o1.get(1).compareTo(o2.get(1)):
-                        o1.get(0).compareTo(o2.get(0));
+                return o1.get(0).equals(o2.get(0))? o1.get(1).compareTo(o2.get(1))
+                        : o1.get(0).compareTo(o2.get(0));
                 // o1.get(1)-o2.get(1): o1.get(0)-o2.get(0);
             }
         });
@@ -29,8 +29,9 @@ public class q332_reconstruct_itinerary {
             String src = tickets.get(i).get(0);
             String nxt = tickets.get(i).get(1);
             if (!src.equals("JFK")) continue;
-            Deque<String> path = new ArrayDeque<>();
-            path.addLast(src);
+            Deque<String> path = new ArrayDeque<>(); // ❤必须在for内定义！否则WA！
+            path.addLast(src); // ❤ path首个是JFK(固定)，接着才是回溯。src不可removeLast()
+
             path.addLast(nxt);
             used[i] = true;
             dfs(tickets, ticketsCnt, nxt, used, path);

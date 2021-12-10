@@ -21,6 +21,7 @@ public class acw786_topKthSmallest {
     }
 
     // 法2-1：快速选择 quickSelect - O(n) -- 升序第k小
+    // ❤vs快排: ①隐式partition ②根据隐式partition后的mid，分区间递归
     public int top_k_min2(int[] arr, int k) {
 //        return quickSelect(arr, 0, arr.length-1, k); // 模板1
         return quickSelect2(arr, 0, arr.length-1, k-1); // idx为k-1
