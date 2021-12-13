@@ -1,4 +1,4 @@
-package Recursion.permutation_based;
+package Recursion.graph;
 
 import java.util.*;
 
