@@ -18,8 +18,8 @@ public class q491_increasing_subsequences {
         if (path.size() >= 2) // idx == n 错！需要所有子集(路径的中间结果)！
             res.add(new ArrayList<>(path));
             /*  // 1) return; 错！ 后续不可return，还需继续下探!!!
-            ❤❤❤ 2) if (idx == n) 不可作为终止条件！
-            会漏掉形如: [1,3,6,7,9,4,10,5,6]中的子序列[1,3,6,7,9,10]
+            ❤❤❤ 2) if (idx == n) 不可作为终止条件！（❤子集保存所有path，而非叶子）
+            会漏掉形如: [1,3,6,7,9,4,10,5,6]中的子序列(子集)[1,3,6,7,9,10]
             因为idx==n只会保存所有最终以nums[n-1](6)为结尾的递增子序列，
             而无法保留idx < n就已经（被continue）终止的路径(如: [1,3,6,7,9,10])
              */
@@ -28,7 +28,9 @@ public class q491_increasing_subsequences {
         // if (idx == nums.length)  return; // 可不写，与for中i < n重复
 
         // ∵求递增子序列
-        // ∴去重方法：1)sort预处理（本题不可取×）2) 哈希
+        // ∴去重方法：1)sort预处理+bool[] used（本题不可取×）2) 哈希√
+        // 对下一层去重：[[4,6],[4,6,7],[4,6,7,7],[4,6,7],[4,7],[4,7,7],[4,7],[6,7],[6,7,7],[6,7],[7,7]]
+        // 变成：[[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]
         Set<Integer> usedSet = new HashSet<>(); // 定义在dfs函数内部！
         for (int i = idx; i < nums.length; i++) {
             if ((!path.isEmpty() && path.peekLast() > nums[i]) // 1) 升序

@@ -27,7 +27,7 @@ public class q51_n_queens {
             res.add(convert(paths));
             return;
         }
-        // 固定当前row_i, 遍历列col_j
+        // 固定当前row_i, 遍历列col_j（❤排列，col从0起）
         for (int col = 0; col < n; col++) {
             if (!check(row, col)) continue;
             cols.add(col); xyDiff.add(row-col); xySum.add(row+col);

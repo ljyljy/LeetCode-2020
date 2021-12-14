@@ -19,7 +19,7 @@ public class q47_permutations_ii {
             res.add(new ArrayList<>(path)); // ×: idx==n时，不一定是叶子
             return; // 保存仅【叶子】（不同于[子集]-保存[所有结点]）
         }
-        // 全排列 i从0起（不同于组合、排列startIdx）
+        // 全排列 i从0起[如:{1,2} & {2, 1(❤逆序：又从0起)}]（不同于组合、排列startIdx）
         for (int i = 0; i < nums.length; i++) {
             // 1)同一树枝的同一结点(地址同) - ∵ i从0起, 勿漏！
             if (used[i]) continue;

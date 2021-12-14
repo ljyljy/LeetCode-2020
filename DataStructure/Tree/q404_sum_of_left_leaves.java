@@ -7,15 +7,17 @@ public class q404_sum_of_left_leaves {
     // 法1: 递归
     public int sumOfLeftLeaves_dfs(TreeNode root) {
         if (root == null) return 0;
-        int leftSum = sumOfLeftLeaves(root.left); // 左孙子
-        int rightSum = sumOfLeftLeaves(root.right); // 右孙子
+        int leftSum = sumOfLeftLeaves_dfs(root.left); // 左孙子
+        int rightSum = sumOfLeftLeaves_dfs(root.right);// 右孙子
+        int leftSonVal = leftSum + rightSum;
         TreeNode leftSon = root.left;
-        int leftSonVal = 0;
-        if (leftSon != null && leftSon.left == null && leftSon.right == null) { // 左孙子恰是左叶子
-            leftSonVal = leftSon.val;
+        if (leftSon != null && leftSon.left == null
+                && leftSon.right == null) { // 左孙子恰是左叶子
+            leftSonVal += leftSon.val;
         }
-        return leftSum + rightSum + leftSonVal;
+        return leftSonVal;
     }
+
 
     // 法2：迭代(stack/queue都行)
     public int sumOfLeftLeaves(TreeNode root) {

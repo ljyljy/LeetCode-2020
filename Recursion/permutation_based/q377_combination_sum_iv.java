@@ -1,4 +1,4 @@
-package Recursion.combination_based;
+package Recursion.permutation_based;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -118,6 +118,26 @@ public class q377_combination_sum_iv {
             // path.addLast(nums[i]);
             dfs(nums, target - nums[i], idx);
             // path.removeLast();
+        }
+    }
+
+    // 法1-2: 普通DFS (TLE)
+    private int res;
+    public int combinationSum4_TLE2(int[] nums, int target) {
+        dfs(nums, target, 0, 0);
+        return res;
+    }
+
+    private void dfs(int[] nums, int target, int idx, int curSum) {
+        if (curSum == target) {
+            res++;
+            return;
+        }
+
+        // 全排列 i从0起[如:{1,2} & {2, 1(❤逆序：又从0起)}]（不同于组合、排列startIdx）
+        for (int i = 0; i < nums.length; i++) {
+            if (curSum + nums[i] > target) continue;
+            dfs(nums, target, i, curSum + nums[i]);
         }
     }
 

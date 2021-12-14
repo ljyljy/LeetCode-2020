@@ -28,8 +28,8 @@ package Recursion;//You are climbing a stair case. It takes n steps to reach to 
 // Related Topics 动态规划
 
 
-
-
+import java.util.HashMap;
+import java.util.Map;
 
 /***
 // 懵逼的时候：
@@ -47,7 +47,23 @@ package Recursion;//You are climbing a stair case. It takes n steps to reach to 
 ***/
 
 public class q70_climbing_stairs {
-    public int climbStairs(int n) {
+    // 法3：完全背包+求方案数+排列(物品内循环)
+    // 物品：台阶数(1,2,..m), 题中m=2; 背包总重: n级台阶；求:装满背包有几种方案？
+    public int climbStairs_dp2(int n) {
+        int bagsize = n, m = 2;
+        int[] dp = new int[bagsize+1];
+        dp[0] = 1;
+        for (int j = 0; j <= bagsize; j++) {
+            for (int i = 1; i <= m; i++) {
+                if (j >= i)
+                    dp[j] += dp[j-i];
+            }
+        }
+        return dp[bagsize];
+    }
+
+    // 法1：DP迭代
+    public int climbStairs_dp1(int n) {
         if (n <= 2) return n;
         int f1 = 1, f2 = 2, f3 = 3;
         for (int i = 3; i <= n; i++) {
@@ -58,4 +74,23 @@ public class q70_climbing_stairs {
         }
         return f3;
     }
+
+    // 法2：回溯
+    Map<Integer, Integer> memo;
+    public int climbStairs_dfs_memo(int n) {
+        memo = new HashMap<>(){{put(1, 1); put(2,2);}};
+        return dfs(n, memo);
+    }
+
+    private int dfs(int n, Map<Integer, Integer> memo) {
+        int key = n;
+        if (memo.containsKey(key)) return memo.get(key);
+
+        int cnt =  dfs(n-1, memo) + dfs(n-2, memo);
+        memo.put(key, cnt);
+        return cnt;
+    }
+
+
+
 }

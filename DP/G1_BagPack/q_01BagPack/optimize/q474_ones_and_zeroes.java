@@ -62,8 +62,8 @@ public class q474_ones_and_zeroes {
 
     private int dfs(String[] strs, int idx, int m, int n,
                     Map<String, Integer> memo2) {
-        if (idx >= strs.length) return 0;
-        if (m < 0 || n < 0) return 0;
+        if (idx >= strs.length || m < 0 || n < 0) return 0;
+        // if (m == 0 && n == 0) return 1;  // WA!
         String key = idx + "_" + m + "_" + n;
         if (memo2.containsKey(key)) return memo2.get(key);
 
@@ -80,5 +80,8 @@ public class q474_ones_and_zeroes {
         memo2.put(key, res);
         return res;
     }
+
+//    法0：
+
 
 }

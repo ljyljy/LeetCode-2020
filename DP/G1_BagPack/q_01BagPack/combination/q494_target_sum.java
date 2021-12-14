@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class q494_target_sum {
     // 法2：一维dp（01背包，组合类！）
+    // VS Q474 一和零
     public int findTargetSumWays(int[] nums, int S) {
         int n = nums.length;
         int SUM = Arrays.stream(nums).sum();
@@ -30,6 +31,7 @@ public class q494_target_sum {
 
 
     // 法1-2：DFS+memo()[PS: memo=int[n+1][S+1]不可！因为sum可能为负数]
+    // VS Q474
     Map<String, Integer> memo2 = new HashMap<>();
     public int findTargetSumWays2(int[] nums, int S) {
         int SUM = Arrays.stream(nums).sum();
@@ -39,7 +41,7 @@ public class q494_target_sum {
 
     private int dfs2(int[] nums, int S, int sum, int idx) {
         String key = idx + "_" + sum;
-        if (idx >= nums.length) {
+        if (idx >= nums.length) { // ❤必须所有数字都遍历结束（做好决策，有正有负）
             if (sum == S) return 1;
             else return 0;
         }
@@ -52,28 +54,6 @@ public class q494_target_sum {
         memo2.put(key, res);
         // memo2.put(new Pair<>(cnt, idx), res);
         // memo2[idx][cnt] = res;
-        return res;
-    }
-
-
-    // 法1：DFS+memo(面试不能用pair!)   ↓ <key=<cnt, idx>, val=cnt>
-    Map<Pair<Integer, Integer>, Integer> memo = new HashMap<>();
-    public int findTargetSumWays1(int[] nums, int S) {
-        return dfs(nums, S,0, 0);
-    }
-
-    private int dfs(int[] nums, int S, int sum, int idx) {
-        if (idx == nums.length) {
-            if (sum == S) return 1;
-            return 0;
-        }
-        if (memo.containsKey(new Pair<>(sum, idx)))
-            return memo.get(new Pair<>(sum, idx));
-
-        int plus = dfs(nums, S, sum+nums[idx], idx+1);
-        int minus = dfs(nums, S, sum-nums[idx], idx+1);
-        int res = plus + minus;
-        memo.put(new Pair<>(sum, idx), res);
         return res;
     }
 
@@ -92,15 +72,36 @@ public class q494_target_sum {
     private int dfs4(int[] nums, int idx, int curSum, int targetSum, Map<String, Integer> memo) {
         String key = idx + "_" + curSum;
         if (memo.containsKey(key)) return memo.get(key);
-        if (idx == nums.length) {
+        if (idx == nums.length) {// ❤必须所有数字都遍历结束（做好决策，有正有负）
             if (curSum == targetSum) return 1;
             else return 0;
         }
 
-        int choose = dfs4(nums, idx+1, curSum+nums[idx], targetSum, memo);
-        int notChoose = dfs4(nums, idx+1, curSum, targetSum, memo);
-        int res = choose + notChoose;
+        int choose = dfs4(nums, idx+1, curSum+nums[idx], targetSum, memo);  // ❤ dp[j-nums[i]]
+        int notChoose = dfs4(nums, idx+1, curSum, targetSum, memo); // ❤ dp[j]
+        int res = choose + notChoose; // ❤ dp[j] += dp[j] + dp[j-nums[i]]
         memo.put(key, res);
+        return res;
+    }
+
+    // 法1-1：DFS+memo(面试不能用pair, 解决：用String代替!)   ↓ <key=<cnt, idx>, val=cnt>
+    Map<Pair<Integer, Integer>, Integer> memo = new HashMap<>();
+    public int findTargetSumWays1(int[] nums, int S) {
+        return dfs(nums, S,0, 0);
+    }
+
+    private int dfs(int[] nums, int S, int sum, int idx) {
+        if (idx == nums.length) {
+            if (sum == S) return 1;
+            return 0;
+        }
+        if (memo.containsKey(new Pair<>(sum, idx)))
+            return memo.get(new Pair<>(sum, idx));
+
+        int plus = dfs(nums, S, sum+nums[idx], idx+1);
+        int minus = dfs(nums, S, sum-nums[idx], idx+1);
+        int res = plus + minus;
+        memo.put(new Pair<>(sum, idx), res);
         return res;
     }
 
