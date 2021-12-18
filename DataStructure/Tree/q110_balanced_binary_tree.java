@@ -5,9 +5,9 @@ public class q110_balanced_binary_tree {
         if (root == null) return 0;
 
         int depthL = getDepth(root.left);
-        if (depthL == -1) return -1;
+        if (depthL == -1) return -1;  // ÎğÂ©£¡
         int depthR = getDepth(root.right);
-        if (depthR == -1) return -1;
+        if (depthR == -1) return -1;  // ÎğÂ©£¡
 
         if (Math.abs(depthL - depthR) > 1)
             return -1;

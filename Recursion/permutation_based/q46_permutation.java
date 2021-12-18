@@ -22,7 +22,7 @@ public class q46_permutation {
         }
         // ∵ {1,2}、{2,1}是不同的排列 -> for中i从0起，而非idx！
         for (int i = 0; i < nums.length; i++) {
-            if (used[i]) continue;
+            if (used[i]) continue; // 去重：同一树枝上，相同的数（∵每次for都从0遍历，难免碰到先前用过的）
             used[i] = true;
             path.addLast(nums[i]);
             dfs(nums, i+1, used);

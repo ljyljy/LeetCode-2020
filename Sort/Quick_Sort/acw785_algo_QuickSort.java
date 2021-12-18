@@ -59,7 +59,7 @@ public class acw785_algo_QuickSort {
         int i = start+1, j = end;
         int pivot = nums[start];
         while (i <= j) {
-            while (i <= j && nums[i] < pivot)  i++;// ❤ 必须严格≠pivot
+            while (i <= j && nums[i] < pivot) i++;// ❤ 必须严格≠pivot
             while (i <= j && nums[j] > pivot) j--;
             if (i <= j) {// ❤必须<=!
                 int temp = nums[i];

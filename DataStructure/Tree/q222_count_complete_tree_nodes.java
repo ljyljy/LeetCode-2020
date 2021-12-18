@@ -20,7 +20,7 @@ public class q222_count_complete_tree_nodes {
         int cnt = 0;
         while (!queue.isEmpty()) {
             int size = queue.size();
-            cnt += size; // 法1
+            cnt += size; // 法1 [荐，减少add操作数]
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
                 // cnt++; // 法2
@@ -31,21 +31,21 @@ public class q222_count_complete_tree_nodes {
         return cnt;
     }
 
-    // 3.【完全二叉树-性质】 - dfs求子树(until满足满二叉树)高h, 节点数=2^h-1
+    // 3.【完全二叉树-性质】 - dfs求子树(until满足满二叉树)高/深h, 节点数=2^h-1
     public int countNodes(TreeNode root) {
         if (root == null) return 0;
         TreeNode left = root.left, right = root.right;
-        int height_L = 1, height_R = 1;
+        int depthL = 1, depthR = 1;
         while (left != null) {
-            height_L++;
+            depthL++;
             left = left.left;
         }
         while (right != null) {
-            height_R++;
+            depthR++;
             right = right.right;
         }
-        if (height_L == height_R) // 满二叉(子)树
-            return (2 << (height_L-1)) - 1;
+        if (depthL == depthR) // 满二叉(子)树【最左孩子深度==最右孩子深度】
+            return (2 << (depthL-1)) - 1; // 节点数=2^h-1
         // 否则，下探 直到满二叉子树 // ↓ 不可写left和right（被更新了）
         return 1 + countNodes(root.left) + countNodes(root.right);
     }

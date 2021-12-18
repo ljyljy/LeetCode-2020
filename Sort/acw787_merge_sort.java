@@ -26,7 +26,7 @@ public class acw787_merge_sort {
         }
         while (i <= mid) tmp[k++] = nums[i++];
         while (j <= end) tmp[k++] = nums[j++];
-        System.arraycopy(tmp, 0, nums, start, n); // ∴?非原地排序，耗内存;
+        System.arraycopy(tmp, 0, nums, start, n); // ∴非原地排序，耗内存;
 //        for (int p = 0; p < n; p++) {
 //            nums[start+p] = tmp[p];
 //        }

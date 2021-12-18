@@ -9,7 +9,7 @@ public class acw786_topKthSmallest {
 //        if (arr == null || k <= 0) return -1;
         // 保留前k小 - pop大数 - 大顶堆(需要重写compare)
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(k,
-                                        (o1, o2) -> (o2 - o1));
+                (o1, o2) -> (o2 - o1));
 
         for (int num: arr) { // 例如：5 4 3 2 1
             maxHeap.offer(num);
@@ -20,15 +20,38 @@ public class acw786_topKthSmallest {
         return maxHeap.peek();
     }
 
+
     // 法2-1：快速选择 quickSelect - O(n) -- 升序第k小
     // ❤vs快排: ①隐式partition ②根据隐式partition后的mid，分区间递归
     public int top_k_min2(int[] arr, int k) {
-//        return quickSelect(arr, 0, arr.length-1, k); // 模板1
+//        return quickSelect(arr, 0, arr.length-1, k); // 模板1-1(quickSelect1) & 1-2
         return quickSelect2(arr, 0, arr.length-1, k-1); // idx为k-1
     }
+    // 模板1-2（写法与快排类似，必会！）
+    private int quickSelect (int[] arr, int start, int end, int k) {
+        if (start >= end) return arr[start];
+        int pivot = arr[start];
+        int i = start + 1, j = end;
+        while (i <= j) {
+            while (i <= j && arr[i] < pivot) i++;
+            while (i <= j && arr[j] > pivot) j--;
+            if (i <= j) {
+                swap(arr, i, j);
+                i++;
+                j--;
+            }
+        }
+        swap(arr, start, j);
+        int leftLen = j - start + 1;
+        if (k <= leftLen) {
+            return quickSelect(arr, start, j, k);
+        } else {
+            return quickSelect(arr, i, end, k-leftLen);
+        }
+    }
 
-    // 模板1（写法与快排类似，必会！）
-    private int quickSelect(int[] arr, int start, int end, int k) {
+    // 模板1-1（写法与快排类似，必会！）
+    private int quickSelect1(int[] arr, int start, int end, int k) {
         if (start == end) return arr[start];
         int x = arr[start + end >> 1];
         int i = start - 1, j = end + 1;
@@ -39,8 +62,8 @@ public class acw786_topKthSmallest {
         } // 退出：i == j, x = arr[mid | i | j]
         int leftLen = j - start + 1;  // 左半段长度/数的个数
         if (k <= leftLen)
-            return quickSelect(arr, start, j, k);
-        return quickSelect(arr, j+1, end, k - leftLen);
+            return quickSelect1(arr, start, j, k);
+        return quickSelect1(arr, j+1, end, k - leftLen);
     }
 
     private void swap(int[] arr, int i, int j) {

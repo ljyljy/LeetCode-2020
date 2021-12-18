@@ -21,10 +21,10 @@ public class q47_permutations_ii {
         }
         // 全排列 i从0起[如:{1,2} & {2, 1(❤逆序：又从0起)}]（不同于组合、排列startIdx）
         for (int i = 0; i < nums.length; i++) {
-            // 1)同一树枝的同一结点(地址同) - ∵ i从0起, 勿漏！
-            if (used[i]) continue;
+            // 1)同一树枝的同一结点(地址同) - ∵ i从0起, 勿漏！↓
+            if (used[i]) continue; // （∵每次for都从0遍历，难免碰到先前用过的）
             // 2)同一树层去重（nums[i-1]遍历结束后回溯-used置false）
-            if (i > 0 && nums[i-1] == nums[i] && !used[i-1]) continue;
+            if (i > 0 && nums[i-1] == nums[i] && !used[i-1]) continue; // ∵存在重复数 ∴存在相同的排列
             used[i] = true;
             path.addLast(nums[i]);
             dfs(nums, i+1, used);
