@@ -11,7 +11,7 @@ public class q139_word_break {
         boolean[] dp = new boolean[bagszie+1];
         dp[0] = true;
         for (int j = 0; j <= bagszie; j++) { // 背包：给定的s
-            for (int i = 0; i < j; i++) { // 物品：子串
+            for (int i = 0; i < j; i++) { // ?物品：子串[i, j)?
                 String str = s.substring(i, j);
                 if (wordDict.contains(str) && dp[i]) {
                     dp[j] = true;
@@ -41,7 +41,7 @@ public class q139_word_break {
             String prev = s.substring(idx, i+1);
             if (!wordDict.contains(prev)) continue;
             if (dfs2(s, wordDict, i+1, memo)) {
-                memo.put((i+1)+"", true);
+                memo.put(key, true);
                 return true;
             }
         }

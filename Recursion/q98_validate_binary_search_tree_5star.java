@@ -10,7 +10,7 @@ public class q98_validate_binary_search_tree_5star {
         }
     }
 
-    // 法一：递归；一定要B！不可小写b！会超时！？
+    // 法1-1：递归；一定要B！不可小写b！会超时！？
     private Boolean flag = true;
     public boolean isValidBST1(TreeNode root) {
         helper(root, Long.MIN_VALUE, Long.MAX_VALUE);
@@ -27,6 +27,38 @@ public class q98_validate_binary_search_tree_5star {
         helper(root.left, min, root.val);
         helper(root.right, root.val, max);
     }
+
+    // （代码随想录）：
+    // 法0: 递归中序, 数组比较（略）
+    // 法1-2：递归中序(升序), 递归中比较（Long MIN/MAX）
+    public boolean isValidBST2(TreeNode root) {
+        return dfs(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean dfs (TreeNode root, long minVal, long maxVal) {
+        if (root == null) return true;
+        boolean left = dfs(root.left, minVal, root.val); // 左 (当前: 左 < 中)
+        if (root.val <= minVal || root.val >= maxVal)
+            return false; // 取等！普通BST中不可有重复值！
+        boolean right = dfs(root.right, root.val, maxVal); // 右 (当前：中 < 右)
+        return left && right;
+    }
+
+    // 法1-3【递归，通用，荐！】
+    private TreeNode pre0;
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) return true;
+        boolean left = isValidBST(root.left); // 左 (当前: 左 < 中)
+
+        if (pre0 != null && root.val <= pre0.val) // BST中序：递增
+            return false; // 取等！普通BST中不可有重复值！
+        pre0 = root;
+
+        boolean right = isValidBST(root.right); // 右 (当前：中 < 右)
+        return left && right;
+    }
+
+
 //
 //    private boolean helper1(TreeNode root, Integer min, Integer max) {
 //        if (root == null) return true;
@@ -35,9 +67,9 @@ public class q98_validate_binary_search_tree_5star {
 //                && helper(root.right, root.val, max);
 //    }
 
-    // 法2：中序遍历
+    // 法3：中序遍历
     private long pre = Long.MIN_VALUE;
-    public boolean isValidBST(TreeNode root) {
+    public boolean isValidBST3(TreeNode root) {
         if (root == null) return true;
         if (!isValidBST(root.left)) return false; // 左
         // 中序遍历后的二叉搜索树【升序】，若当前val<=前一个结点val，则不满足升序

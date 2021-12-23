@@ -35,6 +35,7 @@ public class Transition_Array_Collections {
         // 这里就通过mapToInt()把Stream<Integer>调用Integer::valueOf来转成IntStream
         // 而IntStream中默认toArray()转成int[]。
 
+
         // Integer[] 转 int[]
         int[] arr2 = Arrays.stream(integers1).mapToInt(Integer::valueOf).toArray();
         // 思路同上。先将Integer[]转成Stream<Integer>，再转成IntStream。
