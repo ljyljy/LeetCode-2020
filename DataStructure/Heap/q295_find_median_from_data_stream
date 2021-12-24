@@ -1,0 +1,43 @@
+package DataStructure.Heap;
+
+
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Set;
+
+
+public class q295_find_median_from_data_stream {
+    private PriorityQueue<Integer> minHeap;
+    private PriorityQueue<Integer> maxHeap;
+
+    public q295_find_median_from_data_stream() {
+        maxHeap = new PriorityQueue<>((o1, o2)->(o2-o1)); // 保留小数(<=med)
+        minHeap = new PriorityQueue<>(); // pop小，保留大数(>中位数)
+    }
+
+    public void addNum(int num) {
+        maxHeap.offer(num); // 默认先放入大根堆
+        // 维护俩堆
+        // 1. 若大顶堆的max比小顶堆min还大，则【换顶swap】。
+        if (!minHeap.isEmpty() && maxHeap.peek() > minHeap.peek()) {
+            int minTop = minHeap.poll();
+            int maxTop = maxHeap.poll();
+            minHeap.offer(maxTop);
+            maxHeap.offer(minTop);
+        }
+        // 2. 保持大根堆个数=小根堆个数(+1)
+        while (maxHeap.size() > minHeap.size() + 1) {
+            minHeap.offer(maxHeap.poll());
+        }
+    }
+
+    public double findMedian() {
+        int cnt = maxHeap.size() + minHeap.size();
+        System.out.print(cnt & 1);
+        if ((cnt & 1) != 0) { // 个数为奇数->取大根堆top
+            return maxHeap.peek();
+        } else {
+            return  (maxHeap.peek() + minHeap.peek()) / 2.0;
+        }
+    }
+}
