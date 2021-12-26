@@ -1,18 +1,18 @@
-# 设计一个算法，找出数组中最小的k个数。以任意顺序返回这k个数均可。 
-# 
-#  示例： 
-# 
-#  输入： arr = [1,3,5,7,2,4,6,8], k = 4
+# 设计一个算法，找出数组中最小的k个数。以任意顺序返回这k个数均可。
+#
+#  示例：
+#
+#  输入： buckets = [1,3,5,7,2,4,6,8], k = 4
 # 输出： [1,2,3,4]
-#  
-# 
-#  提示： 
-# 
-#  
-#  0 <= len(arr) <= 100000 
-#  0 <= k <= min(100000, len(arr)) 
-#  
-#  Related Topics 堆 排序 分治算法 
+#
+#
+#  提示：
+#
+#
+#  0 <= len(buckets) <= 100000
+#  0 <= k <= min(100000, len(buckets))
+#
+#  Related Topics 堆 排序 分治算法
 #  👍 22 👎 0
 
 
@@ -47,11 +47,11 @@ class Solution:
 # 2 4 1 5 3
 # 输出样例：
 # 3
-# def tok_k_smallest_num(arr, k):
+# def tok_k_smallest_num(buckets, k):
 #     import heapq
-#     if not arr or k <= 0: return []
+#     if not buckets or k <= 0: return []
 #     max_heap = []
-#     for num in arr:
+#     for num in buckets:
 #         heapq.heappush(max_heap, -num)
 #         if len(max_heap) > k:
 #             heapq.heappop(max_heap)
@@ -60,6 +60,6 @@ class Solution:
 #     return -max_heap[0] # -heapq.heappop(max_heap)  # max_heap[0]: 第k小的数
 #
 # n, k = list(map(int, input().split()))
-# arr = list(map(int, input().split()))
-# ans = tok_k_smallest_num(arr, k)
+# buckets = list(map(int, input().split()))
+# ans = tok_k_smallest_num(buckets, k)
 # print(ans)

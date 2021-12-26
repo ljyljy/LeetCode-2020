@@ -8,7 +8,7 @@ public class q786_k_th_smallest_prime_fraction {
 // 空间复杂度：O(k)
     public int[] kthSmallestPrimeFraction(int[] arr, int k) {
         int n = arr.length;
-        // 最大堆，元素a/b形如: <arr[0], arr[1]>
+        // 最大堆，元素a/b形如: <buckets[0], buckets[1]>
         PriorityQueue<int[]> maxQ = new PriorityQueue<>(k,
                 (a, b)->Double.compare(1.0*b[0]/b[1], 1.0*a[0]/a[1])); // 大根堆 - 逆序
         for (int i = 0; i < n; i++) {

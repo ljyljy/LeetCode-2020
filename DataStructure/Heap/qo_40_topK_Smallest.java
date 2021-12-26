@@ -23,8 +23,8 @@ public class qo_40_topK_Smallest {
     }
 
 ////    // 法1：快排 - O(N)
-//    public int[] getLeastNumbers_1(int[] arr, int k) {
-//        if (k <= 0 || arr == null || arr.length == 0)
+//    public int[] getLeastNumbers_1(int[] buckets, int k) {
+//        if (k <= 0 || buckets == null || buckets.length == 0)
 //            return new int[0];
 //
 //    }

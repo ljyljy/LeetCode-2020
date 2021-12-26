@@ -1,9 +1,8 @@
 package DataStructure.Heap;
 
 
-import java.util.HashSet;
 import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.TreeMap;
 
 
 public class q295_find_median_from_data_stream {
@@ -38,6 +37,57 @@ public class q295_find_median_from_data_stream {
             return maxHeap.peek();
         } else {
             return  (maxHeap.peek() + minHeap.peek()) / 2.0;
+        }
+    }
+
+    // 进阶代码
+    //    作者：AC_OIer 宫水三叶
+//    https://leetcode-cn.com/problems/find-median-from-data-stream/solution/gong-shui-san-xie-jing-dian-shu-ju-jie-g-pqy8/
+    class MedianFinder {
+
+        TreeMap<Integer, Integer> head = new TreeMap<>(), tail = new TreeMap<>();
+        int[] buckets = new int[101];
+        int a, b, c;
+
+        public void addNum(int num) {
+            if (num >= 0 && num <= 100) {
+                buckets[num]++;
+                b++;
+            } else if (num < 0) {
+                head.put(num, head.getOrDefault(num, 0) + 1);
+                a++;
+            } else if (num > 100) {
+                tail.put(num, tail.getOrDefault(num, 0) + 1);
+                c++;
+            }
+        }
+
+        public double findMedian() {
+            int size = a + b + c;
+            if (size % 2 == 0) return (find(size / 2) + find(size / 2 + 1)) / 2.0;
+            return find(size / 2 + 1);
+        }
+
+        int find(int kCnt) {
+            if (kCnt <= a) {
+                for (int num : head.keySet()) {
+                    kCnt -= head.get(num);
+                    if (kCnt <= 0) return num;
+                }
+            } else if (kCnt <= a + b) {
+                kCnt -= a; // kCnt ∈ [a, a+b] kCnt-=a: 排除idx<a的情况
+                for (int i = 0; i <= 100; i++) {
+                    kCnt -= buckets[i]; // 每个桶内的个数
+                    if (kCnt <= 0) return i;
+                }
+            } else {
+                kCnt -= a + b;
+                for (int num : tail.keySet()) {
+                    kCnt -= tail.get(num);
+                    if (kCnt <= 0) return num;
+                }
+            }
+            return -1; // never
         }
     }
 }
