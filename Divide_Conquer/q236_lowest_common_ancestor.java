@@ -1,6 +1,6 @@
 package Divide_Conquer;
 
-public class q236_lowest_common_ancestor_BST {
+public class q236_lowest_common_ancestor {
     //    Definition for a binary tree node.
     public class TreeNode {
         int val;
