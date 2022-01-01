@@ -41,7 +41,7 @@ class Solution:
     def build(self, start, end):
         if start > end: return None
         root = SegmentTreeNode(start, end)
-        if start == end:  return root  # 叶子
+        if start == end:  return root  # 叶子❤
         mid = start + end >> 1
         root.left = self.build(start, mid)
         root.right = self.build(mid + 1, end)

@@ -3,8 +3,32 @@ package DP;
 import java.util.Arrays;
 
 public class q213_house_robber_ii {
-    // 注意：1) System.arraycopy(..) 2) Arrays.fill(..)
+    // 写法1
+    private int MOD = 2;
     public int rob(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        int n = nums.length;
+        if (n == 1) return nums[0];
+        if (n == 2) return Math.max(nums[0], nums[1]);
+        int res1 = robRange(nums, 0, n-2);
+        int res2 = robRange(nums, 1, n-1);
+        return Math.max(res1, res2);
+    }
+
+    private int robRange(int[] nums, int start, int end) {
+        int n = end - start + 1;
+        int[] dp = new int[MOD];
+        dp[0] = nums[start];
+        dp[1] = Math.max(nums[start], nums[start+1]);
+        for (int i = 2; i < n; i++) {
+            dp[i % MOD] = Math.max(dp[(i-1) % MOD], dp[(i-2) % MOD] + nums[i+start]);
+        }
+        return dp[(n-1) % MOD];
+    }
+
+    // 写法2
+    // 注意：1) System.arraycopy(..) 2) Arrays.fill(..)
+    public int rob2(int[] nums) {
         if (nums == null || nums.length == 0) return 0;
         int n = nums.length;
         if (n == 1) return nums[0];

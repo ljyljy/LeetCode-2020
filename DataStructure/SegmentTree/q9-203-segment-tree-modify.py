@@ -30,3 +30,21 @@ class Solution:
             self.modify(root.right, index, value)
         root.max = max(root.left.max, root.right.max)
 
+
+"""
+    public void modify(SegmentTreeNode root, int idx, int value) {
+        if (idx < root.start || idx > root.end) return;
+        if (idx == root.start && idx == root.end) {
+            root.max = value;
+            return;
+        }
+        // 分治 & "后序"
+        int mid = root.start + root.end >> 1;
+        if (idx <= mid) {
+            modify(root.left, idx, value);
+        } else {
+            modify(root.right, idx, value);
+        }
+        root.max = Math.max(root.left.max, root.right.max);
+    }
+"""

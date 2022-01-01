@@ -7,16 +7,12 @@ import java.util.List;
 public class q315v2_segmentTree {
     // 法2： 线段树
     private class SegmentTreeNode {
-        public int cnt;
-        public int start;
-        public int end;
+        public int start, end, cnt;
         public SegmentTreeNode left, right;
         public SegmentTreeNode(int start, int end) {
             this.start = start;
             this.end = end;
             this.cnt = 0;
-            this.left = null;
-            this.right = null;
         }
     }
 
@@ -84,7 +80,7 @@ public class q315v2_segmentTree {
         min = Math.min(min, 0); // 注意如果min > 0, 那么没必要shift;
         int shift =  Math.abs(min);           // ↓ 不是n！
         SegmentTree tree = new SegmentTree(max - min + 1); // [0, max] -- [min+shift, max+shift]
-        for(int i = A.length - 1; i >= 0 ; i--) { // 从后往前遍历
+        for(int i = A.length - 1; i >= 0 ; i --) { // 从后往前遍历
             tree.add(A[i] + shift, 1);// ❤勿忘+shift！！
             if(A[i] == min) { // 勿忘if❤ 比min小的数没有了，所以是0；
                 res.add(0, 0); // 头插 - 插在最前面

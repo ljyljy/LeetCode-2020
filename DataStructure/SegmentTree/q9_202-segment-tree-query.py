@@ -47,24 +47,38 @@ class Solution:
         max_right = self.query(root.right, start, end)
         return max(max_left, max_right)
 
+    """
+    法0：分治即可，面试写出来才是最重要的！
+    public int query(SegmentTreeNode root, int L, int R) {
+        if (root == null) return 0;
+        if (L > R) return 0;
+        if (L <= root.start && root.end <= R) return root.max;
+        
+        // int mid = root.start + root.end >> 1;
+        int maxL = query(root.left, L, mid);
+        int maxR = query(root.right, mid+1, R);
+        return Math.max(maxL, maxR);
+    }
+    """
+
     # 法1：二分(= & ≠)【推荐】
-    def query1(self, root, start, end):
-        if start == root.start and end == root.end:
+    def query1(self, root, L, R):
+        if L == root.start and R == root.end:
             return root.max
         mid = root.start + root.end >> 1
         max_left = -sys.maxsize
         max_right = -sys.maxsize
         # 二分: [l, r] -> [l, mid], [mid+1, r]
-        if start <= mid:
-            if mid < end:  # 可二分 - 查找root左子树在查询区间[l, mid]的max
-                max_left = self.query(root.left, start, mid)
+        if L <= mid:
+            if mid < R:  # 可二分 - 查找root左子树在查询区间[l, mid]的max
+                max_left = self.query(root.left, L, mid)
             else:  # 不可二分
-                max_left = self.query(root.left, start, end)
-        if mid < end:
-            if start <= mid:  # 可二分 - 查找root右子树在查询区间[mid+1, r]的max
-                max_right = self.query(root.right, mid + 1, end)
+                max_left = self.query(root.left, L, R)
+        if mid < R:
+            if L <= mid:  # 可二分 - 查找root右子树在查询区间[mid+1, r]的max
+                max_right = self.query(root.right, mid + 1, R)
             else:  # 不可二分
-                max_right = self.query(root.right, start, end)
+                max_right = self.query(root.right, L, R)
         return max(max_right, max_left)
 
 
