@@ -12,7 +12,7 @@ public class q9_249_countOfSmallerNumberII {
         int min = Arrays.stream(A).min().getAsInt();
         int max = Arrays.stream(A).max().getAsInt();
         min = Math.min(min, 0);
-        int shift = Math.abs(min);
+//        int shift = Math.abs(min);  // A[i]>=0
         SegmentTree tree = new SegmentTree(max - min + 1);
         for (int i = 0; i < n; i++) {
             tree.add(A[i], 1);
