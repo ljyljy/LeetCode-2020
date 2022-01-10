@@ -11,7 +11,7 @@ public class q123_best_time_to_buy_and_sell_stock_iii {
         dp[0][3] = -prices[0];// 第一天买入+卖出+二次买入
         for (int i = 1; i < n; i++) {
             for (int j = 0; j < n_states; j++) {
-                // 0: 无交易 = 沿用“截止前一天”都无交易
+                // 0: 无交易 = 沿用“截止前一天”都无交易(从未买卖过)
                 dp[i % MOD][0] = dp[(i-1) % MOD][0];
                 // 1: 第一次买入：沿用“截止前一天”第一次买入 / 前一天无交易+今天买(-成本)
                 dp[i % MOD][1] = Math.max(dp[(i-1) % MOD][1], dp[(i-1) % MOD][0]-prices[i]);

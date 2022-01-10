@@ -23,6 +23,27 @@ public class q42_trapping_rain_water {
         return res;
     }
 
+    // 法3：单调栈 —— 时间O(n), 空间O(n)
+    public int trap_3(int[] height) {
+        int res = 0;
+        if (height == null || height.length == 0) return res;
+        int n = height.length;
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int r = 0; r < n; r++) { // 遍历每一列, ↓维护单调栈（递减,元素为idx）
+            while (!stack.isEmpty() && height[r] > height[stack.peek()]) {
+                int mid = stack.pop(); // 左右边缘中间【最矮的柱子】
+                if (!stack.isEmpty()){
+                    int l = stack.peek();
+                    int width = r - l - 1; // 宽度不包括左(left)/右(i)边缘
+                    int h = Math.min(height[r], height[l]) - height[mid];
+                    res += width * h;
+                }
+            }
+            stack.push(r);
+        }
+        return res;
+    }
+
     // 法2-2【更易想 - 但效率很低！】双指针 - 时间O(n^2)，空间O(1)
     public int trap_2v2(int[] height) {
         int n = height.length;
@@ -78,25 +99,5 @@ public class q42_trapping_rain_water {
         return res;
     }
 
-    // 法3：单调栈 —— 时间O(n), 空间O(n)
-    public int trap_3(int[] height) {
-        int res = 0;
-        if (height == null || height.length == 0) return res;
-        int n = height.length;
-        Deque<Integer> stack = new ArrayDeque<>();
-        for (int r = 0; r < n; r++) { // 遍历每一列, ↓维护单调栈（递减,元素为idx）
-            while (!stack.isEmpty() && height[r] > height[stack.peek()]) {
-                int mid = stack.pop(); // 左右边缘中间【最矮的柱子】
-                if (!stack.isEmpty()){
-                    int l = stack.peek();
-                    int width = r - l - 1; // 宽度不包括左(left)/右(i)边缘
-                    int h = Math.min(height[r], height[l]) - height[mid];
-                    res += width * h;
-                }
-            }
-            stack.push(r);
-        }
-        return res;
-    }
 
 }
