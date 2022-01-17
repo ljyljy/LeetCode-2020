@@ -3,6 +3,29 @@ package DP;
 public class q5_longest_palindromic_substring {
     private char[] chars;
     public String longestPalindrome(String s) {
+        if (s == null || s.length() <= 1) return s;
+        int n = s.length();
+        chars = s.toCharArray();
+        int len = 0, start = 0, end = 0;
+        boolean[][] dp = new boolean[n][n]; // s[i,j]是否回文(左闭右闭)[j>=i]
+
+        for (int i = n-1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                if (chars[i] == chars[j] && (j-i<=1 || dp[i+1][j-1])) {
+                    dp[i][j] = true;
+                    int curLen = j - i + 1;
+                    if (curLen > len) {
+                        len = curLen;
+                        start = i; end = j;
+                    }
+                }
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+
+
+    public String longestPalindrome_dp2(String s) {
         if (s == null || s.length() < 2) return s;
         chars = s.toCharArray();
         int n = s.length();

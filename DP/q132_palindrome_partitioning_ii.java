@@ -3,6 +3,54 @@ package DP;
 import java.util.*;
 
 public class q132_palindrome_partitioning_ii {
+    // 法3【推荐】：2次dp
+    public int minCut(String s) {
+        int n = s.length();
+        if (n <= 1) return 0; // "" or "a"无需分割，自成回文
+        char[] chars = s.toCharArray();
+        boolean[][] dp = get_dp(chars, n);// s[i, j]是否为回文(j>=i, 左闭右闭)
+        int[] f = new int[n]; // s[0,i]的最少分割次数
+        // ↓ f[i]初始化为i（分割为单字符）/ 大数
+        for (int i = 0; i < n; i++) f[i] = i; // Integer.MAX_VALUE
+
+        // 状态递推 f[i] = min(f[j])+1, j ∈ [0, i-1]
+        for (int i = 1; i < n; i++) {
+            if (dp[0][i]) { // 子串s[0,i]是回文, 最小分割数=0
+                f[i] = 0;
+                continue;
+            } // 未跳过，说明s[0,i]不是回文(如:"cabb")，
+            // 则需要在其子串(分割点j)中:(1) j后-找s[j,i-1]回文("bb")
+            // (2) j前-最小分割数dp[j] -> ∵分割点j ∴dp[j]+1
+            for (int j = 0; j < i; j++) {
+                // s[0,i]不是回文(如:"aab", "ababcb")，需要在其子串中找回文("aa"/"aba")+1("b"/"bcb")
+                if (dp[j+1][i]) // 前提：
+                    f[i] = Math.min(f[i], f[j]+1);  // 此处'+1'指代回文子串s[j+1, i]
+            }
+        }
+        return f[n-1];
+    }
+
+    private boolean[][] get_dp(char[] ch, int n) {
+        boolean[][] dp = new boolean[n][n]; // 初始化全false
+        for (int i = n-1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                if (ch[i] == ch[j] && (j - i <= 1 || dp[i+1][j-1]))
+                    dp[i][j] = true; // 同Q647, Q5
+            }
+        }
+        return dp;
+    }
+
+    private boolean[][] get_dp2(char[] chars, int n) {
+        boolean[][] dp = new boolean[n][n];
+        for (int j = 0; j < n; j++) {
+            for (int i = 0; i <= j; i++) {
+                if (chars[i] == chars[j] && (j - i <= 2 || dp[i+1][j-1]))
+                    dp[i][j] = true;
+            }
+        }
+        return dp;
+    }
 
     // List<List<String>> res = new ArrayList<>();
     Deque<String> path = new ArrayDeque<>();
@@ -70,41 +118,6 @@ public class q132_palindrome_partitioning_ii {
         return memo.get(idx);
     }
 
-    // 法3【推荐】：2次dp
-    public int minCut(String s) {
-        int n = s.length();
-        if (n <= 1) return 0; // "" or "a"无需分割，自成回文
-        char[] chars = s.toCharArray();
-        boolean[][] dp = get_dp(chars, n);
-        int[] f = new int[n]; // ↓ f[i]初始化为i（分割为单字符）/ 大数
-        for (int i = 0; i < n; i++) f[i] = i; // Integer.MAX_VALUE
 
-        // 状态递推 f[i] = min(f[j])+1, j ∈ [0, i-1]
-        for (int i = 1; i < n; i++) {
-            if (dp[0][i]) { // 子串s[0,i]是回文, 最小分割数=0
-                f[i] = 0;
-                continue;
-            } // 未跳过，说明s[0,i]不是回文(如:"cabb")，
-            // 则需要在其子串(分割点j)中:(1) j后-找s[j,i-1]回文("bb")
-            // (2) j前-最小分割数dp[j] -> ∵分割点j ∴dp[j]+1
-            for (int j = 0; j < i; j++) {
-                // s[0,i]不是回文(如:"aab", "ababcb")，需要在其子串中找回文("aa"/"aba")+1("b"/"bcb")
-                if (dp[j+1][i]) // 前提：
-                    f[i] = Math.min(f[i], f[j]+1);  // 此处'+1'指代回文子串s[j+1, i]
-            }
-        }
-        return f[n-1];
-    }
-
-    private boolean[][] get_dp(char[] chars, int n) {
-        boolean[][] dp = new boolean[n][n];
-        for (int j = 0; j < n; j++) {
-            for (int i = 0; i <= j; i++) {
-                if (chars[i] == chars[j] && (j - i <= 2 || dp[i+1][j-1]))
-                    dp[i][j] = true;
-            }
-        }
-        return dp;
-    }
 
 }
