@@ -35,10 +35,10 @@ public class q315_count_of_smaller_numbers_after_self {
         if (nums[mid] <= nums[mid+1]) return; // 整体有序 直接返回
 
         while (i <= mid && j <= R) { // [8,12,29,50, 100] & [7,9,9,9,12,15]
-            if (nums[i] <= nums[j]) { // 右[(mid+1) ~ (j-1)] < 左[i] <= 右[j]
+            if (nums[i] <= nums[j]) { // 右[(mid+1) ~ (j-1)] < 左[i:mid] <= 右[j:R]
                 // ❤❤❤ 等于的时候，也需要算逆序对！(如左i=右j=12,此时左i有逆序对<i-12,j-[7~12]>)
                 temp[k] = nums[i];
-                tempIndex[k] = index[i]; // index[i]为nums[i]的原始下标
+                tempIndex[k] = index[i]; // index[i]为nums[i]的原始下标【num与idx的位置是同步变化的】
                 // 进阶-逆序对(q315)在【左区间小】时计算-法2
                 // 即一次性将【右[R_start(mid+1)~(j-1)]】<左[i]<右[j]加入结果
                 ans[index[i]] += (j-1-mid); // (j-1)-(mid+1)+1
