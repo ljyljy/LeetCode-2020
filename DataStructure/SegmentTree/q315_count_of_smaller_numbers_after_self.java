@@ -4,16 +4,15 @@ import java.util.*;
 
 public class q315_count_of_smaller_numbers_after_self {
     private int[] index;
-    private int[] temp;
-    private int[] tempIndex;
+    private int[] tmp;
+    private int[] tmpIdx;
     private int[] ans;
     public List<Integer> countSmaller(int[] nums) {
         int n = nums.length;
-        this.index = new int[n];
-        this.temp = new int[n];
-        this.tempIndex = new int[n];
-        this.ans = new int[n];
+        tmp = new int[n]; ans = new int[n];
+        tmpIdx = new int[n]; index = new int[n];
         for (int i = 0; i < n; i++)  index[i] = i;
+
         mergeSort(nums, 0, n-1);
         List<Integer> res = new ArrayList<>();
         for (int num: ans) res.add(num);
@@ -36,9 +35,9 @@ public class q315_count_of_smaller_numbers_after_self {
 
         while (i <= mid && j <= R) { // [8,12,29,50, 100] & [7,9,9,9,12,15]
             if (nums[i] <= nums[j]) { // 右[(mid+1) ~ (j-1)] < 左[i:mid] <= 右[j:R]
-                // ❤❤❤ 等于的时候，也需要算逆序对！(如左i=右j=12,此时左i有逆序对<i-12,j-[7~12]>)
-                temp[k] = nums[i];
-                tempIndex[k] = index[i]; // index[i]为nums[i]的原始下标【num与idx的位置是同步变化的】
+                // ❤❤❤ 等于的时候，也需要算逆序对！(如左i=右j=12,此时左i有逆序对<i-12,j-[7~12左]>)
+                tmp[k] = nums[i];
+                tmpIdx[k] = index[i]; // index[i]为nums[i]的原始下标【num与idx的位置是同步变化的】
                 // 进阶-逆序对(q315)在【左区间小】时计算-法2
                 // 即一次性将【右[R_start(mid+1)~(j-1)]】<左[i]<右[j]加入结果
                 ans[index[i]] += (j-1-mid); // (j-1)-(mid+1)+1
@@ -48,29 +47,29 @@ public class q315_count_of_smaller_numbers_after_self {
             } else{ // 左[i] > 右[j](此时右侧比自己(左i)小，'养成'↓
                 // '养成': 此时不算逆序对，等自己(左i)比右侧j+=n小后，
                 //         一举拿下[mid+1, j-1]所有逆序对
-                temp[k] = nums[j];
-                tempIndex[k] = index[j];
+                tmp[k] = nums[j];
+                tmpIdx[k] = index[j];
                 k++;
                 j++;
             }
         }
         while (i <= mid) {
-            temp[k] = nums[i];
-            tempIndex[k] = index[i];
+            tmp[k] = nums[i];
+            tmpIdx[k] = index[i];
             ans[index[i]] += (j-1-mid);// 此处+=正数（因为之前未计算过）
             k++; // ↑ 右侧比自己[nums[i]]小的元素个数
             i++;
         }
         while (j <= R) {
-            temp[k] = nums[j];
-            tempIndex[k] = index[j];
+            tmp[k] = nums[j];
+            tmpIdx[k] = index[j];
             k++;
             j++;
         }
 
         for (int p = L; p <= R; p++) {
-            index[p] = tempIndex[p];
-            nums[p] = temp[p];
+            index[p] = tmpIdx[p];
+            nums[p] = tmp[p];
         }
     }
 
@@ -83,30 +82,30 @@ public class q315_count_of_smaller_numbers_after_self {
 
         while (i <= mid && j <= R) {
             if (nums[i] > nums[j]) {// 左 > 右 (逆序对数+= [i]~[mid]区间长度)
-                temp[k] = nums[j];
-                tempIndex[k] = index[j];
+                tmp[k] = nums[j];
+                tmpIdx[k] = index[j];
                 ans[index[j]] += (mid - i + 1);
                 k++; j++; // ↑ 左侧([i]~[mid])比自己[nums[j]]大的元素个数
             } else {
-                temp[k] = nums[i];
-                tempIndex[k] = index[i];
+                tmp[k] = nums[i];
+                tmpIdx[k] = index[i];
                 k++; i++;
             }
         }
         while (i <= mid) {
-            temp[k] = nums[i];
-            tempIndex[k] = index[i];
+            tmp[k] = nums[i];
+            tmpIdx[k] = index[i];
             k++; i++;
         }
         while (j <= R) { // 左 > 右(无元素) (逆序对数+= [i]~[mid]区间长度)
-            temp[k] = nums[j];
-            tempIndex[k] = index[j];
+            tmp[k] = nums[j];
+            tmpIdx[k] = index[j];
             ans[index[j]] += (mid - i + 1); // 此处+=0（因为之前已经计算过）
             k++; j++; // ↑ 左侧([i]~[mid])比自己[nums[j]]大的元素个数
         }
         for (int p = L; p <= R; p++) {
-            nums[p] = temp[p];
-            index[p] = tempIndex[p];
+            nums[p] = tmp[p];
+            index[p] = tmpIdx[p];
         }
     }
 

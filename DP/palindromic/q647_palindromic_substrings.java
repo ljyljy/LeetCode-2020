@@ -1,4 +1,4 @@
-package DP;
+package DP.palindromic;
 
 public class q647_palindromic_substrings {
     public int countSubstrings(String s) {

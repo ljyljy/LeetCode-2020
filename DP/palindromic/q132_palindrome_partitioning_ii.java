@@ -1,4 +1,4 @@
-package DP;
+package DP.palindromic;
 
 import java.util.*;
 

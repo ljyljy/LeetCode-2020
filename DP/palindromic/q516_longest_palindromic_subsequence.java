@@ -1,4 +1,4 @@
-package DP;
+package DP.palindromic;
 
 public class q516_longest_palindromic_subsequence {
     // Ð´·¨2£ºdp[i,j]--s[i,j]

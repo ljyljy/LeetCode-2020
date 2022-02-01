@@ -1,4 +1,4 @@
-package DP;
+package DP.palindromic;
 
 public class q5_longest_palindromic_substring {
     private char[] chars;
