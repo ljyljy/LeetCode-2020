@@ -7,7 +7,7 @@ public class q9_palindrome_number {
         int origin = x;
         while (x != 0) {
             res = res * 10 + x % 10;
-            x /= 10;
+            x /= 10;  // 类比q7、8
         }
         return origin == res;
     }

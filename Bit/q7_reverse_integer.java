@@ -4,6 +4,18 @@ public class q7_reverse_integer {
     public int reverse(int x) {
         int res = 0;
         while (x != 0) {
+            if (res * 10 / 10 != res)
+                return 0; // 若溢出，直接返回0
+            res = res * 10 + x % 10;
+            x /= 10;
+        }
+        return res;
+    }
+
+    // 写法2
+    public int reverse0(int x) {
+        int res = 0;
+        while (x != 0) {
             if (isOverflow(res))  return 0;
             res = res * 10 + x % 10;
             x /= 10;
