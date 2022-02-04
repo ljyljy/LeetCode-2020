@@ -1,4 +1,4 @@
-//Given n non-negative integers a1, a2, ..., an , where each represents a point
+package Two_Pointers;//Given n non-negative integers a1, a2, ..., an , where each represents a point
 //at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of
 // line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis for
 //ms a container, such that the container contains the most water.
@@ -28,18 +28,6 @@
 
 
 public class q11_container_with_most_water {
-    // 1.枚举
-    public int maxArea01(int[] height) {
-        int max = 0;
-        for (int i = 0; i < height.length - 1; ++i) {
-            for (int j = i + 1; j < height.length; ++j) {
-                int area = (j - i) * Math.min(height[i], height[j]);
-                max = Math.max(area, max);
-            }
-        }
-        return max;
-    }
-
     // 2. O(n)：左右边界 同时向中间收敛 【左右夹逼】
     public int maxArea(int[] height) {
         int max = 0;
@@ -52,4 +40,16 @@ public class q11_container_with_most_water {
         return max;
     }
 
+
+    // 1.枚举--TLE
+    public int maxArea01(int[] height) {
+        int max = 0;
+        for (int i = 0; i < height.length - 1; ++i) {
+            for (int j = i + 1; j < height.length; ++j) {
+                int area = (j - i) * Math.min(height[i], height[j]);
+                max = Math.max(area, max);
+            }
+        }
+        return max;
+    }
 }
