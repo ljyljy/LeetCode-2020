@@ -13,7 +13,22 @@ public class q27_remove_element {
         }
         return i;
     }
+    // 法1-2：结合q26
+    public int removeElement3(int[] nums, int val) {
+        int n = nums.length;
+        if (n == 0) return 0;
+        int slow = 0, fast = 0;
+        while (fast < n) {
+            if (nums[fast] != val) {
+                nums[slow++] = nums[fast];
+            }
+            fast++;
+        }
+        return slow;
+    }
+
     // 法2：优化版（避免了需要保留的元素的重复赋值）
+    // 【但nums[j--]若仍为val，无法避免重复赋值1次】
     public int removeElement2(int[] nums, int val) {
         if (nums == null || nums.length == 0) return 0;
         int n = nums.length;

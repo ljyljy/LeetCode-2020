@@ -1,8 +1,22 @@
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 public class q20_valid_parentheses {
+    // 法2：不用map，只用双端队列（still栈）
+    public boolean isValid(String s) {
+        if (s.isEmpty()) return true;
+        Deque<Character> stack = new ArrayDeque<>();
+        for (char c: s.toCharArray()) {
+            if (c == '(') stack.push(')');
+            else if (c == '[') stack.push(']');
+            else if (c == '{') stack.push('}');
+            else if (stack.isEmpty() || stack.pop() != c) {
+                return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    // 法1
     private static final Map<Character, Character> map = new HashMap<Character, Character>(){{
         put('(',')'); put('{', '}'); put('[', ']'); put('?','?'); // 为避免pop出现异常，放首个元素'？'
     }}; // 定义时添加元素，要用两个{{}}！！！(一个{}中可定义class)
@@ -20,18 +34,6 @@ public class q20_valid_parentheses {
         return stack.size() == 1;
     }
 
-    // 法2：不用map，只用双端队列（still栈）
-    public boolean isValid(String s) {
-        if (s.length() == 0) return true;
-        LinkedList<Character> stack = new LinkedList<>();
-        for (Character c : s.toCharArray()) {
-            if (c == '[') stack.addLast(']');
-            else if (c == '{') stack.addLast('}');
-            else if (c == '(') stack.addLast(')');
-            else if (stack.isEmpty()|| c != stack.removeLast())
-                return false;
-        }
-        return stack.isEmpty();
-    }
+
 
 }
