@@ -21,15 +21,15 @@ public class q32_longest_valid_parentheses {
                 deque.pop(); // 当前"()"都不入栈, 暴露后面栈顶哨兵
                 if (deque.isEmpty()) {
                     deque.push(i); // 类似push(-1): 哨兵
-                } else {
-                    // '('.idx=pop&peek; i=')'.idx, 长度=i-上一个"("的下标
-                    maxLen = Math.max(maxLen, i - deque.peek()); // 或peekFirst
                 }
+                // '('.idx=pop&peek; i=')'.idx, 长度=i-上一个"("的下标
+                maxLen = Math.max(maxLen, i - deque.peek()); // 或peekFirst
+
             }
         }
         return maxLen;
     }
-    
+
     // 1.DP - 易错，必会！
     public int longestValidParentheses_DP(String s) {
         if (s == null || s.length() == 0) return 0;

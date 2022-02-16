@@ -25,8 +25,9 @@ public class q29_divide_two_integers {
     private int div(int dividend, int divisor) {
         int ans = 0;
         while (dividend <= divisor) {
-            int tmp = divisor, cnt = 1;
+            int tmp = divisor, cnt = 1; // ?一定在while内！每轮重新赋值！
             // 这里注意不要写成 tmp + tmp >= dividend，这样写加法有可能会溢出导致死循环
+            // ?是while！非if！
             while (tmp >= dividend - tmp) { // 正数tmp + tmp <= dividend，颠倒 & 防溢
                 // tmp 和 cnt 每次对应增加一倍（*2），所以叫倍增
                 cnt <<= 1; // 即 2^x

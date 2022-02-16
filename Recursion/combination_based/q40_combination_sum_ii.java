@@ -15,7 +15,7 @@ public class q40_combination_sum_ii {
     }
 
     private void dfs(int[] candidates, int target, int idx, boolean[] used) {
-        if (target < 0) return;
+        if (target < 0) return; // 否则TLE
         if (target == 0) {
             res.add(new ArrayList<>(path));
             return;
