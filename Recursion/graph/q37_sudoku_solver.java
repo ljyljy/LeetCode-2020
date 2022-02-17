@@ -3,10 +3,10 @@ package Recursion.graph;
 public class q37_sudoku_solver {
     public void solveSudoku(char[][] board) {
         dfs(board); // 二维递归(行&列);
-        // ↑?无需传入状态idx1/idx2; ?直接对board内修改
+        // ↑?无需传入状态idx1/idx2; ?直接对board内修改;
     }
 
-    private boolean dfs(char[][] board) {
+    private boolean dfs(char[][] board) { // ?返回值为bool!
         // 无递归出口(return T/F即可)
         for (int i = 0; i < 9; i++) { // board.length==9
             for (int j = 0; j < 9; j++) { // board[0].length==9

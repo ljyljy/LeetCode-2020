@@ -55,6 +55,7 @@ public class Transition_Array_Collections {
 
 //        对于基本类型的数组如int[], double[], char[] ,Arrays类只提供了默认的升序排列，
 //        没有降序，需要传入自定义比较器，使用Arrays.sort(num,c)，传入一个实现了Comparator接口的类的对象c。
+        // 必须是Integer[], 基本的int[]没有降序，也不能使用比较器！?
         Arrays.sort(integers1,new Comparator<Integer>(){
             public int compare(Integer a, Integer b){
                 return b-a;

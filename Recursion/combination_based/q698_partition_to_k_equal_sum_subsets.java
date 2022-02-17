@@ -58,7 +58,7 @@ public class q698_partition_to_k_equal_sum_subsets {
         // // 优化V1：降序排序nums，以便更容易出发剪枝???
         // // ?int[]无法自动降序，需要将int[]转为Integer[]，再转为int[]
         // Integer[] numsBox = Arrays.stream(nums).boxed().toArray(Integer[]::new);
-        // // Arrays.sort(numsBox, Collections.reverseOrder()); // 降序1
+         // Arrays.sort(numsBox, Collections.reverseOrder()); // 降序1
         // Arrays.sort(numsBox, (o1, o2)->(o2-o1));  // 降序2
         // // Integer[]转为int[]
         // int[] sortedNums = Arrays.stream(numsBox).mapToInt(Integer::valueOf).toArray();
