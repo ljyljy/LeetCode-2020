@@ -1,4 +1,4 @@
-package Sort;
+package Array.sort_def;
 
 import java.util.*;
 

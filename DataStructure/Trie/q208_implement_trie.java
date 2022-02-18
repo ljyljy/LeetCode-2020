@@ -15,7 +15,6 @@ public class q208_implement_trie {
             root = new TrieNode();
         }
 
-
         public void insert(String word) {
             TrieNode cur = root;
             for (int i = 0; i < word.length(); i++) {
@@ -24,10 +23,10 @@ public class q208_implement_trie {
                     cur.children[pos] = new TrieNode();
                 cur = cur.children[pos]; // 指针下移
             }
-            cur.isWord = true;
+            cur.isWord = true; // 叶子处
         }
 
-        private TrieNode find(String word) {
+        private TrieNode find(String word) { // 返回word末尾对应的结点
             TrieNode cur = root;
             char[] chars = word.toCharArray();
             for (char c: chars) {

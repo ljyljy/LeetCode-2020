@@ -23,7 +23,7 @@ public class q42_trapping_rain_water {
         return res;
     }
 
-    // 法3：单调栈 —— 时间O(n), 空间O(n)
+    // 法3【荐】：单调栈 —— 时间O(n), 空间O(n)
     public int trap_3(int[] height) {
         int res = 0;
         if (height == null || height.length == 0) return res;
@@ -31,6 +31,7 @@ public class q42_trapping_rain_water {
         Deque<Integer> stack = new ArrayDeque<>();
         for (int r = 0; r < n; r++) { // 遍历每一列, ↓维护单调栈（递减,元素为idx）
             while (!stack.isEmpty() && height[r] > height[stack.peek()]) {
+                // if (height[stack.peek()] < height[r]) { // stack有哨兵，会死循环❤
                 int mid = stack.pop(); // 左右边缘中间【最矮的柱子】
                 if (!stack.isEmpty()){
                     int l = stack.peek();
@@ -39,7 +40,7 @@ public class q42_trapping_rain_water {
                     res += width * h;
                 }
             }
-            stack.push(r);
+            stack.push(r); // 新来的高度<=栈顶，无法接水->入栈❤
         }
         return res;
     }
