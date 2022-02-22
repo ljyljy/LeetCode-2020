@@ -1,5 +1,59 @@
+package Divide_Conquer;
+
 
 public class q50_powx_n {
+
+    // 法1：迭代
+    public double myPow(double x, int n) {
+        if (x == 0) return 0;
+        long N = n;
+        double res = 1.0;
+        if (N < 0) {
+            x = 1.0 / x;
+            N = -N;
+        }
+        while (N > 0) {
+            if ((N & 1) == 1)
+                res *= x;
+            x *= x;
+            N >>= 1; // N /= 2
+        }
+        return res;
+    }
+
+    // 法2：分治-递归（指数n需要转为long + 重载）
+    public double myPow0(double x, int n) {
+        if (n == 0 || x == 1) return 1.0;
+        long N = n; // 【一定要将int转为long！】
+        if (N < 0) {
+            x = 1.0 / x;
+            N = -N;
+        }
+        double subAns = myPow0(x, N/2);
+        subAns *= subAns;
+        if (N % 2 == 1) // 奇数
+            subAns *= x;
+        return subAns;
+    }
+
+    public double myPow0(double x, long n) {
+        if (n == 0 || x == 1) return 1.0;
+        long N = n; // 【一定要将int转为long！】
+        if (N < 0) {
+            x = 1.0 / x;
+            N = -N;
+        }
+        double subAns = myPow0(x, N/2);
+        subAns *= subAns;
+        if (N % 2 == 1) // 奇数
+            subAns *= x;
+        return subAns;
+    }
+
+
+    // 以下（old 不看）：题目已更新，需要支持n<0
+
+
     /**
      * // 1. 暴力, O(n)
      * res = 1
@@ -20,7 +74,7 @@ public class q50_powx_n {
 
     // 3. 牛顿迭代法
     //     （略）
-    public double myPow(double x, int n) {
+    public double myPow1(double x, int n) {
         // Java 代码中 int32 变量 n∈[−2147483648,2147483647]
         // 因此当 n=−2147483648 时，执行【n=-n会因越界】而赋值出错。
         // 解决方法是先将 n 存入 long 变量 N ，后面用 N 操作即可。
@@ -43,6 +97,7 @@ public class q50_powx_n {
             subAns *= x;
         return subAns;
     }
+
     // 法2： 非递归
     private double fastPow1(double x, long N) {
         double ans = 1.0;

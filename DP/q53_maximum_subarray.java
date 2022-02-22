@@ -6,8 +6,8 @@ public class q53_maximum_subarray {
         if (nums == null || nums.length == 0) return 0;
         int n = nums.length;
         int[] dp = new int[n];
-        dp[0] = nums[0];
-        int res = dp[0];
+        dp[0] = nums[0]; // 易错1
+        int res = dp[0]; // 易错2❤
         for (int i = 1; i < n; i++) {
             dp[i] = Math.max(dp[i-1] + nums[i], nums[i]);
             res = Math.max(res, dp[i]);

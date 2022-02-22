@@ -17,27 +17,25 @@ public class q49_group_anagrams_1star {
         return new ArrayList(res.values()); // ❤
     }
 
-        // 法2：计数数组分类 -- 时间O(NK), 空间O(NK)
+    // 法2：计数数组分类 -- 时间O(NK), 空间O(NK)
     public List<List<String>> groupAnagrams2(String[] strs) {
-        if (strs.length == 0) return new ArrayList<>();
-        Map<String, List> map = new HashMap<>();
-        int[] cnt = new int[26];
-        for (String s : strs) {
-            Arrays.fill(cnt, 0);
-            for (char c : s.toCharArray()) cnt[c - 'a']++;
-
-            StringBuilder sb = new StringBuilder("");
-            for (int i = 0; i < 26; ++i) {
-                sb.append('#');// 因为怕>9的两位数字无法分割
-                sb.append(cnt[i]);
+        if (strs == null || strs.length == 0) return new ArrayList<>();
+        Map<String, List<String>> map = new HashMap<>();
+        int[] cnt = new int[26]; // 类比TrieNode.children
+        for (String s: strs) {
+            Arrays.fill(cnt, 0); // 每轮清零cnt
+            for (char c: s.toCharArray()) cnt[c - 'a']++;
+            StringBuilder sb = new StringBuilder();
+            for (int k: cnt) {
+                sb.append("#" + k);// 因为怕>9的两位数字无法分割
             }
             String key = sb.toString();
             if (!map.containsKey(key)) {
-                map.put(key, new ArrayList());
+                map.put(key, new ArrayList<>());
             }
             map.get(key).add(s);
         }
-        return new ArrayList(map.values());
+        return new ArrayList<>(map.values());
     }
 
 
