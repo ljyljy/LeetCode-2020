@@ -9,10 +9,24 @@ public class q69_sqrtx {
             // 为避免溢出，勿写 "nums[mid] * nums[mid]"
             if (mid > x / mid) { // mid缩小，向左区间搜索
                 right = mid-1;
-            } else if (mid < x / mid) {
+            } else if (mid < x / mid) {// mid还可以提高
                 left = mid;
             } else return mid; // mid * mid == x
         }
         return left;
+    }
+
+
+    public int mySqrt_WA(int x) {
+        int start = 0, end = x;
+        while (start < end) { // [L, mid] [mid+1, R]
+            int mid = start + end >> 1;
+            if (mid == x / mid) {
+                return mid;
+            } else if (mid < x / mid) { // mid还可以提高
+                start = mid + 1;
+            } else end = mid;
+        }
+        return start;
     }
 }

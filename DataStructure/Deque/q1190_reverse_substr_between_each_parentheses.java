@@ -5,20 +5,21 @@ import java.util.Deque;
 
 public class q1190_reverse_substr_between_each_parentheses {
     // 法1：栈 -- O(n^2)
+
     public String reverseParentheses1(String s) {
         Deque<String> stack = new ArrayDeque<>();
         StringBuffer sb = new StringBuffer();
         int n = s.length();
         for (int i = 0; i < n; i++) {
             char ch = s.charAt(i);
-            if (ch == '(') {
+            if (ch == '(') {// 遇到新的括号，将之前的sb压栈暂存，待后翻转
                 stack.push(sb.toString());
                 sb.setLength(0); // sb清空
-            } else if (ch == ')') {
-                sb.reverse(); // u evol + i -翻转-> i love u
-                sb.insert(0, stack.pop());
+            } else if (ch == ')') {// 将(..)翻转，与前串合并&保序
+                sb.reverse(); // u(love)->evol
+                sb.insert(0, stack.pop()); // 前串保序(头插)：u+evol
             } else {
-                sb.append(ch);
+                sb.append(ch); // u evol + i，最后待翻转-> i love u
             }
         }
         return sb.toString();

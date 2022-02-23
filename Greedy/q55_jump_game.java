@@ -1,4 +1,4 @@
-package Other.Greedy;
+package Greedy;
 
 public class q55_jump_game {
     // ·¨1£ºÌ°ÐÄ

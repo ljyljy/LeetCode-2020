@@ -1,4 +1,4 @@
-package Other.Greedy;
+package Greedy;
 
 public class q807_max_increase_to_keep_city_skyline {
     public int maxIncreaseKeepingSkyline(int[][] grid) {
