@@ -1,9 +1,25 @@
 package DP;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class q62_unique_paths {
+    // 法2【荐】：DP[?注意初始化 & (0,0)->(m-1, n-1)]
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        Arrays.fill(dp[0], 1); // dp[0][:] = 1
+        for (int j = 0; j < m; j++) dp[j][0] = 1; // dp[:][0] = 1
+
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+        }
+        return dp[m-1][n-1];
+    }
+
+
     // 法1：DFS+memo[注意(1,1)->(m, n)]
     private int cnt = 0;
     private Map<String, Integer> memo = new HashMap<>();
@@ -24,20 +40,4 @@ public class q62_unique_paths {
         memo.put(key, res);
         return res;
     }
-
-    // 法2：DP[?注意初始化 & (0,0)->(m-1, n-1)]
-    public int uniquePaths(int m, int n) {
-        int[][] dp = new int[m][n];
-        Arrays.fill(dp[0], 1); // dp[0][:] = 1
-        for (int j = 0; j < m; j++) dp[j][0] = 1; // dp[:][0] = 1
-
-        for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
-                dp[i][j] = dp[i-1][j] + dp[i][j-1];
-            }
-        }
-        return dp[m-1][n-1];
-    }
-
-
 }

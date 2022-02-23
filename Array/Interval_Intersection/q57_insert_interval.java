@@ -8,7 +8,7 @@ public class q57_insert_interval {
         if (n == 0) return new int[][]{newInterval}; // 外加一维度
         // 至多n+1个区间，即插入后，所有区间都不重合
         int[][] res = new int[n+1][2];
-        // 按区间首元素[0]，升序排序 - 题目已经排好
+        // 按区间首元素[0]，升序排序 - 题目已经排好?
         // Arrays.sort(intervals, (o1, o2)->(o1[0]-o2[0]));
 
         // 遍历区间列表：
@@ -30,6 +30,6 @@ public class q57_insert_interval {
         while (i < n) {
             res[idx++] = intervals[i++];
         }
-        return Arrays.copyOf(res, idx); // 截取res的前idx个?
+        return Arrays.copyOf(res, idx); // 截取res的前idx个
     }
 }

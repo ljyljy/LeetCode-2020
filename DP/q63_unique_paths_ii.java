@@ -36,7 +36,7 @@ public class q63_unique_paths_ii {
         int[][] dp = new int[m][n];
         for (int i = 0; i < m; i++) {
             // 边界遇到1(障碍),后面的dp全为0!(∵被前面的障碍堵住了)
-            if (obstacleGrid[i][0] == 1) break;
+            if (obstacleGrid[i][0] == 1) break; // 必须放在dp赋值之前！?易错！
             dp[i][0] = 1;
         }
         for (int j = 0; j < n; j++) {
