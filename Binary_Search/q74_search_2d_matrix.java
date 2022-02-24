@@ -1,10 +1,10 @@
 package Binary_Search;
 
 public class q74_search_2d_matrix {
-    // 法3:（BFS）
+    // 法3:荐（BFS）
     public boolean searchMatrix(int[][] matrix, int target) {
         int row = 0, col = matrix[0].length - 1;
-        // 以右上角为起点root, 看作BST(查找方向: 向下row++/向左col--)
+        // 以【右上角】为起点root, 看作BST(查找方向: 向下row++/向左col--)
         while (row < matrix.length && col >= 0) {
             if (matrix[row][col] == target)  return true;
             else if (matrix[row][col] < target)

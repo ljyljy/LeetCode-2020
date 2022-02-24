@@ -20,9 +20,10 @@ public class q77_combinations {
             return;
         }
         // 剪枝思路：(1)在for中，而非循环体内——因为path.size()会因递归&回溯动态变化
-        // (2) 应保证：还需选的节点数 <= 可选择的数目（候选结点数 + 本层结点(1)）
+        // (2) 应保证：还需选的节点数 <= 可选择的数目，即nums[i, n]
         //     i.e.,  k - path.size() <=  (n-i) + 1, 化简为 i <= n - (k-path.size()) + 1
-        for (int i = idx; i <= n - (k - path.size()) + 1; i++) {
+        for (int i = idx; i <= n; i++) {
+            if (k - path.size() > n - i + 1) continue; // 剪枝
             // for：横向遍历，i∈[startIdx, n - (k - path.size()) + 1]
             path.addLast(i);
             dfs(n, k, i+1, path, res); // 递归：纵向遍历
