@@ -40,7 +40,7 @@ from collections import deque
 
 
 class Solution:
-    # 法1：辅助栈
+    # 法1：辅助栈，类比q1190
     def decodeString(self, s: str) -> str:
         stack, res, num = deque([]), '', 0
         for c in s:

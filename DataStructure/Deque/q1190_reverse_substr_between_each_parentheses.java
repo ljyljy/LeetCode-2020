@@ -4,8 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class q1190_reverse_substr_between_each_parentheses {
-    // 法1：栈 -- O(n^2)
-
+    // 法1：栈 -- O(n^2)，类比q394
     public String reverseParentheses1(String s) {
         Deque<String> stack = new ArrayDeque<>();
         StringBuffer sb = new StringBuffer();
