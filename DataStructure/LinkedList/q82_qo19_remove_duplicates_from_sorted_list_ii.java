@@ -2,7 +2,7 @@ package DataStructure.LinkedList;
 
 import java.util.ArrayList;
 
-public class qo_19_q82_remove_duplicates_from_sorted_list_ii {
+public class q82_qo19_remove_duplicates_from_sorted_list_ii {
     public ListNode deleteDuplicates(ListNode head) {
         ListNode dummy = new ListNode(-1, head);
         ListNode p = dummy, q = p.next;
@@ -53,7 +53,7 @@ public class qo_19_q82_remove_duplicates_from_sorted_list_ii {
     }
 
     public static void main(String[] args) {
-        qo_19_q82_remove_duplicates_from_sorted_list_ii sol = new qo_19_q82_remove_duplicates_from_sorted_list_ii();
+        q82_qo19_remove_duplicates_from_sorted_list_ii sol = new q82_qo19_remove_duplicates_from_sorted_list_ii();
         ListNode head = sol.init("1,2,3,3,4,4,5");
 
         ListNode head2 = sol.deleteDuplicates(head);

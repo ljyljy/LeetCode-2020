@@ -1,6 +1,43 @@
 package Binary_Search;
 
 public class q81_search_in_rotated_sorted_array_ii {
+    // 类比q33，升级版
+    // v3 - 一次二分 【推荐 不易错】
+    public boolean search_2(int[] nums, int target) {
+        int n = nums.length;
+        if (n == 0) return false;
+        int j = n-1; // ❤ 预处理：恢复二段性（vs nums[0]）
+        while (j>0 && nums[0] == nums[j]) j--;
+        int i = 0;  // ❤这个i++可以不考虑，直接传入i=0：因为在[start] == [mid]中包括了开头的判重！
+        while (i+1 < n && nums[i] == nums[i+1]) i++;
+        return binSearch_onceKO(nums, target, i, j) != -1;
+    }
+
+    private int binSearch_onceKO(int[] nums, int target, int l, int r) {
+        while (l + 1 < r) {
+            int mid = l + r >> 1;
+
+            if (nums[mid] == target) return mid;
+            // 分别在左右半段【L/R vs mid】中，找出包含target的升序的子数列
+            if (nums[l] == nums[mid]) { // ❤易错：该判断不可少！针对左半段的重复元素[也包括开头的重复段]
+                l++; continue;
+            }else if (nums[l] < nums[mid]) {// 左半段
+                if (nums[l] <= target && target <= nums[mid])
+                    r = mid; // target∈[l, mid]，且子序列严格升序
+                else l = mid;
+            }else { // 右半段
+                // ❤易错：外层不可嵌套if (nums[mid] < nums[r]), 因为[mid] == [r]没考虑
+                if (nums[mid] <= target && target <= nums[r])
+                    l = mid; // target∈[mid, r] 严格升序
+                else r = mid;
+            }
+        }
+        if (nums[l] == target) return l;
+        if (nums[r] == target) return r;
+        return -1;
+    }
+
+
     // v1-1: 两次二分v1
     public boolean search_1v1(int[] nums, int target) {
         int n = nums.length;
@@ -86,39 +123,6 @@ public class q81_search_in_rotated_sorted_array_ii {
             else start = mid + 1;
         }
         return false;
-    }
-
-    // v3 - 一次二分 【推荐 不易错】
-    public boolean search_2(int[] nums, int target) {
-        int n = nums.length;
-        if (n == 0) return false;
-        int j = n-1; // ❤ 预处理：恢复二段性（vs nums[0]）
-        while (j>0 && nums[0] == nums[j]) j--;
-
-        return binSearch_onceKO(nums, target, 0, j) != -1;
-    }
-
-    private int binSearch_onceKO(int[] nums, int target, int l, int r) {
-        while (l + 1 < r) {
-            int mid = l + r >> 1;
-
-            if (nums[mid] == target) return mid;
-            // 分别在左右半段【L/R vs mid】中，找出包含target的升序的子数列
-            if (nums[l] == nums[mid]) { // 该判断不可少！针对左半段的重复元素
-                l++; continue;
-            }else if (nums[l] < nums[mid]) {// 左半段
-                if (nums[l] <= target && target <= nums[mid])
-                    r = mid; // target∈[l, mid]，且子序列严格升序
-                else l = mid;
-            }else { // 右半段
-                if (nums[mid] <= target && target <= nums[r])
-                    l = mid; // target∈[mid, r] 严格升序
-                else r = mid;
-            }
-        }
-        if (nums[l] == target) return l;
-        if (nums[r] == target) return r;
-        return -1;
     }
 
     public static void main(String[] args) {
