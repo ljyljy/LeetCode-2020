@@ -14,7 +14,7 @@ public class q83_remove_duplicates_from_sorted_list {
             while (q != null && p.val == q.val) {
                 q = q.next;
             }
-            if (q == p.next) {
+            if (q == p.next) {// ²»Í¬4: q83: q == p.next.next
                 p = p.next;
             } else {
                 p.next = q;

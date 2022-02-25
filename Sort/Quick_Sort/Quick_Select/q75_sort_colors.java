@@ -5,7 +5,7 @@ public class q75_sort_colors {
     public void sortColors(int[] nums) {
         int n = nums.length;
         int left = 0, i = 0, right = n-1;
-        while (i <= right) {
+        while (i <= right) { // while条件❤❤❤
             if (nums[i] == 1) i++; // 跳过
             else if (nums[i] == 0) {
                 swap(nums, left, i);
