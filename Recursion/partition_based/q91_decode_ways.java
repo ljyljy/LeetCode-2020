@@ -16,8 +16,8 @@ public class q91_decode_ways {
     }
 
     private int dfs(char[] chars, int idx, int[] memo) {
-        if (idx == chars.length) return 1; // 完成一个匹配，ans+=1
-        if (chars[idx] == '0') return 0; // 前导‘0’无对应映射
+        if (idx == chars.length) return 1; // ❤完成一个匹配，ans+=1
+        if (chars[idx] == '0') return 0; // ❤❤❤前导‘0’无对应映射
         if (memo[idx] != -1) return memo[idx];
         int ans = 0;  // 只控制某结点的下一层
         // for (int i = idx; i < idx + 2; i++) { // ❤ for 循环不可取！因为情况2需要额外特判(<=26), 无法与情况1合并为for循环！
@@ -37,14 +37,14 @@ public class q91_decode_ways {
 
     // dfs写法2 - 推荐
     private int dfs2(char[] chars, int idx, int[] memo) {
-        if (idx == chars.length) return 1;//每次达到最后，就是一种解
+        if (idx == chars.length) return 1;//❤每次达到最后，就是一种解，ans+=1
         if (memo[idx] != -1) return memo[idx];
-        if (chars[idx] == '0') return 0; // 去除'前导0'的情况
+        if (chars[idx] == '0') return 0; // ❤❤❤去除'前导0'的情况
 
         int ans = 0; // 只控制本层
         for (int i = idx; i < idx + 2 && i < chars.length; i++) {
             String numStr = new String(chars, idx, i-idx+1);
-            //若numStr < 26就符合要求
+            //若numStr < 26就符合要求，dfs下层
             if (Integer.parseInt(numStr) > 26) continue;
             ans += dfs2(chars, i+1, memo);
         }

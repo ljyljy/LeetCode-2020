@@ -66,7 +66,7 @@ public class q84_largest_rectangle_in_histogram_4star {
                 // 宽度要-1：两边的矮柱子不参与面积计算！ 矮高矮--> 面积只算高的部分！
                 // 高的弹栈后，矮的以后有机会自会再算一次（此时下标相减就会包括高的）。
             }
-            stack.push(i);
+            stack.push(i); // 递增栈❤
         }
 
         return max;

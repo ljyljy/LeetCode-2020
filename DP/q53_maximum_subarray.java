@@ -1,6 +1,19 @@
 package DP;
 
 public class q53_maximum_subarray {
+    // 2-贪心[荐!]
+    public int maxSubArray2(int[] nums) {
+        int n = nums.length;
+        int maxSum = Integer.MIN_VALUE;
+        int curSum = 0;
+        for (int i = 0; i < n; i++) {
+            curSum += nums[i];
+            if (curSum > maxSum) maxSum = curSum;
+            if (curSum < 0) curSum = 0;
+        }
+        return maxSum;
+    }
+
     // 法1：普通dp
     public int maxSubArray_v1(int[] nums) {
         if (nums == null || nums.length == 0) return 0;
@@ -14,7 +27,7 @@ public class q53_maximum_subarray {
         }
         return res;
     }
-    // 法2：空间压缩 - 空间O(1)
+    // 法1-2：空间压缩 - 空间O(1)
     public int maxSubArray(int[] nums) {
         if (nums == null || nums.length == 0) return 0;
         int n = nums.length;
@@ -41,13 +54,13 @@ public class q53_maximum_subarray {
         for (int i = 1; i < n; i++) {
             if (dp[(i-1) % mod] > 0)
                 dp[i % mod] = dp[(i-1) % mod] + nums[i];
-            else { //当nums[i]自立门户时，记录新起始位置
+            else { //当nums[i]自立门户时，记录新起始位置❤
                 dp[i % mod] = nums[i];
-                start = i;
+                start = i;// ❤
             }
             if (maxSum < dp[i % mod]) {
                 maxSum = dp[i % mod];
-                res[0] = start;
+                res[0] = start; // ❤
                 res[1] = i;//记录下起始和终止位置
             }
         }
