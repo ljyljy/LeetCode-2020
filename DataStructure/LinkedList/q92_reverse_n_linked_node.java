@@ -1,5 +1,7 @@
 package DataStructure.LinkedList;
 
+import java.util.Random;
+
 public class q92_reverse_n_linked_node {
     ListNode successor = null;  // 后驱结点
 
@@ -19,7 +21,7 @@ public class q92_reverse_n_linked_node {
     public void printLinkedList(ListNode listNode){
         ListNode cur0 = listNode;
         while (cur0 != null) {
-            System.out.print(cur0.val);
+            System.out.print(cur0.val + " ");
             cur0 = cur0.next;
         }
         System.out.println();
@@ -29,7 +31,7 @@ public class q92_reverse_n_linked_node {
         ListNode listNode = new ListNode(1);
         ListNode cur = listNode;
         for (int i = 2; i < 6; i++) {
-            cur.next = new ListNode(i);
+            cur.next = new ListNode(i);// new Random().nextInt(xxx); 或 Math.random()❤
             cur = cur.next;
         }
 

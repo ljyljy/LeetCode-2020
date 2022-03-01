@@ -2,32 +2,43 @@ package DataStructure.LinkedList;
 
 
 public class q92_reverse_linked_list_ii {
-//    法1： 递归
-    private ListNode successor = null;  // 后驱结点
+    // 法1：迭代（new）
+    // 类比q25❤
+    // dummy -> head/p -> (start, ..., end) -> next...
+    // dummy -> head/p -> (end, ..., start) -> next...
+    public ListNode reverseBetween1(ListNode head, int left, int right) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode p = head, start_prev = dummy, end = dummy;
+        for (int i = 0; i < left-1; i++) start_prev = start_prev.next;
+        for (int i = 0; i < right; i++) end = end.next;
+        ListNode start = start_prev.next;
+        ListNode nxt = end.next;
 
-    // 反转以 head 为起点的 n 个节点，返回新的头结点
-    private ListNode reverseN(ListNode head, int n){
-        if (n == 1) {
-            successor = head.next;  // 记录第 n + 1 个节点
-            return head;
-        }
-        // 以 head.next 为起点，需要反转前 n - 1 个节点
-        ListNode dummy = reverseN(head.next, n-1);
-        head.next.next = head;
-        head.next = successor;
-        return dummy;
+        end.next = null;
+        start_prev.next = reverse_1(start, end);
+        start.next = nxt;
+        return dummy.next;
     }
 
-    public ListNode reverseBetween0(ListNode head, int m, int n){
-        if (m == 1){
-            return reverseN(head, n);
+    // 可以不传入end，类比q25❤
+    private ListNode reverse_1(ListNode start, ListNode end) {
+        // pre -> (start/cur, nxt, ..., end)
+        // pre <- (start/cur, nxt, ..., end)
+        ListNode pre = null;
+        ListNode cur = start;
+        while (cur != null) {
+            ListNode nxt = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = nxt;
         }
-        head.next = reverseBetween0(head.next, m - 1, n - 1);
-        return head;
+        return pre;
     }
 
-//    法2：迭代
-    public ListNode reverseBetween(ListNode head, int left, int right){
+
+    // 法1-迭代写法2（old）
+    public ListNode reverseBetween_V1_old(ListNode head, int left, int right){
         if (left >= right || head == null) return head;
 
         // 因为头节点有可能发生变化，使用虚拟头节点可以避免复杂的分类讨论
@@ -53,7 +64,7 @@ public class q92_reverse_linked_list_ii {
         pre.next = null;
         rightNode.next = null;
 
-        // 4. 同q206.反转链表(子链表)
+        // 4. 同q206.反转链表(子链表), q25❤
         reverseLinkedList(leftNode);
 
         // 5. 接回原链表
@@ -64,6 +75,8 @@ public class q92_reverse_linked_list_ii {
     }
 
     private void reverseLinkedList(ListNode head) {
+        // pre -> (start/cur, nxt, ..., end)
+        // pre <- (start/cur, nxt, ..., end)
         // 法1：迭代
         ListNode prev = null, cur = head;
         while (cur != null){
@@ -74,13 +87,27 @@ public class q92_reverse_linked_list_ii {
         }
     }
 
-    private ListNode reverseLinkedList2(ListNode head) {
-        // 法2：递归
-        if(head == null || head.next == null) return head;
+    // 2、递归：类比q92, 206❤
+    // head -> ... ->  nxt(m--) ... -> end -> ^
+    // head -> ... -> [nxt(m=1) ... <- end/last] （接head）-> succ -> ...
+    ListNode successor = null;// 后驱结点
+    // 反转以 head 为起点的 n 个节点，返回新的头结点
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        if (m == 1) { // 走到[m, n]处，以m为头，翻转n个结点
+            return reverseTopN(head, n); // 返回[2<-3<-4(head)]
+        }
+        head.next = reverseBetween(head.next, m-1, n-1); // head后移，m--直到1(走到m开头)
+        return head;
+    }
 
-        ListNode dummy = reverseLinkedList2(head.next);
-        head.next.next = head;
-        head.next = null;
-        return dummy;
+    private ListNode reverseTopN(ListNode head, int n) {
+        if (n == 1) { // 走到[m, n]末尾n处(head)，需要记录后继succ
+            successor = head.next; // [2<-3<-4(head, n-1)] | 5(succ)
+            return head;
+        }
+        ListNode last = reverseTopN(head.next, n-1); // 2, [3<-4]
+        head.next.next = head; // 正序head.next == last.tail
+        head.next = successor;
+        return last;
     }
 }

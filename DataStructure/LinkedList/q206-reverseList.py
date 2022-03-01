@@ -45,10 +45,10 @@ class Solution:
     # https://leetcode-cn.com/problems/reverse-linked-list/solution/shi-pin-jiang-jie-die-dai-he-di-gui-hen-hswxy/
     def reverseList(self, head: ListNode) -> ListNode:
         if not head or not head.next: return head  # head[本身]为空 or [递归时]下一个空
-        # 自上而下递归到最后一个结点，设为dummy
-        dummy = self.reverseList(head.next)
-        head.next.next = head  # 反转; head = dummy上一层(递归)的父亲
+        # 自上而下递归到最后一个结点，设为last
+        last = self.reverseList(head.next)
+        head.next.next = head  # 反转; head = last上一层(递归)的父亲
         head.next = None
-        return dummy
+        return last
 
 # leetcode submit region end(Prohibit modification and deletion)
