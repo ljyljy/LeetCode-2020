@@ -14,33 +14,33 @@ public class q93_restore_ip_addresses {
         return res;
     }
 
-    private void dfs2(String s, int len, int idx, int validSplitNum, Deque<String> path) {
+    private void dfs2(String s, int len, int idx, int valid, Deque<String> path) {
         if (idx == len) {
-            if (validSplitNum == 4)
+            if (valid == 4) // ?ÎðÍü£¡
                 res.add(String.join(".", path));
             return;
         }
 
         int remainLen = len - idx;
-        int remainSplit = 4 - validSplitNum;
-        if (remainLen < remainSplit || remainLen > remainSplit * 3)
-            return;
+        int remainValid = 4 - valid;
+        if (remainLen < remainValid || remainLen > remainValid * 3) return;
 
         for (int i = idx; i < s.length(); i++) {
             String curSeg = s.substring(idx, i+1);
             if (isValidIP(curSeg)) {
                 path.addLast(curSeg);
-                dfs2(s, len, i+1, validSplitNum+1, path);
+                dfs2(s, len, i+1, valid+1, path);
                 path.removeLast();
-            } else continue;
+            }
         }
     }
 
     private boolean isValidIP(String curSeg) {
-        if (curSeg.length() < 1 || curSeg.length() > 3) return false;
-        if (curSeg.charAt(0) == '0' && curSeg.length() != 1) return false;
+        int n = curSeg.length();
+        if (n < 1 || n > 3) return false;
+        if (curSeg.charAt(0) == '0' && n != 1) return false;
 
-        int val = Integer.valueOf(curSeg);
+        int val = Integer.valueOf(curSeg); // »ò Integer.parseInt
         return 0 <= val && val <= 255;
     }
 
