@@ -58,8 +58,46 @@ public class HJ20_CodeValidate {
         }
     }
 
+    // 法2：正则表达式???【荐！】
+    public static void main3(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        while(sc.hasNext()){
+            String s = sc.nextLine();
+            int n = s.length();
+            // 条件1
+            if (n <= 8) {
+                System.out.println(NG);
+                continue;
+            }
+            // 条件2
+            int types = 0; // 大写、小写字母、数字、其他；
+            String[] regs = {"[A-Z]", "[a-z]", "[0-9]", "[^a-zA-Z0-9]"}; // ?reg="[xx]": 字符集-匹配任意一个
+            for (String reg: regs) {
+                Pattern pattern = Pattern.compile(reg);
+                Matcher matcher = pattern.matcher(s);
+                if (matcher.find()) {
+                    types += 1;
+                }
+            }
+            if (types < 3) {
+                System.out.println(NG);
+                continue;
+            }
+            // 条件3：排除以下规则(.{3,})不可重复！reg分组:(..)；
+            String reg2 = ".*(.{3,}).*(?=\\1).*"; // ?"(?=\\1)":后面匹配组1
+            Pattern pattern2 = Pattern.compile(reg2);
+            Matcher matcher2 = pattern2.matcher(s);
+            if (!matcher2.find()) {
+                System.out.println(OK);
+                continue;
+            } else {
+                System.out.println(NG);
+                continue;
+            }
+        }
+    }
 
-    // 法2：正则表达式
+
 //    https://blog.nowcoder.net/n/fc6993638c2d4ccaab24e8d8df019880
     public static void main2(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
@@ -70,6 +108,7 @@ public class HJ20_CodeValidate {
                 System.out.println("NG");
                 continue;
             }
+
             // 大小写字母.数字.其它符号check
             String[] regexes = {"\\d", "[a-z]", "[A-Z]", "[^\\da-zA-Z]"};
             int types = 0;
@@ -87,10 +126,17 @@ public class HJ20_CodeValidate {
             //匹配串前后连续3个字符一样的
             //public String replaceAll(String replacement)
             //替换模式与给定替换字符串相匹配的输入中存在长度大于2的不含公共元素的子串重复 删除一个重复字串长度显然变短了 这时输入NG
+            // 分组(组1)(组2), "?=(组1内容)\\1"，
             if(s.replaceAll("(.{3,})(?=.{3,}\\1)", "").length() < s.length()){
                 System.out.println("NG");
                 continue;
             }
+//            写法2：
+            // // 条件3
+//            String reg2 = ".*(.{3,}).*(?=\\1).*"; // ?
+//            Pattern pattern2 = Pattern.compile(reg2);
+//            Matcher matcher2 = pattern2.matcher("021Abc998nws2Abced21");
+//            System.out.println("test: " +  matcher2.find());
             System.out.println("OK");
         }
     }
