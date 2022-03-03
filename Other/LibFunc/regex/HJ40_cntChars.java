@@ -10,7 +10,7 @@ public class HJ40_cntChars {
             int n = str.length();
             int[] cnts = new int[4]; //alphas spaces, digits, others = 0;
             for (char ch: str.toCharArray()) {
-                if (Character.isLetter(ch)) { //? (ch+"").matches("[a-zA-Z]")
+                if (Character.isLetter(ch)) { //? (ch+"").matches("[a-zA-Z]"), ?不可["\\w"]，等价于["_a-zA-Z0-9"] !!!
                     cnts[0]++;
                 } else if (ch == ' ') {// (ch+"").matches("\\s")
                     cnts[1]++;

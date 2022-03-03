@@ -10,7 +10,7 @@ public class HJ26_stringSort {
             char[] ss = s.toCharArray();
             List<Character> letters = new ArrayList<>();
             for (char ch: ss) {
-                if (Character.isLetter(ch)) { // (ch+"").matches("[\\w]") 是字母
+                if (Character.isLetter(ch)) { // (ch+"").matches("[a-zA-Z]") ?不可["\\w"]，等价于["_a-zA-Z0-9"] !!!
                     letters.add(ch);
                 }
             }
