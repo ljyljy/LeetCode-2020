@@ -1,10 +1,54 @@
 package DP;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class q87_scramble_string {
+    // 最新版本 dp（较短）
+    // [len, i, j]: 长度为len的字符串s1[i:]与s2[j:]是否匹配
+    boolean[][][] dp;// i,j分别为起始比较点
+    char[] ss1, ss2;
+    public boolean isScramble_DP(String s1, String s2) {
+        if (s1.isEmpty() || s2.isEmpty()) return false;
+        int n = s1.length(), n2 = s2.length();
+        if (n != n2) return false;
+        ss1 = s1.toCharArray(); ss2 = s2.toCharArray();
+        dp = new boolean[n+1][n][n];
+        if (!isCharEquals(ss1, ss2)) return false;
+
+        for (int len = 1; len <= n; len++) {
+            for (int i = 0; i + len <= n; i++) {
+                for (int j = 0; j + len <= n; j++) {
+                    if (len == 1) {
+                        dp[1][i][j] = (ss1[i] == ss2[j]);
+                    } else { //遍历切割后的左半部分长度(必须非空！q∈[1,len-1])
+                        for (int q = 1; q < len; q++) {
+                            // 1) [i1...q][i2..(len-q)]    // 2) [i1...q][i2..(len-q)]
+                            // 1) [j1...q][j2..(len-q)]    // 2) [j2..(len-q)][j1...q]
+                            // dp[len,i,j] = (1) || (2), 即[q,i1,j1] && [len-q,i2,j2]
+                            dp[len][i][j] = (dp[q][i][j] && dp[len-q][i+q][j+q]) ||
+                                    (dp[q][i][j+len-q] && dp[len-q][i+q][j]);
+                            if (dp[len][i][j]) break;
+                        }
+                    }
+                }
+            }
+        }
+        return dp[n][0][0]; // 长度为n的s1[0:]与s2[0:]是否匹配
+    }
+
+    private boolean isCharEquals(char[] s1, char[] s2) {
+        int[] cnts = new int[26];
+        for (int i = 0; i < s1.length; i++) {
+            cnts[s1[i] - 'a']++;
+            cnts[s2[i] - 'a']--;
+        }
+        return Arrays.stream(cnts).sum() == 0;
+    }
+
+
     // 法2（推荐）：动态规划
-    boolean[][][] dp;
+//    boolean[][][] dp;
     public boolean isScramble(String s1, String s2) {
         if (s1.isEmpty() || s2.isEmpty()) return false;
         // 1. 比较len

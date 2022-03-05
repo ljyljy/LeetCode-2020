@@ -14,6 +14,7 @@ public class q113_path_sum_ii {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         if (root == null) return res;
         Deque<Integer> path = new ArrayDeque<>();
+        // ❤在main中执行以root为起点的dfs！path需要先加入root！
         path.addLast(root.val);
         dfs(root, sum - root.val, path);
 //        path.removeLast(); // 可以不加
