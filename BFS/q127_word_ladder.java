@@ -3,6 +3,56 @@ package BFS;
 import java.util.*;
 
 public class q127_word_ladder {
+    // 20220308新版本-短、快
+    Set<String> words = new HashSet<>();
+    int minDist = 0;
+    public int ladderLength(String beginW, String endW, List<String> wordList) {
+        words.addAll(wordList);
+        words.add(beginW);
+        return bfs(beginW, endW, words);
+    }
+
+    private int bfs(String start, String end, Set<String> words) {
+        Deque<String> queue = new ArrayDeque<>();
+        queue.offer(start);
+        Set<String> visited = new HashSet<>();
+        visited.add(start);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            minDist++; // 下一层的深度（for-1内部）
+            for (int i = 0; i < size; i++) {
+                String cur = queue.poll();
+                // if (cur.equals(end)) return minDist; // 法1：本层深度
+                for (String nxt: getNextWords(cur, words)) {
+                    if (visited.contains(nxt)) continue;
+                    // 法2：更快-每层遍历ing就时刻检查有无equals(end)
+                    if (nxt.equals(end)) return minDist+1; // 直接返回到下一层的长度（for-2内部）
+                    queue.offer(nxt);
+                    visited.add(nxt);
+                }
+            }
+        }
+        return 0;
+    }
+
+    private Set<String> getNextWords(String str, Set<String> words) {
+        Set<String> nxtWords = new HashSet<>();
+        char[] ss = str.toCharArray();
+        for (int i = 0; i < str.length(); i++) {
+            for (char c = 'a'; c <= 'z'; c++) {
+                char src = ss[i];
+                ss[i] = c;
+                String nxtWord = new String(ss);
+                if (words.contains(nxtWord)) {
+                    nxtWords.add(nxtWord);
+                }
+                ss[i] = src; // 恢复原状
+            }
+        }
+        return nxtWords;
+    }
+
     // BFS法2-快（dist初始化为1，每层遍历ing就时刻检查有无equals(end),无需等本层遍历结束）
     public int ladderLength_fast(String start, String end, List<String> wordList) {
         // 必须将List转为Set，否则TLE!!!
