@@ -3,7 +3,45 @@ package Recursion.partition_based;
 import java.util.*;
 
 public class q131_palindrome_partitioning {
-    // 法1：未优化版 - 普通dfs（切割）
+    // 20220309 新版 - 法2：dfs+dp回文
+    // 法2：dp优化
+    boolean[][] dp;
+    int n;
+    char[] ss;
+    public List<List<String>> partition(String s) {
+        n = s.length(); ss = s.toCharArray();
+        getDP(ss);
+        dfs2(0, ss);
+        return res;
+    }
+
+    private void getDP(char[] ss) {
+        dp = new boolean[n][n];
+        for (int i = n-1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                if (ss[i] == ss[j] && (j-i<=2 || dp[i+1][j-1])) {
+                    dp[i][j] = true;
+                }
+            }
+        }
+    }
+
+    private void dfs2(int idx, char[] ss) {
+        if (idx == n) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = idx; i < n; i++) {
+            if (!dp[idx][i]) continue;
+            path.addLast(new String(ss, idx, i-idx+1));
+            dfs2(i+1, ss);
+            path.removeLast();
+        }
+    }
+
+
+    // old
+    // 法1：掌握 - 普通dfs（切割）
     List<List<String>> res = new ArrayList<>();
     Deque<String> path = new ArrayDeque<>();
     public List<List<String>> partition_v1(String s) {

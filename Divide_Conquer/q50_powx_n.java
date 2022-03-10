@@ -15,8 +15,8 @@ public class q50_powx_n {
         while (N > 0) {
             if ((N & 1) == 1)
                 res *= x;
-            x *= x;
-            N >>= 1; // N /= 2
+            x *= x;            // x指数增
+            N >>= 1; // N /= 2，  N乘性减
         }
         return res;
     }

@@ -3,6 +3,29 @@ package Bit;
 import java.util.*;
 
 public class q137_single_number_of_array_iii {
+    // 推荐-位运算
+    public int singleNumber_bit(int[] nums) {
+        int mod = 3;
+        int[] bitcnts = new int[32];
+        // 统计各个bit位‘1’的个数
+        for (int num: nums) {
+            for (int i = 0; i < 32; i++) {
+                if (((num >> i) & 1) == 1) {
+                    bitcnts[i]++;
+                }
+            }
+        }
+        // %mod：按位抵消mod个相同的元素
+        // 落单（mod != 0）的即为所求的第i位为1
+        int res = 0;
+        for (int i = 0; i < 32; i++) {
+            if (bitcnts[i] % mod != 0) {
+                res |= (1 << i);
+            }
+        }
+        return res;
+    }
+
     // 法1：常规 map
     public int singleNumber1(int[] nums) {
         Map<Integer, Integer> numCntMap = new HashMap<>();

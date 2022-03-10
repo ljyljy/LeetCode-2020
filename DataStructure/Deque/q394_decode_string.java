@@ -17,13 +17,13 @@ public class q394_decode_string {
                 st_cnt.push(cnt);
                 cnt = 0; // 计算下一轮新的
                 sb.setLength(0);
-            } else if (ch == ']') { // ?需要将本轮暂存的sb、cnt压栈
-                int tmpCnt = st_cnt.pop();// ?非cnt！pop出的是上一轮处理的cnt！ 
-                String tmpRes = sb.toString().repeat(tmpCnt); // "sb"*tmpCnt次
-                sb = new StringBuilder(st_res.pop() + tmpRes);;// ?保序-头插法（pop出的本身就是前串）
+            } else if (ch == ']') {  // ?需要将本轮暂存的sb、cnt弹栈
+                int tmpCnt = st_cnt.pop();// ?非cnt！pop出的是本轮处理的cnt！
+                String tmpRes = sb.toString().repeat(tmpCnt); // 本轮的"sb"*tmpCnt次
+                sb = new StringBuilder(st_res.pop() + tmpRes);// ?保序-头插法（pop出的本身就是前串）
             } else if (Character.isDigit(ch)) { // ‘0’~‘9’? 勿忘ch-'0'!
                 cnt = cnt * 10 + (ch - '0'); // ?易错! 如: 12[abc], 即：abc重复12次
-            } else sb.append(ch); // 字母 // WA: st_res.push(ch + "");
+            } else sb.append(ch); // 字母,暂存到本轮的sb // WA: st_res.push(ch + "");
         }
         return sb.toString();
     }

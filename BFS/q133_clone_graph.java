@@ -20,6 +20,32 @@ public class q133_clone_graph {
         }
     }
 
+    // 20220309 最新版BFS
+    Map<Node, Node> srcCopy = new HashMap<>();
+    public Node cloneGraph_bfs(Node node) {
+        if (node == null) return null;
+        Deque<Node> queue = new ArrayDeque<>();
+        queue.offer(node);
+        srcCopy.put(node, new Node(node.val));
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                Node src = queue.poll();
+                Node copied = srcCopy.getOrDefault(src, new Node(src.val));
+
+                for (Node neighbor: src.neighbors) {
+                    if (!srcCopy.containsKey(neighbor)) {
+                        srcCopy.put(neighbor, new Node(neighbor.val));
+                        queue.offer(neighbor);
+                    }
+                    copied.neighbors.add(srcCopy.get(neighbor));
+                }
+            }
+        }
+        return srcCopy.get(node);
+    }
+
     // 法1：DFS
     private Map<Node, Node> visited = new HashMap<>();
     public Node cloneGraph_dfs(Node node) {
@@ -42,8 +68,6 @@ public class q133_clone_graph {
     // 法2：BFS
     public Node cloneGraph(Node node) {
         if (node == null) return null;
-        // ↓ 不是DFS回溯, 本句没啥效用
-        if (visited.containsKey(node))  return visited.get(node);
 
         Map<Node, Node> visited = new HashMap<>();
         Deque<Node> queue = new ArrayDeque<>();
@@ -51,7 +75,6 @@ public class q133_clone_graph {
         // ❤ 法1：首先，将node(root)放入visited
         visited.put(node, new Node(node.val));
 
-        // BFS易错!!!
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {

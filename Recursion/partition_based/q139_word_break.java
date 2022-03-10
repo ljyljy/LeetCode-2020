@@ -7,18 +7,18 @@ import java.util.Map;
 public class q139_word_break {
     // 法2: DP【完全背包, 排列(荐)/组合均可】
     public boolean wordBreak(String s, List<String> wordDict) {
-        int bagszie = s.length(); //
-        boolean[] dp = new boolean[bagszie+1];
+        int n = s.length();
+        boolean[] dp = new boolean[n+1];
         dp[0] = true;
-        for (int j = 0; j <= bagszie; j++) { // 背包：给定的s
-            for (int i = 0; i < j; i++) { // ?物品：子串[i, j)?
-                String str = s.substring(i, j);
-                if (wordDict.contains(str) && dp[i]) {
+        for (int i = 0; i < n; i++) {// 背包：给定的s
+            for (int j = i+1; j <= n; j++) {// 物品：子串[i, j)
+                String subStr = s.substring(i, j);
+                if (dp[i] && wordDict.contains(subStr)) {
                     dp[j] = true;
                 }
             }
         }
-        return dp[bagszie];
+        return dp[n];
     }
 
 
