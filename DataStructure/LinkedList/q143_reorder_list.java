@@ -1,32 +1,38 @@
 package DataStructure.LinkedList;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class q143_reorder_list {
     // 法1：线性表存储数组下标 - 时间O(n)，空间O(n)
-    public void reorderList_1(ListNode head) {
-        if (head == null) return;
-        List<ListNode> listNodes = new ArrayList<>();
-        ListNode node = head;
-        while (node != null) {
-            listNodes.add(node);
-            node = node.next;
+    public void reorderList1(ListNode head) {
+        if (head == null) return ;
+        List<ListNode> list = new LinkedList<>();
+        ListNode p = head;
+        int n = 0;
+        while (p != null) {
+            list.add(p);
+            p = p.next;
+            n++;
         }
-        int n = listNodes.size();
-        int i = 0, j = n - 1;
-        for (i = 0, j = n - 1; i < j; i++, j--) {
-            ListNode first_node = listNodes.get(i);
-            ListNode sec_node = listNodes.get(i+1);
-            ListNode last_node = listNodes.get(j);
-
-            first_node.next = last_node;
-            last_node.next = sec_node;
-        }  // i == j 退出
-        listNodes.get(i).next = null;
+        int i = 0, j = n-1;
+        while (i < j) {
+            list.get(i).next = list.get(j);
+            i++;
+            if (i == j) break; // ❤
+            list.get(j).next = list.get(i);
+            j--;
+        }
+        list.get(i).next = null;
     }
 
-    // 法2（最优）：寻找链表中点 + 链表逆序 + 合并链表 - 时间O(n)，空间O(1)
+    // 法2（最优）：
+    // 链表中点 + 链表逆序 + 合并链表 - 时间O(n)，空间O(1)
+    // 1->2->3->4->5
+    // 1->2 & 5->4->3
+    // 1-5->2-4->3
+    // https://leetcode-cn.com/problems/reorder-list/solution/zhong-pai-lian-biao-by-leetcode-solution/
     public void reorderList(ListNode head) {
         if (head == null) return;
         ListNode mid = get_midNode(head);
@@ -39,7 +45,6 @@ public class q143_reorder_list {
     }
 
     private ListNode get_midNode(ListNode head) {
-        if (head == null) return head;
         ListNode slow = head, fast = head;
         /* 扩展
         * // 若为节点数为双数，则以下返回【后者】
@@ -54,9 +59,6 @@ public class q143_reorder_list {
     }
 
     private ListNode reverseList(ListNode head) {
-        if (head == null) return head;
-        ListNode dummy = new ListNode(-1);
-        dummy.next = head;
         ListNode prev = null, cur = head;
         while (cur != null) {
             ListNode nxt = cur.next;
@@ -67,7 +69,27 @@ public class q143_reorder_list {
         return prev;
     }
 
-    private void mergeList(ListNode l1, ListNode l2) {
+    private ListNode mergeList(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(-1);
+        ListNode p = dummy;
+        while (l1 != null && l2 != null) {
+            if (l1 != null) {
+                p.next = l1;
+                l1 = l1.next;
+                p = p.next;
+            }
+            if (l2 != null) {
+                p.next = l2;
+                l2 = l2.next;
+                p = p.next;
+            }
+        }
+        if (l1 != null) p.next = l1;
+        if (l2 != null) p.next = l2;
+        return dummy.next;
+    }
+
+    private void mergeList_2(ListNode l1, ListNode l2) {
         ListNode l1_sec, l2_sec;
         while (l1 != null && l2 != null) {
             l1_sec = l1.next;

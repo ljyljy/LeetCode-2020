@@ -5,38 +5,39 @@ import java.util.Deque;
 
 public class q150_evaluate_reverse_polish_notation {
     public int evalRPN(String[] tokens) {
-        Deque<Integer> deque = new ArrayDeque<>();
+        Deque<Integer> stack = new ArrayDeque<>();
         String operators = "+-*/";
         for (String token: tokens) {
             if (!operators.contains(token)) {
-                deque.offerFirst(Integer.valueOf(token));  // stack.push(); 类型转换String -> int;
+                stack.offerFirst(Integer.valueOf(token));  // stack.push(); 类型转换String -> int;
                 continue;  // 不进行下面的运算(iff.token为运算符时)
             }
-            int a = deque.pollFirst(); // stack.pop()
-            int b = deque.pollFirst();
+            // 逆波兰：若当前为运算符，则栈内至少有两个数！
+            int a = stack.pollFirst(); // stack.pop()
+            int b = stack.pollFirst(); // 或removeFirst
             if (token.equals("+"))
-                deque.offerFirst(b + a);
+                stack.offerFirst(b + a);
             else if (token.equals("-"))
-                deque.offerFirst(b - a); // 注意b在前！！
+                stack.offerFirst(b - a); // ❤注意b在前！！
             else if (token.equals("*"))
-                deque.offerFirst(b * a);
+                stack.offerFirst(b * a);
             else // if (token.equals("/"))
-                deque.offerFirst(b / a);
+                stack.offerFirst(b / a);
 //            switch (token){
 //                case "+":
-//                    deque.offerFirst(b + a);
+//                    stack.offerFirst(b + a);
 //                    break;
 //                case "-":
-//                    deque.offerFirst(b - a);
+//                    stack.offerFirst(b - a);
 //                    break;
 //                case "*":
-//                    deque.offerFirst(b * a);
+//                    stack.offerFirst(b * a);
 //                    break;
 //                case "/":
-//                    deque.offerFirst(b / a);
+//                    stack.offerFirst(b / a);
 //                    break;
 //            }
         }
-        return deque.pollFirst();
+        return stack.pollFirst();
     }
 }
