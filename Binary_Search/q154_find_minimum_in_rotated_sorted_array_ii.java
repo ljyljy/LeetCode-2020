@@ -8,7 +8,7 @@ public class q154_find_minimum_in_rotated_sorted_array_ii {
         // ↓ 恢复“二段性” -- [2,2,3,4,5,   0(pivot),1,1,2,2,2]
         while (end > 0 && nums[start] == nums[end]) end--; // 退出后，保证end >= 0
         // case1：不存在旋转（本身升序）
-        if (nums[start] <= nums[end])  return nums[start];
+        if (end == 0 || nums[start] <= nums[end])  return nums[start];
         // case2：有旋转，以nums[0] 或 nums[end-1]为“二段性”分界点
         int target = nums[0]; // 但为了避免end-1<0，故保守选nums[0]
         return findPivot2(nums, target, end);
