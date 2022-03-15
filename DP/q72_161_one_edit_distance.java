@@ -3,7 +3,7 @@ package DP;
 public class q72_161_one_edit_distance {
     char[] ss, pp;
     int n1, n2;
-    // Àà±Èq72
+    // ç±»æ¯”q72
     public boolean isOneEditDistance(String s, String p) {
         ss = s.toCharArray(); pp = p.toCharArray();
         n1 = ss.length; n2 = pp.length;

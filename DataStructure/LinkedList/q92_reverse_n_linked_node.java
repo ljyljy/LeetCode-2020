@@ -11,7 +11,7 @@ public class q92_reverse_n_linked_node {
             successor = head.next;  // 记录第 n + 1 个节点
             return head;
         }
-        // 以 head.next 为起点，需要反转前 n - 1 个节点
+        // 以 head.next 为起点，需要反转前 n - 1 个节点g
         ListNode dummy = reverseN(head.next, n-1);
         head.next.next = head;
         head.next = successor;

@@ -11,10 +11,10 @@ public class q72_edit_distance {
         for (int i = 1; i <= n1; i++) {
             for (int j = 1; j <= n2; j++) {
                 if (ch1[i-1] == ch2[j-1]) {
-                    dp[i][j] = dp[i-1][j-1]; // ÑØÓÃ
+                    dp[i][j] = dp[i-1][j-1]; // æ²¿ç”¨
                 } else {
-                    dp[i][j] = Math.min(dp[i-1][j-1], // ÑØÓÃÇ°½áÎ²+ÏÖÄ©Î²Ìæ»»1´Î
-                            Math.min(dp[i-1][j], dp[i][j-1])) + 1; // Ôö/É¾1´Î
+                    dp[i][j] = Math.min(dp[i-1][j-1], // æ²¿ç”¨å‰ç»“å°¾+çŽ°æœ«å°¾æ›¿æ¢1æ¬¡
+                            Math.min(dp[i-1][j], dp[i][j-1])) + 1; // å¢ž/åˆ 1æ¬¡
                 }
             }
         }
