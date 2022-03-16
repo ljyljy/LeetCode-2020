@@ -18,10 +18,10 @@ public class q44_wildcard_matching {
         // 为了解决s="a", p="[*]a"中*组合在p开头0次匹配的问题，需要额外初始化dp[0][:]。
         // 为此，在s前加“ ”，以便于s=" "与p="*"的匹配;
         // i>0, j=0时，dp[i][j]=false(∵'空p'不可能与'非空s'匹配,如s="a", p=" ")
-        s = " " + s; p = " " + p;
+        s = " " + s; p = " " + p; // ???
         ss = s.toCharArray(); pp = p.toCharArray();
         int nS = ss.length, nP = pp.length;
-        boolean[][] dp = new boolean[nS][nP];
+        boolean[][] dp = new boolean[nS][nP];// ???
         dp[0][0] = true; // 假定s和p都从空字符开始
         for (int i = 0; i < nS; i++) {
             for (int j = 1; j < nP; j++) { // dp[>0][j=0]一定是false，无需遍历
@@ -32,7 +32,7 @@ public class q44_wildcard_matching {
                 }
             }
         }
-        return dp[nS-1][nP-1];
+        return dp[nS-1][nP-1];// ???
     }
 
     private boolean match(int i, int j) {

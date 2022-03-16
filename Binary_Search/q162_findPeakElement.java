@@ -1,6 +1,7 @@
-package BinarySearch;
+package Binary_Search;
 
 public class q162_findPeakElement {
+//    数组的两端nums[-1] = nums[n] = -∞ 都是负无穷，因此数组无论是单调递增还是单调递减，又或者是成起伏状，数组中必定包含一个峰值。
     // if1
     public int findPeakElement1(int[] nums) {
         if (nums == null || nums.length == 0) return -1;

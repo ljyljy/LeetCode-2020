@@ -29,7 +29,9 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 from typing import List
 
-
+# 思路：使用val & count计数，相同++不同--，最后返回val。 因为众数超过总数的一半，所以不会被减到0以下。
+#
+# // 即：不同的数可以互相抵消，众数一定是最后落单的那个
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
         if not nums: return None
