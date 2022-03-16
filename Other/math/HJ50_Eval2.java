@@ -1,12 +1,29 @@
 package Other.math;
 
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.util.*;
 
 public class HJ50_Eval2{
+    // eval
+    public static void main(String[] args) throws ScriptException {
+        Scanner sc = new Scanner(System.in);
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine js = manager.getEngineByName("js");
+        while(sc.hasNextLine()){
+            String exp = sc.nextLine();
+            exp = exp.replaceAll("[{\\[]", "(").replaceAll("[}\\]]", ")");
+            Integer res = (Integer)js.eval(exp);
+            System.out.println(res);
+        }
+    }
+
+    // 常规解法
     // 用于存放一个正括号的集合, 用于简化代码
     static Set<Character> brace = new HashSet<>();
-    public static void main(String ... args){
+    public static void main1(String ... args){
         Scanner sc = new Scanner(System.in);
         // 初始化正括号集合
         brace.add('{');
