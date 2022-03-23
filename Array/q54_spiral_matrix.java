@@ -6,7 +6,7 @@ import java.util.List;
 public class q54_spiral_matrix {
     private boolean[][] visited;
     private int m, n;
-    private int[] _row = {0, 1, 0, -1};
+    private int[] _row = {0, 1, 0, -1}; // À≥ ±’Î?
     private int[] _col = {1, 0, -1, 0};
     public List<Integer> spiralOrder(int[][] matrix) {
         m = matrix.length; n = matrix[0].length;

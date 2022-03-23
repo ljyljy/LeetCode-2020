@@ -3,7 +3,7 @@ package Divide_Conquer;
 
 public class q50_powx_n {
 
-    // 法1：迭代
+    // 法1：迭代❤
     public double myPow(double x, int n) {
         if (x == 0) return 0;
         long N = n;
@@ -15,7 +15,7 @@ public class q50_powx_n {
         while (N > 0) {
             if ((N & 1) == 1)
                 res *= x;
-            x *= x;            // x指数增
+            x *= x;            // x指数增，❤而非res*=res!
             N >>= 1; // N /= 2，  N乘性减
         }
         return res;
@@ -36,15 +36,15 @@ public class q50_powx_n {
         return subAns;
     }
 
-    public double myPow0(double x, long n) {
+    public double myPow0(double x, long n) { // 利用重载！
         if (n == 0 || x == 1) return 1.0;
-        long N = n; // 【一定要将int转为long！】
+        long N = n; // 【一定要将int转为long！❤】
         if (N < 0) {
             x = 1.0 / x;
             N = -N;
         }
         double subAns = myPow0(x, N/2);
-        subAns *= subAns;
+        subAns *= subAns; // ❤ 不可dfs()*dfs(): 栈溢出！
         if (N % 2 == 1) // 奇数
             subAns *= x;
         return subAns;

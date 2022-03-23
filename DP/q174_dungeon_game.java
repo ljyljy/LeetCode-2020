@@ -6,7 +6,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class q174_dungeon_game {
-    // 挖坑：dp
+    // 法3: DP
+    public int calculateMinimumHP_dp(int[][] dungeon) {
+        int m = dungeon.length, n = dungeon[0].length;
+        int[][] dp = new int[m+1][n+1]; // [i,j]的最小耗血量(>=0, 魔法加血则置0)
+        for (int i = 0; i <= m; i++) // ❤勿忘等号 <=m!
+            Arrays.fill(dp[i], Integer.MAX_VALUE); // ❤ 网格外围一圈(哨兵)-INT_MAX
+        dp[m][n-1] = dp[m-1][n] = 0; // 右下角的→ & ↓
+        for (int i = m-1; i >= 0; i--) {
+            for (int j = n-1; j >= 0; j--) {
+                dp[i][j] = Math.max(0,
+                        Math.min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j]);
+            }
+        }
+        return dp[0][0] + 1;
+    }
 
     // 法2-2: DFS + MEMO<数组优化hash>
     private int n_row, n_col;
