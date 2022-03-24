@@ -1,7 +1,7 @@
 package Array;
 
 public class q41_first_missing_positive {
-    // O(n)-原地哈希：类比qo_3、qo_53
+    // O(n)-原地哈希：类比qo_3、qo_53, q287
     public int firstMissingPositive(int[] nums) {
         int n = nums.length;
         for (int i = 0; i < n; i++) { // [3,4,-1,1]->[1, 2缺,3, 4]
