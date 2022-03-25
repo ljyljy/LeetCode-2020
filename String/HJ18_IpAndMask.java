@@ -3,6 +3,7 @@ package String;
 import java.util.Scanner;
 
 public class HJ18_IpAndMask {
+    // 类比HJ39
     private static final int A = 0, B = 1, C = 2, D = 3, E = 4, INVALID = 5, PRIVATE = 6;
     private static final int IP = 7, MASK = 8;
     private static int[] cnts = new int[7]; // A/B/C/D/E类地址+非法+掩码;
