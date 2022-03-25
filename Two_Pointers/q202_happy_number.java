@@ -1,6 +1,6 @@
 package Two_Pointers;
 
-public class q210_happy_number {
+public class q202_happy_number {
     // 链表找环，快慢指针
     public boolean isHappy(int n) {
         int slow = n, fast = squareSum(n);

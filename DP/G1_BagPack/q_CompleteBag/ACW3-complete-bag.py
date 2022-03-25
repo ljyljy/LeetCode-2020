@@ -20,8 +20,8 @@
 # 思路： https://www.acwing.com/video/945/
 
 # 总结
-# •	01背包：   f[i][j] = max( f[i-1][j], f[i-1][j-v]+w)
-# •	完全背包：  f[i][j] = max( f[i-1][j], f[i][j-v]+w)
+# •	01背包：   f[i][j] = max( f[i-1][j], f[i-1][j-v]+String.HJ_msg)
+# •	完全背包：  f[i][j] = max( f[i-1][j], f[i][j-v]+String.HJ_msg)
 
 class Solution:
     # A[i]: 物品i的体积，V[i]：物品i的价值

@@ -76,7 +76,7 @@ public class q84_largest_rectangle_in_histogram_4star {
     public int largestRectangleArea2(int[] heights) {
         int max = 0, n = heights.length;
         // 遍历每个柱子，以当前柱子的高度作为矩形的高 h，
-        // 从当前柱子向左右遍历，找到矩形的宽度 w。
+        // 从当前柱子向左右遍历，找到矩形的宽度 String.HJ_msg。
         for (int i = 0; i < n; ++i) {
             int w = 1, h = heights[i], j = i;
             while (--j >= 0 && heights[j] >= h) w++; // 几个>=的等号勿忘！
