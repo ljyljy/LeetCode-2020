@@ -14,15 +14,15 @@ public class q0_01backpack {
     1. 不选择当前的第i件物品/第i件物品比背包容量要大，则dp[i][j] = dp[i-1][j]
     2. 选择当前的第i件物品（潜在要求第i件物品体积小于等于背包总容量），则能装入的物品最大价值为：
         当前物品的价值 加上 背包剩余容量在只能选前i-1件物品的情况下的最大价值
-        dp[i][j] = dp[i-1][j-v[i]] + String.HJ_msg[i]
+        dp[i][j] = dp[i-1][j-v[i]] + w[i]
     dp[i][j]在两种情况中选择比较大的情况作为当前的最优解；
     即：
     if(j >= v[i]):
-        dp[i][j] = max(dp[i-1][j], dp[i-1][j-v[i]] + String.HJ_msg[i])
+        dp[i][j] = max(dp[i-1][j], dp[i-1][j-v[i]] + w[i])
     else:
         dp[i][j] = dp[i-1][j]
     */
-    // v[i]: 物品i的体积; String.HJ_msg[i]: 物品i的价值/权重
+    // v[i]: 物品i的体积; w[i]: 物品i的价值/权重
     private void backPack01_v1 (int N, int V, int[] v, int[] w) {
         // 初始化，先全部赋值为0，这样至少体积为0或者不选任何物品的时候是满足要求
         //  dp[i][j]: 只看前i个物品，总体积是j的情况下，当前最大总价值
@@ -51,9 +51,9 @@ public class q0_01backpack {
     /*
     注意，这里第二层循环的时候，还是小到大循环的话，那么
 
-    dp[i][j] = Math.max(dp[i-1][j], dp[i-1][j-v[i]] + String.HJ_msg[i])
+    dp[i][j] = Math.max(dp[i-1][j], dp[i-1][j-v[i]] + w[i])
     实际上变成了
-    dp[i][j] = Math.max(dp[i][j], dp[i][j-v[i]] + String.HJ_msg[i]);
+    dp[i][j] = Math.max(dp[i][j], dp[i][j-v[i]] + w[i]);
 
     因为i-1的值已经在前面被更新过了，覆盖了
     为了避免这个问题，所以要逆序更新，即先更新第i个，然后更新第i-1个，从而保证第i-1个不被覆盖

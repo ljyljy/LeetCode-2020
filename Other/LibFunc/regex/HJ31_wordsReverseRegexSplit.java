@@ -8,7 +8,7 @@ public class HJ31_wordsReverseRegexSplit {
         while (sc.hasNext()) {
             String str = sc.nextLine();
             String[] strs = str.split("[^a-zA-Z]"); // ?regex：同下
-//            String[] strs = str.split("[^\\String.HJ_msg]"); // ?regex: 任意非字母
+//            String[] strs = str.split("[^\\w]"); // ?regex: 任意非字母
 
             int n = strs.length;
 

@@ -9,7 +9,7 @@
 # 输出："wertf"
 # 解释：
 # 从 "wrt"和"wrf" ,我们可以得到 't'<'f'
-# 从 "wrt"和"er" ,我们可以得到'String.HJ_msg'<'e'
+# 从 "wrt"和"er" ,我们可以得到'w'<'e'
 # 从 "er"和"ett" ,我们可以得到 get 'r'<'t'
 # 从 "ett"和"rftt" ,我们可以得到 'e'<'r'
 # 所以返回 "wertf"
