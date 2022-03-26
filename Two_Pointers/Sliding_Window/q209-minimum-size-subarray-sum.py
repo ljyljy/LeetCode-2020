@@ -58,8 +58,7 @@ class Solution:
                 min_len = min(min_len, end - i)
         return 0 if min_len == n + 1 else min_len
 
-        # 同向双指针 - O(n)
-
+    # 同向双指针 - O(n) [滑动窗口]
     def minSubArrayLen_1(self, sum: int, nums: List[int]) -> int:
         n = len(nums)
         if not n or sum is None: return 0

@@ -16,7 +16,7 @@ public class q337_house_robber_iii {
 
         int[] resL = dpHelper(root.left);
         int[] resR = dpHelper(root.right);
-        // 1. 选root - 左右孩子不选
+        // 1. 选root - Σ左右孩子都不选（不是Math.max!是求和！?）
         int choose = root.val + resL[1] + resR[1];
         // 2. 不选root - 左右孩子随意
         int notChoose = Math.max(resL[0], resL[1]) + Math.max(resR[0], resR[1]) ;
