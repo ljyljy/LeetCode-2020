@@ -22,7 +22,7 @@ public class qo_32_1_levelOrder {
                 if (node.right != null) queue.offer(node.right);
             }
         }
-        // 问题：return res.toArray(new int[res.size()×]); // (指定类型 如new String[n], 但无int[]!)
+        // ❤问题：return res.toArray(new int[res.size()×]); // (指定类型 如new String[n], 但无int[]!) -- q501，q9_10
         // 解决：List<Integer> 转 int[]
         int n = res.size();
         int[] arr = new int[n];
