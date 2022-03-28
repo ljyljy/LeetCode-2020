@@ -5,6 +5,7 @@ import java.util.Deque;
 
 public class q445_add_two_numbers_ii {
     // 法1：栈（FIFO）-- 无需翻转链表，就可从后向前做加法
+    // 类比q415, 445, 43, 67
     public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
         Deque<ListNode> deq1 = new ArrayDeque<>();
         Deque<ListNode> deq2 = new ArrayDeque<>();

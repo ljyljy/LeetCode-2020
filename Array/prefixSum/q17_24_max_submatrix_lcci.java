@@ -52,8 +52,7 @@ public class q17_24_max_submatrix_lcci {
                 ts.add(0); // 第0列の前缀和=0
                 for (int r = 1; r <= m; r++) {
                     int sum_rt = sum[bottom][r] - sum[top-1][r];
-                    int sum_lf = ts.first();// 升序排列，取最小的左和(从而最大化curSum
-                    // )
+                    int sum_lf = ts.first();// 升序排列，取最小的左和(从而最大化curSum)
                     int l = sumColMap.get(sum_lf);
                     int curSum = sum_rt - sum_lf;
                     if (maxSum < curSum) {

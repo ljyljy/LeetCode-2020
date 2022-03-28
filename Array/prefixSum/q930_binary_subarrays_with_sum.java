@@ -4,6 +4,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class q930_binary_subarrays_with_sum {
+    // 新版本
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        int n = nums.length, ans = 0;
+        int[] sum = new int[n+1];
+        for (int i = 1; i <= n; i++) {
+            sum[i] = sum[i-1] + nums[i-1];
+        }
+
+        Map<Integer, Integer> map = new HashMap<>(); // <前缀和, 频次cnt>
+        for (int s: sum) {
+            ans += map.getOrDefault(s - goal, 0);
+            map.put(s, map.getOrDefault(s, 0) + 1);
+        }
+        return ans;
+    }
+
+    // v2
     public int numSubarraysWithSum1(int[] nums, int goal) {
         int n = nums.length;
         int[] sum = new int[n+1];
