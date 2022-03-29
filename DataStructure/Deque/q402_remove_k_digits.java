@@ -20,7 +20,7 @@ public class q402_remove_k_digits {
             stack.push(curNum);
         }
         while (!stack.isEmpty() && k-- > 0) stack.pop(); // ?勿漏！法1) 还需pop，直至k为0!!!!
-        while (!stack.isEmpty() && stack.peekLast() == 0) stack.removeLast(); //法1） ?队头/栈底=Last：前导0去除
+        while (!stack.isEmpty() && stack.peekLast() == 0) stack.removeLast(); //法1） ?队头/栈底=Last：前导0去除, 不可pop！
         StringBuilder sb = new StringBuilder();
         while (!stack.isEmpty()) {
             sb.insert(0, stack.pop());

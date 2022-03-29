@@ -10,7 +10,7 @@ import java.util.*;
         A. n个苹果全部装在k-1个盘子；
         B. 先一次性装满k个盘子，剩余n-k个苹果，继续递归/dp
 */
-public class HJ61_put_apples {
+public class HJ61_put_apples_3star {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {
