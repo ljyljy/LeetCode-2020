@@ -4,6 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class q377_combination_sum_iv {
+    // 法3-2【荐！】：DP动归2【完全背包 组合】 - 时间O(target*n), 空间O(target)
+    public int combinationSum4(int[] nums, int target) {
+        int bagsize = target;
+        int[] dp = new int[bagsize+1];
+        dp[0] = 1;
+        for (int i = 1; i <= bagsize; i++) {
+            for (int j = 0; j < nums.length; j++) {
+                if (i - nums[j] >= 0)
+                    dp[i] += dp[i-nums[j]]; // 组合类
+            }
+        }
+        return dp[bagsize];
+    }
+
     // 法3-1：DP动归 - 时间O(target^2 * n), 空间O(target^2)
     public int combinationSum4_dp1(int[] nums, int target) {
         // int len = target;
@@ -38,19 +52,7 @@ public class q377_combination_sum_iv {
         return cnt;
     }
 
-    // 法3-2【荐！】：DP动归2【完全背包 组合】 - 时间O(target*n), 空间O(target)
-    public int combinationSum4(int[] nums, int target) {
-        int bagsize = target;
-        int[] dp = new int[bagsize+1];
-        dp[0] = 1;
-        for (int i = 1; i <= bagsize; i++) {
-            for (int j = 0; j < nums.length; j++) {
-                if (i - nums[j] >= 0)
-                    dp[i] += dp[i-nums[j]]; // 组合类
-            }
-        }
-        return dp[bagsize];
-    }
+
 
     // 法2-1（可）: DFS + memo
     Map<String, Integer> memo = new HashMap<>();

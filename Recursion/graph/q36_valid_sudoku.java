@@ -8,7 +8,7 @@ public class q36_valid_sudoku {
         boolean[][] subMat = new boolean[n][n]; // <idx，位图>
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                int idx = i / 3 * 3 + j / 3; // 子矩阵idx=[0,8]
+                int idx = i / 3 * 3 + j / 3; // 二维转一维?：子矩阵idx=[0,8]
                 if (board[i][j] == '.') continue;
                 int num = board[i][j] - '0';
                 if (row[i][num-1] || col[j][num-1] || subMat[idx][num-1])
