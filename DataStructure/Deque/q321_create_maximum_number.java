@@ -12,7 +12,7 @@ public class q321_create_maximum_number {
         for (int pick1 = 0; pick1 <= k && pick1 <= n1; pick1++) {
             int pick2 = k - pick1;
             // 从 nums2 中选出长 k - i 的子序列
-            if (pick2 >= 0 && pick2 <= n2) {
+            if (0 <= pick2 && pick2 <= n2) {
                 int[] tmp = merge(pickK(nums1, pick1), pickK(nums2, pick2)); // 合并
                 if (compare(tmp, 0, res, 0)) res = tmp;
             }
@@ -53,9 +53,27 @@ public class q321_create_maximum_number {
         return res;
     }
 
-    public boolean compare(int[] nums1, int p1, int[] nums2, int p2) { // nums1 > nums2, 则true
-        if (p2 >= n2) return true; // 说明nums1更短, nums2先到头了
-        if (p1 >= n1) return false;// 说明nums2更短
+    // compare迭代-0
+    private boolean compare(int[] nums1, int p1, int[] nums2, int p2) {
+        int n1 = nums1.length, n2 = nums2.length;
+        int i = p1, j = p2;
+        while (i < n1 && j < n2) {
+            if (nums1[i] > nums2[j]) {
+                return true;
+            } else if (nums1[i] < nums2[j]) {
+                return false;
+            }
+            i++; j++; // 当前数位相同，继续下一位比较
+        }
+        if (i < n1) return true;// nums1更长
+        if (j < n2) return false;// nums1短
+        return true; // 二者相同
+    }
+
+    // compare递归-1
+    public boolean compare1(int[] nums1, int p1, int[] nums2, int p2) { // nums1 > nums2, 则true
+        if (p2 >= n2) return true; // 说明nums1更长（>）
+        if (p1 >= n1) return false;// 说明nums1更短, 先到头了（前p1个数都相同）
         if (nums1[p1] > nums2[p2]) return true;
         if (nums1[p1] < nums2[p2]) return false;
         return compare(nums1, p1 + 1, nums2, p2 + 1);

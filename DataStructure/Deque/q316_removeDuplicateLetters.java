@@ -10,8 +10,8 @@ public class q316_removeDuplicateLetters {
 
         Deque<Character> stack = new ArrayDeque<>();
         for (char ch: s.toCharArray()) { // 维护单调递【增】栈 - 字典序升序
-            if (!stack.contains(ch)) { // ???勿漏此句！
-                // 如：ac[b], b<c,且b后还有c, 则pop-c, 栈内只有ab了，后面再碰到c可以重入?
+            if (!stack.contains(ch)) { // 【勿漏此句】！
+                // 如：ac[b], b<c,且b后还有c, 则pop-c, 栈内只有ab了，后面再碰到c可以重入
                 while (!stack.isEmpty() && ch < stack.peek() && cnts[stack.peek()] > 0) {
                     stack.pop();                              // ↑当前较小的ch身后，还有栈顶元素的个数
                 }

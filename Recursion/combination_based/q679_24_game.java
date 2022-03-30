@@ -27,8 +27,8 @@ public class q679_24_game {
                     if (dfs(cards)) return true;
                     cards.removeLast(); //
                 }
-                cards.addFirst(b);
-                // ?放到队尾/栈顶b，而非addLast!!!! 由于从前往后计算，回溯时需要将a/b放到后面，等待后续加入计算（否则不会再遍历到）
+                cards.addFirst(b); // 放到【队尾/栈顶b】，【而非addLast】!!!!
+                // 由于从前往后计算，回溯时需要将a/b放到后面，等待后续加入计算（否则不会再遍历到）
             }
             cards.addFirst(a);  // ?放到队尾/栈顶a，而非addLast!!!! 将相对顺序颠倒，寻找其他结果
         }
