@@ -21,11 +21,11 @@ public class q329_longest_increasing_path_in_a_matrix {
 
     private int dfs(int i, int j) {
         if (memo[i][j] != 0) return memo[i][j];
-        memo[i][j]++; // pathLen算入当前格点
+        memo[i][j]++; // ?pathLen算入当前格点，勿漏！
 
         for (int dir = 0; dir < 4; dir++) {
             int newI = i + _x[dir], newJ = j + _y[dir];
-            // 边界内 & mat[newI, newJ]递增
+            // 边界内  &  mat[newI, newJ]递【增】?
             if (isValid(newI, newJ) && matrix[newI][newJ] > matrix[i][j]) {
                 memo[i][j] = Math.max(memo[i][j],
                         dfs(newI, newJ) + 1); // 继续向(newI, newJ)走，pathLen+1【类似dp】

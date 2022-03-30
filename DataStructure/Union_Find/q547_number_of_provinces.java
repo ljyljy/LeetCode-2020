@@ -1,9 +1,10 @@
-package Recursion.graph;
+package DataStructure.Union_Find;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class q547_number_of_provinces {
+    // 类比q130,547
     // 法1：DFS
     int n;
     int[][] isConnected;
@@ -61,7 +62,7 @@ public class q547_number_of_provinces {
         return connCnt;
     }
 
-    // 法3：UF并查集，类比q9_591
+    // 法3：# UF并查集，类比q547，q9_591，q261
     public int findCircleNum(int[][] isConnected) {
         n = isConnected.length;
         UnionFind uf = new UnionFind(n);

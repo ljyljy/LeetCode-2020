@@ -5,7 +5,7 @@ import java.util.*;
 public class q45_LCP9_minJump {
     // 法1：dp
     // 审题：i处只能跳跃到1)左[0, i-1]或2)右i+jump[i]处
-    // ?区别于 跳跃游戏Q45、55！
+    // 【区别于 跳跃游戏Q45、55！】
     public int minJump_dp(int[] jump) {
         int n = jump.length;
         int[] dp = new int[n]; // 至少"再"弹x次，跳出(从后往前)
