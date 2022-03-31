@@ -73,6 +73,7 @@ public class HJ20_CodeValidate {
             int types = 0; // 大写、小写字母、数字、其他；
             String[] regs = {"[A-Z]", "[a-z]", "[0-9]", "[^a-zA-Z0-9]"}; // ?reg="[xx]": 字符集-匹配任意一个
             for (String reg: regs) {
+//                Pattern.compile(reg).matcher(s).find()
                 Pattern pattern = Pattern.compile(reg);
                 Matcher matcher = pattern.matcher(s);
                 if (matcher.find()) {
@@ -83,7 +84,10 @@ public class HJ20_CodeValidate {
                 System.out.println(NG);
                 continue;
             }
-            // 条件3：排除以下规则(.{3,})不可重复！reg分组:(..)；
+            // ?Regex后向引用：http://php-note.com/article/363.html
+            // ?regex外，引用分组使用【$1】, regex内使用【\\1】, 类比HJ20, HJ96
+            // ?条件3：排除以下规则(.{3,})不可重复！reg分组:(..)；
+            //          不能有长度大于2的不含公共元素的子串重复 （注：其他符号不含空格或换行）
             String reg2 = ".*(.{3,}).*(?=\\1).*"; // ?"(?=\\1)":后面匹配组1
             Pattern pattern2 = Pattern.compile(reg2);
             Matcher matcher2 = pattern2.matcher(s);

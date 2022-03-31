@@ -1,18 +1,20 @@
 package DataStructure.Tree;
 
+import com.sun.source.tree.Tree;
+
 import java.util.*;
 
-public class HJ22_2_3 {
+public class q652_q297_HJ22_2_3 {
     static Map<String, Integer> cntMap = new HashMap();
     static List<TreeNode> ans = new ArrayList();
-    static Set<String> serials = new HashSet<>();
+    static Set<String> serials = new TreeSet<>(((o1, o2) -> o2.length()-o1.length())); // 序列化子树.长度降序
     static final String NULL = "null";
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 //        while (sc.hasNext()) {
 //            String[] nodeStr = sc.nextLine().split("\\s");
-            String line = "1,2,3,1,null,2,null,null,null,null,null,1,null,null,null";
-            String line2 = "1,2,3,4,null,2,4,null,null,4,null";
+            String line1 = "1,2,3,1,null,2,null,null,null,null,null,1,null"; // WA
+            String line2 = "1,2,3,4,null,2,4,null,null,4,null"; // pass
             String[] nodeStr = line2.split(",");
             Deque<String> nodes = new ArrayDeque<>(Arrays.asList(nodeStr));
 
@@ -21,14 +23,26 @@ public class HJ22_2_3 {
             dfs(root);
 //        }
 
+        System.out.println("ALL ANS: ");
+        for (String serial: serials)
+            System.out.println(serial);
+        System.out.println("-".repeat(20));
+
+
         if (serials.isEmpty()) {
             System.out.println(-1);
         } else {
-//            for (String str: serials) {
-//                System.out.println(str);
-//            }
-            Deque<String> res0 = new ArrayDeque<>(serials); // 所有可行解 -> TODO: 序列化 & 计算深度，输出最深的树
-
+//            List<TreeNode> nodes = new ArrayList<>();// 所有可行解 -> TODO: 序列化 & 计算深度，输出最深的树
+            // TODO: 序列化输出的是完全二叉？ -- 直接返回最长的
+            boolean first = true;
+            for (String serial: serials) {
+                if (!first) break;
+                String[] nodes0 = serial.split(",");
+                if (nodes0.length == 3 && NULL.equals(nodes0[1]) && NULL.equals(nodes0[2])) {
+                    System.out.println(-1); // 【子树不可以只有一个结点】
+                }else System.out.println(serial);
+                first = false;
+            }
         }
     }
 
@@ -68,27 +82,6 @@ public class HJ22_2_3 {
         }
         return serial;
     }
-
-//    // 法2：序列化 - 层序BFS （?自定义nullNode(nullptr) & INF值）
-//    private static String serialize_BFS(TreeNode root) {
-//        if (root == null) return "";//（可不写 serialize已特判，此处一定不是头结点为空）
-//        Deque<TreeNode> deq = new ArrayDeque<>();
-//        deq.offer(root);
-//        String res = "";
-//        while (!deq.isEmpty()) {
-//            TreeNode node = deq.poll();
-//            // if (node.val == INF) {
-//            //     res += INF + ",";
-//            //     continue;
-//            // } // 可合并到下句↓
-//            res += node.val + ",";
-//            if (!node.equals(nullNode)) { // ?
-//                deq.offer(node.left != null? node.left : nullNode);
-//                deq.offer(node.right != null? node.right : nullNode);
-//            }
-//        }
-//        return res;
-//    }
 
     static class TreeNode {
         int val;
