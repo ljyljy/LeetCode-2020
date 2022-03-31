@@ -8,7 +8,7 @@ public class q45_LCP9_minJump {
     // 【区别于 跳跃游戏Q45、55！】
     public int minJump_dp(int[] jump) {
         int n = jump.length;
-        int[] dp = new int[n]; // 至少"再"弹x次，跳出(从后往前)
+        int[] dp = new int[n]; // 至少【再】弹x次，跳出(从后往前)
         Arrays.fill(dp, Integer.MAX_VALUE);
 
         dp[n-1] = 1; // 边界再弹1次，即可跳出

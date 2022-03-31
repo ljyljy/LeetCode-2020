@@ -105,28 +105,4 @@ public class q63_HJ22_2_2_shortest_unique_paths {
             return Objects.hash(x, y);
         }
     }
-//    // ·¨1: DFS + memo
-//    Map<String, Integer> memo = new HashMap<>();
-//    int m, n;
-//    public int uniquePathsWithObstacles_dfs(int[][] obstacleGrid) {
-//        m = obstacleGrid.length; n = obstacleGrid[0].length;
-//        return dfs(obstacleGrid, 0, 0, memo);
-//    }
-//
-//    private int dfs(int[][] obstacleGrid, int i, int j, Map<String, Integer> memo) {
-//        if (i >= m || j >= n) return 0;
-//        String key = i + "_" + j;
-//        if (memo.containsKey(key)) return memo.get(key);
-//        if (obstacleGrid[i][j] == 1) {
-//            memo.put(key, 0);
-//            return 0;
-//        }
-//        if (i == m-1 && j == n-1 && obstacleGrid[i][j] != 1) return 1;
-//
-//        int cnt_down = dfs(obstacleGrid, i+1, j, memo);
-//        int cnt_right = dfs(obstacleGrid, i, j+1, memo);
-//        int res = cnt_down + cnt_right;
-//        memo.put(key, res);
-//        return res;
-//    }
 }
