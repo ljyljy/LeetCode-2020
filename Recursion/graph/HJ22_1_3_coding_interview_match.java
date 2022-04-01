@@ -55,7 +55,8 @@ import java.util.Scanner;
  *     [0, 1, 0, 1, 0, 0]
  */
 
-// 类比q37
+// dfs:类比q37
+// 预处理领接表等：类比HJ22_1_3, Q815
 public class HJ22_1_3_coding_interview_match {
     private static boolean isValid = false;
     private static int[][] graph;

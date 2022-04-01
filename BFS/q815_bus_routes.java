@@ -3,52 +3,54 @@ package BFS;
 import java.util.*;
 
 public class q815_bus_routes {
+    // 预处理领接表等：类比HJ22_1_3, Q815
     public int numBusesToDestination(int[][] routes, int source, int target) {
         if (source == target) return 0;
         int n = routes.length;
         boolean[][] edge = new boolean[n][n]; // <路线x, 路线y>可否换乘(有共同子集)
-        Map<Integer, Set<Integer>> siteRtsMap = new HashMap<>();// <站点x,list(路线1 2 3...)>
-        for (int r = 0; r < n; r++) { // 遍历路线：r-当前route
-            for (int site : routes[r]) { // 遍历该路线所有站点
-                // 更新站点site的所有路线（siteRtsMap）
-                Set<Integer> routes_site = siteRtsMap.getOrDefault(site, new HashSet<>());
-                routes_site.add(r);
-                siteRtsMap.put(site, routes_site);
+        Map<Integer, Set<Integer>> siteBusMap = new HashMap<>();// 与routes相反，<站点x,list(公交路线1 2 3...)>, 如<站点7, 路线[0, 1]>
+        for (int bus = 0; bus < n; bus++) { // 遍历路线：bus-当前route // 如：idx=0,1
+            for (int site : routes[bus]) { // 遍历该路线所有站点 // 如[1,2,7]或[3,6,7]
+                // 更新包含站点site的所有路线（siteBusMap）
+                Set<Integer> busSet = siteBusMap.getOrDefault(site, new HashSet<>());
+                busSet.add(bus);
+                siteBusMap.put(site, busSet);
                 // 更新'换乘'信息（edge）
-                for (int r2: routes_site) {
-                    if (r == r2) continue;
-                    edge[r][r2] = true;
-                    edge[r2][r] = true;
+                for (int bus2 : busSet) {
+                    if (bus == bus2) continue;
+                    edge[bus][bus2] = true;
+                    edge[bus2][bus] = true;
                 }
             }
         }
         // 若终点站没有任何路线可通行
-        if (!siteRtsMap.containsKey(target)) return -1;
+        if (!siteBusMap.containsKey(target)) return -1;
 
-        int[] cnt = new int[n]; // 记录从起点站所在路线r0到其余各个路线r2的乘坐次数（累加）
-        Arrays.fill(cnt, -1);
-        Deque<Integer> queue = new LinkedList<>(); // 初始化：queue<可通起点的路线>，❤而非site！！
-        Set<Integer> routes_src = siteRtsMap.get(source);
-        for (int r0: routes_src) {
-            cnt[r0] = 1; // 起点站所在路线，尚未换乘
-            queue.offer(r0);
+        // ↓【visitedMap变种】：类比q815，q909
+        int[] transferCnt = new int[n]; // visitedMap: 记录从起点站所在路线r0到其余各个路线r2的乘坐次数（累加）
+        Arrays.fill(transferCnt, -1);
+        Deque<Integer> queue = new LinkedList<>();
+        // 初始化：queue<可通起点的路线bus-∵需计算换乘数>，而非site！！(类比q207，815)
+        for (int bus : siteBusMap.get(source)) {
+            transferCnt[bus] = 1; // 起点站所在路线，尚未换乘
+            queue.offer(bus);
         }
 
         while (!queue.isEmpty()) {
-            int r1 = queue.poll();
-            for (int r2 = 0; r2 < n; r2++) {
-                if (edge[r1][r2] && cnt[r2] == -1) { // -1：表示尚未遍历过（避免重复乘坐）
-                    cnt[r2] = cnt[r1] + 1;
-                    queue.offer(r2);
+            int bus = queue.poll();
+            for (int nxtBus = 0; nxtBus < n; nxtBus++) {
+                if (edge[bus][nxtBus] && transferCnt[nxtBus] == -1) { // -1：表示尚未遍历过（避免重复乘坐）
+                    transferCnt[nxtBus] = transferCnt[bus] + 1; // transferCnt <=> visitedMap变种，类比q909
+                    queue.offer(nxtBus);
                 }
             }
         }
-        // 遍历终点所在的所有线路r_end，找到cnt[r_end]最小者
+        // 遍历终点所在的所有线路busEnd，找到transferCnt[busEnd]最小者
         int res = Integer.MAX_VALUE;
-        for (int r_end:siteRtsMap.get(target)) {
-            if (cnt[r_end] != -1)
-                res = Math.min(res, cnt[r_end]);
+        for (int busEnd : siteBusMap.get(target)) {
+            if (transferCnt[busEnd] != -1)
+                res = Math.min(res, transferCnt[busEnd]);
         }
-        return res == Integer.MAX_VALUE? -1:res;
+        return res == Integer.MAX_VALUE ? -1 : res;
     }
 }

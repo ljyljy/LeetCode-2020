@@ -4,6 +4,7 @@ import java.util.*;
 
 public class q127_word_ladder {
     // 20220308新版本-短、快
+    // 【坑❤：BFS的cur、min更新 & return的多个可行位置】
     Set<String> words = new HashSet<>();
     int minDist = 0;
     public int ladderLength(String beginW, String endW, List<String> wordList) {
@@ -36,6 +37,7 @@ public class q127_word_ladder {
         return 0;
     }
 
+    // 类比a127、752
     private Set<String> getNextWords(String str, Set<String> words) {
         Set<String> nxtWords = new HashSet<>();
         char[] ss = str.toCharArray();

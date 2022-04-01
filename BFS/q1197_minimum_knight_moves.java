@@ -3,11 +3,6 @@ package BFS;
 import java.util.*;
 
 public class q1197_minimum_knight_moves {
-    class Location {
-        int x, y;
-        public Location(){}
-        public Location(int _x, int _y) {x = _x; y = _y;}
-    }
 
     private final int[] _x = {1, 1,  -1,-1, 2, 2, -2,-2};
     private final int[] _y = {2,-2,  -2, 2, 1,-1, -1, 1};
@@ -27,28 +22,26 @@ public class q1197_minimum_knight_moves {
         queue.offer(src);
         Set<Integer> visited = new HashSet<>();
         // Map<Integer, Integer> visitedDist = new HashMap<>();
-        visited.add(src.x*500+src.y); // 二维坐标 -> 一维坐标: x*col(>300)+y
+        visited.add(getID(src)); // 二维坐标 -> 一维坐标: x*col(>300)+y
 
         while (!queue.isEmpty()) {
             int size = queue.size();
             cnt++;
             for (int i = 0; i < size; i++) {
                 Location loc = queue.poll();
-                int hash = loc.x * 500 + loc.y;
                 for (int dir = 0; dir < 8; dir++) {
-                    int new_x = loc.x + _x[dir];
-                    int new_y = loc.y + _y[dir];
-                    if (new_x == x && new_y == y)
-                        return cnt;
+                    int newX = loc.x + _x[dir];
+                    int newY = loc.y + _y[dir];
+                    if (newX == x && newY == y) return cnt;
 
-                    Location new_loc = new Location(new_x, new_y);
-                    int newHash = new_loc.x * 500 + new_loc.y;
+                    Location newLoc = new Location(newX, newY);
+                    int newIdx = getID(newLoc);
 
-                    if (isValid(new_x, new_y)) {
-                        if (visited.contains(newHash))
+                    if (isValid(newX, newY)) {
+                        if (visited.contains(newIdx))
                             continue; // 不走回头路
-                        queue.offer(new_loc);
-                        visited.add(newHash);
+                        queue.offer(newLoc);
+                        visited.add(newIdx);
                     }
                 }
             }
@@ -65,6 +58,11 @@ public class q1197_minimum_knight_moves {
     private boolean isValid(int new_x, int new_y) {
         return (-5 <= new_x && new_x <= 305 && -5 <= new_y && new_y <= 305);
     }
+
+    private int getID(Location loc) {
+        return loc.x * 500 + loc.y;
+    }
+
 
 
     // 写法1-2：visited （set） -> visitedDist（map）
@@ -104,5 +102,12 @@ public class q1197_minimum_knight_moves {
         return -1;
     }
 
+    // Location类做hash会很慢，导致LTE!
+    // 解决: 使用int[]{x, y}
+    class Location {
+        int x, y;
+        public Location(){}
+        public Location(int _x, int _y) {x = _x; y = _y;}
+    }
 
 }

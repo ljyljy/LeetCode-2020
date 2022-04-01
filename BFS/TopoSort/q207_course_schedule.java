@@ -15,14 +15,14 @@ public class q207_course_schedule {
         }
         // BFS TopSort.
         Deque<Integer> queue = new ArrayDeque<>();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) { // queue初始化：类比q207，210，815
             if (indegrees[i] == 0) queue.offer(i); // 不是offer(0==ind[i])
         }
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 int cur = queue.poll();
-                n--; // ?
+                n--; // ?区别于一般BFS维护的cnt，需在每一层BFS前后更新；拓扑排序：n需要在每一[层内]的结点处更新（标记剩余未遍历的[结点数]）
                 for (int nxt: adjList.get(cur)) {
                     if (--indegrees[nxt] == 0) {
                         queue.offer(nxt);
@@ -48,7 +48,7 @@ public class q207_course_schedule {
 
         int[] visited = new int[n];
         for (int i = 0; i < n; i++) {
-            if (!dfs(i, visited)) return false;
+            if (!dfs(i, visited)) return false; // 图内存在环
         }
         return true;
     }

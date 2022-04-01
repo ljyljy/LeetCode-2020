@@ -25,7 +25,7 @@ public class q210_course_schedule_ii {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 int cur = queue.poll();
-                n--;
+                n--;// ?区别于一般BFS维护的cnt，需在每一层BFS前后更新；拓扑排序：n需要在每一[层内]的结点处更新（标记剩余未遍历的[结点数]）
                 // path.add(cur);
                 path[k++] = cur;
                 for (int nxt: adjList.get(cur)) {
@@ -35,6 +35,6 @@ public class q210_course_schedule_ii {
             }
         }
         if (n == 0) return path;
-        else return new int[]{}; // 说明有课程落单，成环?
+        else return new int[]{}; // 说明有课程落单，【成环】
     }
 }
