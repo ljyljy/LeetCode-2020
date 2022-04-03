@@ -31,6 +31,7 @@ public class q974_subarray_sums_divisible_by_k {
 
         // <余数为i∈[0,k-1], 子数组cnt>
         // 同余 - 说明 和为k的子数组 被抵消了❤
+//        ❤：取余（负数求补）-- end=((i+nums[i])%n+n)%n 得到终点（负余修正，类比q974、457）
         Map<Integer, Integer> modCntMap = new HashMap<>();
         modCntMap.put(0, 1); // 哨兵
         for (int i = 1; i <= n; i++) {

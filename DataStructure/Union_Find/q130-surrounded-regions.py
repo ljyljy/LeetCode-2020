@@ -35,7 +35,7 @@ class Solution:
             if not isValid(x, y): return
             if board[x][y] != 'O': return
             board[x][y] = '*'  # 将'边界O'暂时替换为‘*’
-            # dill down 下探（任何与边界相连的'O'，都将他们替换为“*”——最后结果：需还原回'O'）
+            # dill down 下探（任何与边界相连的'O'，都将他们替换为“*”——最后结果：需还原回'O'）【类比q934(染色)】
             for dir in self.DIRS:
                 new_x, new_y = x + dir[0], y + dir[1]
                 dfs(new_x, new_y)

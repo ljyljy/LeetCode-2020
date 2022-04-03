@@ -4,7 +4,21 @@ import java.util.Arrays;
 
 public class q674_longest_continuous_increasing_subsequence {
     // ·¨1£ºdp
-    public int findLengthOfLCIS_DP(int[] nums) {
+    public int findLengthOfLCIS_DPv1(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        int LCIS = 1;
+        for (int i = 1; i < n; i++) {
+            if (nums[i] > nums[i-1])
+                dp[i] = Math.max(dp[i-1], dp[i]) + 1;
+            if (LCIS < dp[i]) LCIS = dp[i];
+        }
+        return LCIS;
+    }
+
+    // ·¨1-2
+    public int findLengthOfLCIS_DPv2(int[] nums) {
         int n = nums.length;
         int[] dp = new int[n];
         Arrays.fill(dp, 1);

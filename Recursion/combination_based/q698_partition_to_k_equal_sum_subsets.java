@@ -24,7 +24,7 @@ public class q698_partition_to_k_equal_sum_subsets {
             // 【0】装满了当前桶，递归穷举下一个桶的选择[(大树)递归下沉drill down?(多选)]
             //   递归1：让下一个桶从 nums[0] 开始选数字
             return dfs_v2(nums, k-1, 0, used, 0, targetSum);
-        }   // ↑ ??? 【勿忘return】!!!否则【WA】!!!
+        }   // ↑ 【【【勿忘return】】】!!!否则【WA，不应继续for】!!!
 
         // 【1】针对当前桶[当前树深]，横向遍历：对每个数字如何选择？【多选】
         for (int i = idx; i < nums.length; i++) {

@@ -96,7 +96,7 @@ public class q547_number_of_provinces {
             }
         }
 
-        public boolean find(int a, int b) {
+        public boolean find(int a, int b) { // ¼´£ºisConnected
             return findR(a) == findR(b);
         }
 

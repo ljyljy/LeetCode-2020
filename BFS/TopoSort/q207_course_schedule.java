@@ -48,7 +48,7 @@ public class q207_course_schedule {
 
         int[] visited = new int[n];
         for (int i = 0; i < n; i++) {
-            if (!dfs(i, visited)) return false; // 图内存在环
+            if (!dfs(i, visited)) return false; // 有向图内存在环
         }
         return true;
     }

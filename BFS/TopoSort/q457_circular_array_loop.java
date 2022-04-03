@@ -22,12 +22,13 @@ public class q457_circular_array_loop {
     }
 
     private void setGraph(boolean flag) {
-        graph = new ArrayList<>();
-        inDeg = new int[n];
+        graph = new ArrayList<>();// 每次需要【重置】！
+        inDeg = new int[n];// 每次需要【重置】！
         for (int i = 0; i < n; i++) {
             graph.add(new ArrayList<>());
         }
         for (int i = 0; i < n; i++) {
+//            ❤：取余（负数求补）-- end=((i+nums[i])%n+n)%n 得到终点（负余修正，类比q974、457）
             int dst = ((i + nums[i]) % n + n) % n; // 负数求补
             if (flag) {// 先处理(flag正) 正向边 nums[i] > 0 的情况
                 if (nums[i] <= 0 || dst == i) continue; // 排除自环：dst == i(src)
@@ -56,7 +57,7 @@ public class q457_circular_array_loop {
             }
         }
 
-        // BFS结束后，若仍有入度非0的点，说明该点存在环（非自环）
+        // BFS结束后，若仍有入度非0的点，说明有向图该结点【存在环（非自环）】
         for (int i = 0; i < n; i++) {
             if (inDeg[i] != 0)
                 return true; // 存在环

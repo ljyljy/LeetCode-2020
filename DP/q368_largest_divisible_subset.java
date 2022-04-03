@@ -3,7 +3,7 @@ package DP;
 import java.util.*;
 
 public class q368_largest_divisible_subset {
-    // 法2: 动归
+    // 法2: 动归【dp + int[] prevs回溯路径】
     public List<Integer> largestDivisibleSubset_DP(int[] nums) {
         Arrays.sort(nums); // 升序
         int n = nums.length;
@@ -25,19 +25,19 @@ public class q368_largest_divisible_subset {
         }
 
         // 遍历 dp，取得「最大长度dp[i]」和「对应下标i-路径res的终点！」
-        int maxLen = -1, idx = -1;
+        int maxLen = -1, end = -1;
         for (int i = 0; i < n; i++) {
             if (maxLen < dp[i]) {
                 maxLen = dp[i];
-                idx = i;
+                end = i;
             }
         }
 
         // 回溯path
         List<Integer> res = new ArrayList<>();
         while (res.size() != maxLen) {
-            res.add(0, nums[idx]); // 头插！从终点(idx0)向前(prev)回溯
-            idx = prevs[idx];// 回溯到prev
+            res.add(0, nums[end]); // 头插！从终点(idx0)向前(prev)回溯
+            end = prevs[end];// 回溯到prev
         }
         return res;
     }
@@ -52,16 +52,19 @@ public class q368_largest_divisible_subset {
     }
 
     private void dfs(int[] nums, int idx) {
-//        if (LDSlist.size() < path.size())    // path回溯下来需要先特判整除！
-//            LDSlist = new ArrayList<>(path); // 满足要求才可能替换LSDlist！
+        if (LDSlist.size() < path.size()) {// 写法1、path回溯下来需要先特判整除！
+            LDSlist = new ArrayList<>(path);
+//            × return;×  // <回溯-子集> 不return，继续下探
+        } // 满足要求才可能替换LSDlist！
+
 
 //        if (idx == nums.length) return; // 可不写，与for中i<n重复
         for (int i = idx; i < nums.length; i++) {
             if (!check(path, nums[i]))  continue; // vs 子集ii(需特判 整除关系)
 
             path.addLast(nums[i]); // 子集问题，保存所有中间结点！
-            if (LDSlist.size() < path.size()) // 直接覆盖为当前最长path
-                LDSlist = new ArrayList<>(path); // 位于path.addLast之后！
+//            if (LDSlist.size() < path.size()) // 写法2、直接覆盖为当前最长path
+//                LDSlist = new ArrayList<>(path); // 位于path.addLast之后！
             dfs(nums, i+1);
             path.removeLast();
         }
@@ -69,10 +72,11 @@ public class q368_largest_divisible_subset {
 
     private boolean check(Deque<Integer> path, int newNum) {
         if (path.isEmpty()) return true;
-        for (Integer oldNum: path) { // [所有]old都必须能被new整除
-            if (newNum % oldNum != 0) // 如： 8 % (4/2/1) == 0
-                return false;
-        }
-        return true;
+        // for (Integer oldNum: path) { // [所有]old都必须能被new整除
+        //     if (newNum % oldNum != 0) // 如： 8 % (4/2/1) == 0
+        //         return false;
+        // }
+        // return true;
+        return (newNum % path.peekLast() == 0);// [优化]path递增，path最后一个元素须能被new整除
     }
 }

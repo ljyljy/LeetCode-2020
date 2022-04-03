@@ -15,7 +15,7 @@ public class q115_distinct_subsequences {
                 if (ch1[i-1] == ch2[j-1]) {
                     // 1) [i-1][j-1] & 当前[i][j]共同组成一种方案
                     // 2) 不考虑当前[i][j]组合，形成另一种方案：[i-1][j] <- 模式串j不动
-                    dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
+                    dp[i][j] = dp[i-1][j-1] + dp[i-1][j]; // ?类比q115, 1143, 392
                 } else { // 无法考虑当前[i][j]&[i-1][j-1]，故只有一种方案:[i-1][j]
                     dp[i][j] = dp[i-1][j];
                 }

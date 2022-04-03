@@ -11,7 +11,7 @@ public class q1143_longest_common_subsequence {
                 if (ch1[i-1] == ch2[j-1]) {
                     dp[i][j] = dp[i-1][j-1] + 1;
                 } else { // 否则, 看max([0, i-2] & [0, j-1] 与 [0, i-1] & [0, j-2])
-                    dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+                    dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]); // ?类比q115, 1143, 392
                 }
                 // if (res < dp[i][j]) res = dp[i][j];
             }
