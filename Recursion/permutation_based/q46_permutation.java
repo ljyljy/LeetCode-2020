@@ -9,7 +9,7 @@ public class q46_permutation {
     public List<List<Integer>> permute(int[] nums) {
         if (nums == null || nums.length == 0) return res;
         // ∵全排列 ∴(1) {1,2}、{2,1}是不同的排列 -> for中i从0起，而非idx！
-        // - (2) ∵i从0起，∴需要used进行路径(树枝)去重！❤
+        // - (2) ∵i从0起，∴需要used进行路径(树枝)去重！--【01背包-物品只有1个，排列问题】❤
         boolean[] used = new boolean[nums.length];
         dfs(nums, 0, used);
         return res;

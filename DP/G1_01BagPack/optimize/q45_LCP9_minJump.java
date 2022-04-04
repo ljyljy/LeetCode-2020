@@ -32,18 +32,22 @@ public class q45_LCP9_minJump {
         Deque<int[]> queue = new ArrayDeque<>(); // [idx, step]
         queue.offer(new int[]{0, 1});
         used[0] = true;
-        int farthestL = 1; // ?
+        int farthestL = 1; //
         while (!queue.isEmpty()) {
-            int size = queue.size();
+//            int size = queue.size();
             // for (int i = 0; i < size; i++) {
             int[] cur = queue.poll();
             int idx = cur[0], step = cur[1];
             int farIdx = idx + jump[idx];
             if (farIdx >= n) return step;
-            if (!used[farIdx]) {
+            if (!used[farIdx]) { // 避免成环
                 queue.offer(new int[]{farIdx, step+1});
                 used[farIdx] = true;
             }
+            // 向左扩展：O(n^2)
+            // 某一个位置及其之前所有位置都已经被扩展过，那么一定是最短路，不需要再次被扩展
+            // farthestL：记录某个位置及其之前位置均已被扩展，每次更新farthestL 即可
+            // TLE:  for (int j = 0...)
             for (int j = farthestL; j < idx; j++) {
                 if (!used[j]) {
                     queue.offer(new int[]{j, step+1});

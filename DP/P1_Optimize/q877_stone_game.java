@@ -4,13 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class q877_stone_game {
-    // 法1：DFS
-    // ↓ <key="i_j", val=剩余石子>
+    // 类比q486, 877
+    // 【荐】法1：DFS
+    // ↓ <key="i_j", val=Alex-Lee的石子数量差值>
     private Map<String, Integer> memo = new HashMap<>();
     private int[] piles; // 减少传参
     public boolean stoneGame_dfs(int[] piles) {
         this.piles = piles;
         return dfs(0, piles.length-1) > 0;
+        // ↑ Alex从[i 或 n-1处拿石头，最终(Alex-Lee石子数量)>0], Alex胜
     }
 
     private int dfs(int i, int j) {
@@ -32,7 +34,7 @@ public class q877_stone_game {
         //     (而另一个人该轮捡不到，差值为piles[i]-0) ↓
         for (int i = 0; i < n; i++) dp[i][i] = piles[i];
         // j >= i
-        for (int i = n-2; i >= 0; i--) { // i+1不可越界
+        for (int i = n-2; i >= 0; i--) { // i+1不可越界=n-1起
             for (int j = i+1; j < n; j++) { // [j-1]不可越界(>=i)
                 // <i,j>需要<i+1, j-1>, ∴i倒序，j正序
                 dp[i][j] = Math.max(piles[i] - dp[i+1][j],
@@ -50,7 +52,7 @@ public class q877_stone_game {
         //     (而另一个人该轮捡不到，差值为piles[i]-0) ↓
         for (int i = 0; i < n; i++) dp[i] = piles[i];
         // j >= i
-        for (int i = n-2; i >= 0; i--) { // i+1不可越界
+        for (int i = n-2; i >= 0; i--) { // i+1不可越界=n-1起
             for (int j = i+1; j < n; j++) { // [j-1]不可越界(>=i)
                 // <i,j>需要<i+1, j-1>, ∴i倒序，j正序
                 dp[j] = Math.max(piles[i] - dp[j],

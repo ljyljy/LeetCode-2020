@@ -4,15 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class q377_combination_sum_iv {
-    // 法3-2【荐！】：DP动归2【完全背包 组合】 - 时间O(target*n), 空间O(target)
+    // 法3-2【荐！】：DP动归2【完全背包 排列】 - 时间O(target*n), 空间O(target)
     public int combinationSum4(int[] nums, int target) {
         int bagsize = target;
         int[] dp = new int[bagsize+1];
         dp[0] = 1;
-        for (int i = 1; i <= bagsize; i++) {
-            for (int j = 0; j < nums.length; j++) {
-                if (i - nums[j] >= 0)
-                    dp[i] += dp[i-nums[j]]; // 组合类
+        for (int j = 1; j <= bagsize; j++) { // 背包-外循环
+            for (int i = 0; i < nums.length; i++) { // 【物品-内循环】- 排列
+                if (j - nums[i] >= 0)
+                    dp[j] += dp[j-nums[i]]; // 求排列的方案数（有顺序）
             }
         }
         return dp[bagsize];
@@ -54,7 +54,7 @@ public class q377_combination_sum_iv {
 
 
 
-    // 法2-1（可）: DFS + memo
+    // 法2-1（荐）: DFS + memo
     Map<String, Integer> memo = new HashMap<>();
     public int combinationSum4_memo0(int[] nums, int target) {
         return dfs_memo(nums, 0, target, memo);
@@ -69,6 +69,7 @@ public class q377_combination_sum_iv {
         int cnt_ = 0;
         for (int i = idx; i < nums.length; i++) {
             if (target-nums[i] < 0) continue;
+            // 1. nums元素不重复 2.元素可以重复取！ -- 下探仍为idx【而非i！】
             cnt_ += dfs_memo(nums, idx, target-nums[i], memo);
         }
         memo.put(key, cnt_);
@@ -86,7 +87,6 @@ public class q377_combination_sum_iv {
         if (remain < 0) return 0; // 也可以不加 因为for内有if
         if (remain == 0) return 1;
         if (memo.containsKey(remain)) return memo.get(remain);
-        else memo.put(remain, 0);
 
         int res = 0; // 控制某一树层
         for (int i = 0; i < nums.length; i++) {

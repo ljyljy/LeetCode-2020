@@ -3,6 +3,7 @@ package Recursion.permutation_based;
 import java.util.*;
 
 public class q47_permutations_ii {
+    // 【01背包，排列-有重复元素，每个数字/物品只能用1次】
     List<List<Integer>> res = new ArrayList<>();
     Deque<Integer> path = new ArrayDeque<>();
     public List<List<Integer>> permuteUnique(int[] nums) {
