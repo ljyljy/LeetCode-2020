@@ -21,6 +21,7 @@ public class q684_redundant_connection {
 
         public UnionFind (int n) {
             father = new int[n+1]; // 改动1：结点值∈[1, n]
+            // 也可以不改动：结点值∈[1, n] -> new UF(n+1)即可, 见q685
             for (int i = 1; i <= n; i++) {
                 father[i] = i;
             }
@@ -35,7 +36,7 @@ public class q684_redundant_connection {
                 connCnt--;
                 return true;
             }
-            return false; // 根节点相同，返回true
+            return false; // 根节点相同，返回false
         }
 
         private int findR(int x) {
