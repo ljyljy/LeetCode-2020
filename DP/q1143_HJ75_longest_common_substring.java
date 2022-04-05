@@ -3,7 +3,7 @@ package DP;
 import java.util.Scanner;
 
 public class q1143_HJ75_longest_common_substring {
-    // 类比q1143：最长公共子序列LCSeq(不要求连续) ≠ LCStr(本题，要求连续！)
+    // 对比q1143：最长公共子序列LCSeq(不要求连续) ≠ LCStr(本题，要求连续！)
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {
@@ -22,7 +22,7 @@ public class q1143_HJ75_longest_common_substring {
                     dp[i][j] = dp[i-1][j-1] + 1;
                 } else {
                     dp[i][j] = 0; // ∵公共子串（连续）∴自立门户时，重新计数
-                    // vs1: LCS最长公共子序列(不连续): dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+                    // vs-q1143: LCS子序列(不连续): dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
                 }
                 maxLen = Math.max(maxLen, dp[i][j]);
             }

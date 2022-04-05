@@ -4,8 +4,8 @@ public class q96_unique_BST {
     public int numTrees(int n) {
         int[] dp = new int[n+1];
         dp[0] = 1;
-        for (int i = 1; i <= n; i++) { // Ã¶¾Ùn
-            for (int j = 1; j <= i; j++) { // ÒÔjÎªroot
+        for (int i = 1; i <= n; i++) { // æžšä¸¾n
+            for (int j = 1; j <= i; j++) { // ä»¥jä¸ºroot
                 dp[i] += dp[j-1] * dp[i-j];
             }
         }

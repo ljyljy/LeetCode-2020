@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class q179_largest_number {
+    // 类比q179, qo_45
     // 法1：新
     public String largestNumber(int[] nums) {
         int n = nums.length;

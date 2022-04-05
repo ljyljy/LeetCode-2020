@@ -21,6 +21,7 @@ public class q1893_check_if_all_range_covered {
     //     }
     // };
 
+    // 法2
     public boolean isCovered0(int[][] ranges, int left, int right) {
         Arrays.sort(ranges, (o1, o2) -> (o1[0] != o2[0]? o1[0] - o2[0] : o1[1] - o2[1]));
         int m = ranges.length, n = ranges[0].length;

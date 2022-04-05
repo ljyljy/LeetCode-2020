@@ -38,4 +38,31 @@ public class q25_reverse_nodes_in_k_group {
         }
         return pre;
     }
+
+    // 练习：链表的输入输出
+    public static void main(String[] args) {
+        q25_reverse_nodes_in_k_group sol = new q25_reverse_nodes_in_k_group();
+        int n = 5; // sc
+        int[] head = new int[]{1,2,3,4,5}; // sc
+        int k = 2; // sc
+        ListNode dummy = new ListNode(-1);
+        ListNode cur = new ListNode(-1);
+        dummy = cur; // 【非.next！】
+        for (int i = 0; i < n; i++) {
+            cur.next = new ListNode(head[i]);// sc 【非cur=...】
+            cur = cur.next;
+        }
+
+        ListNode reversed = sol.reverseKGroup(dummy.next, k);
+        printNodes(reversed);
+
+    }
+
+    private static void printNodes(ListNode reversed) {
+        ListNode p = reversed; // dummy.next;
+        while (p != null) {
+            System.out.print(p.val + " ");
+            p = p.next;
+        }
+    }
 }
