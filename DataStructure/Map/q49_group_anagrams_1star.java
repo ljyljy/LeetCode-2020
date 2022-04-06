@@ -1,3 +1,5 @@
+package DataStructure.Map;
+
 import java.lang.reflect.Array;
 import java.util.*;
 

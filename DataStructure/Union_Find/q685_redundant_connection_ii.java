@@ -1,7 +1,7 @@
 package DataStructure.Union_Find;
 
 public class q685_redundant_connection_ii {
-    // 法1：并查集-判环
+    // 法1：并查集-有向图判环【有根树】
     public int[] findRedundantDirectedConnection(int[][] edges) {
         int n = edges.length;
         // 1) 统计入度

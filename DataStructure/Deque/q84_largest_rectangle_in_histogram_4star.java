@@ -61,6 +61,7 @@ public class q84_largest_rectangle_in_histogram_4star {
             // 若当前柱体 i 的高度小于栈顶柱体的高度，说明 i 是栈顶柱体的「右边第一矮于自己」。
             // 因此以栈顶柱体为高的矩形的左右宽度边界就确定了，可以计算面积🌶️ ～
             while (!stack.isEmpty() && tmp[i] < tmp[stack.peek()]) {
+                // ↓【高柱子(栈顶)弹栈&计算，给矮tmp[i](>哨兵0)压栈等待后面计算的机会】
                 int h = tmp[stack.pop()]; // i: 右边界
                 max = Math.max(max, (i - stack.peek() - 1) * h); // 弹栈后的栈顶（原-次栈顶）是左边界
                 // 宽度要-1：两边的矮柱子不参与面积计算！ 矮高矮--> 面积只算高的部分！

@@ -4,10 +4,10 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class q321_create_maximum_number {
-    int n1, n2;
+    private int n1, n2;
     public int[] maxNumber(int[] nums1, int[] nums2, int k) {
-        int[] res = new int[0];
         n1 = nums1.length; n2 = nums2.length;
+        int[] res = new int[n1 + n2];
         // 从 nums1 中选出长 i 的子序列
         for (int pick1 = 0; pick1 <= k && pick1 <= n1; pick1++) {
             int pick2 = k - pick1;
@@ -40,10 +40,12 @@ public class q321_create_maximum_number {
     }
 
     // 坑：不可以简单merge！若67 & 604, 还需比较后续哪个大！
+    // 【不可以直接用全局n1, n2】
     public int[] merge(int[] nums1, int[] nums2) {
-        int[] res = new int[n1 + n2];
+        int n11 = nums1.length, n22 = nums2.length;
+        int[] res = new int[n11 + n22];
         int cur = 0, p1 = 0, p2 = 0;
-        while (cur < n1 + n2) {
+        while (cur < n11 + n22) {
             if (compare(nums1, p1, nums2, p2)) {
                 res[cur++] = nums1[p1++];
             } else {
@@ -54,8 +56,9 @@ public class q321_create_maximum_number {
     }
 
     // compare迭代-0
+    // 【不可以直接用全局n1, n2】
     private boolean compare(int[] nums1, int p1, int[] nums2, int p2) {
-        int n1 = nums1.length, n2 = nums2.length;
+        int n1 = nums1.length, n2 = nums2.length;// 【不可以直接用全局n1, n2】
         int i = p1, j = p2;
         while (i < n1 && j < n2) {
             if (nums1[i] > nums2[j]) {
@@ -71,12 +74,14 @@ public class q321_create_maximum_number {
     }
 
     // compare递归-1
-    public boolean compare1(int[] nums1, int p1, int[] nums2, int p2) { // nums1 > nums2, 则true
+    // 【不可以直接用全局n1, n2】
+    private boolean compare1(int[] nums1, int p1, int[] nums2, int p2) { // nums1 > nums2, 则true
+        int n1 = nums1.length, n2 = nums2.length;// 【不可以直接用全局n1, n2】
         if (p2 >= n2) return true; // 说明nums1更长（>）
         if (p1 >= n1) return false;// 说明nums1更短, 先到头了（前p1个数都相同）
         if (nums1[p1] > nums2[p2]) return true;
         if (nums1[p1] < nums2[p2]) return false;
-        return compare(nums1, p1 + 1, nums2, p2 + 1);
+        return compare1(nums1, p1 + 1, nums2, p2 + 1);
     }
 }
 
