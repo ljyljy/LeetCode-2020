@@ -15,7 +15,7 @@ public class q86_partition_list {
             }
             p = p.next;
         }
-        big.next = null;
+        big.next = null; // 【勿漏】否则big后可能依然有引用，会成环！
         small.next = head_big.next; // head_XXX: dummy
         return head_small.next;
     }

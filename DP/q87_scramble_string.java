@@ -25,6 +25,7 @@ public class q87_scramble_string {
                         for (int q = 1; q < len; q++) {
                             // 1) [i1...q][i2..(len-q)]    // 2) [i1...q][i2..(len-q)]
                             // 1) [j1...q][j2..(len-q)]    // 2) [j2..(len-q)][j1...q]
+                            // 1) [i...q][i+q..(len-q)]    // 2) [j..(len-q)][j+len-q...q]
                             // dp[len,i,j] = (1) || (2), 即[q,i1,j1] && [len-q,i2,j2]
                             dp[len][i][j] = (dp[q][i][j] && dp[len-q][i+q][j+q]) ||
                                     (dp[q][i][j+len-q] && dp[len-q][i+q][j]);

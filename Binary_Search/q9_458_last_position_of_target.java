@@ -1,4 +1,4 @@
-package BinarySearch;
+package Binary_Search;
 
 public class q9_458_last_position_of_target {
     public int lastPosition(int[] nums, int target) {

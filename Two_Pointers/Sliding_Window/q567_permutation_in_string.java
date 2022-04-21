@@ -6,18 +6,17 @@ import java.util.Map;
 
 public class q567_permutation_in_string {
     // 法0：Labu模板：https://labuladong.gitee.io/algo/2/21/56/
-    // 先看q76
+    // 先看q76  ❤类比q567,438
     public boolean checkInclusion(String tar, String src) {
-        Map<Character, Integer> need= new HashMap<>(),
-                                window = new HashMap<>();
+        Map<Character, Integer> need= new HashMap<>();
+        Map<Character, Integer> window= new HashMap<>();
         for (char c: tar.toCharArray())
             need.put(c, need.getOrDefault(c, 0)+1);
 
         int left = 0, right = 0, valid = 0;
         while (right < src.length()) {
             // 1、扩大窗口(右边界++)
-            char char2Add = src.charAt(right);
-            right++;
+            char char2Add = src.charAt(right++);
             if (need.containsKey(char2Add)) {
                 window.put(char2Add, window.getOrDefault(char2Add, 0)+1);
                 if (window.get(char2Add).equals(need.get(char2Add)))
@@ -26,11 +25,10 @@ public class q567_permutation_in_string {
 
             // 3、已找到'可行解'（字母种类&个数均满足, 即valid==need.size()），持续优化——缩小窗口(左边界++)
             // 前提：↓ 滑窗大小 > tar长度，才能缩小窗口（注意临界，不可取等） (实时变)
-            while (right-left-1 > tar.length()) {
-                if (valid == need.size()) return true; // 找到一个可行解，直接true（与q76不同，无需最优化'可行解'）
+            while (right-left >= tar.length()) {
+                if (valid == need.size()) return true; // 找到一个可行解，直接true（与q76/438不同）
 
-                char char2Del = src.charAt(left);
-                left++;
+                char char2Del = src.charAt(left++);
                 if (need.containsKey(char2Del)) {
                     if (need.get(char2Del).equals(window.get(char2Del)))
                         valid--;
@@ -55,14 +53,17 @@ public class q567_permutation_in_string {
             cnt1[s1.charAt(i) - 'a']++;
             cnt2[s2.charAt(i) - 'a']++;
         }
+
         if (Arrays.equals(cnt1, cnt2))
             return true; // s1.equals(s2)
+
         for (int i = n1; i < n2; i++) { // 滑动窗口(维护长度==n1)
             cnt2[s2.charAt(i) - 'a']++; // 新元素加入滑窗
             cnt2[s2.charAt(i-n1) - 'a']--; // 旧元素(最左)删除
             if (Arrays.equals(cnt1, cnt2))
                 return true;
         }
+
         return false;
     }
 

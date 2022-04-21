@@ -37,6 +37,36 @@ public class q81_search_in_rotated_sorted_array_ii {
         return -1;
     }
 
+    // 二分 // 类比q33，升级版
+    // v3-2 - 一次二分v2 【推荐 不易错】
+    public boolean search_2_2(int[] nums, int target) {
+        int n = nums.length;
+        int j = n-1;
+        while (j >= 0 && nums[0] == nums[j]) j--;
+        return binSearch_once(nums, 0, j, target) != -1;
+    }
+
+    private int binSearch_once(int[] nums, int start, int end, int target) {
+        while (start < end) {
+            int mid = start + end >> 1;
+            if (nums[mid] == target) return mid;
+            if (nums[start] == nums[mid]) {
+                start++;
+                continue;
+            } else if (nums[start] < nums[mid]) {
+                if (nums[start] <= target && target <= nums[mid]) {
+                    end = mid;
+                } else start = mid + 1;
+            } else {
+                if (nums[mid] <= target && target <= nums[end]) {
+                    start = mid + 1;
+                } else end = mid;
+            }
+        }
+        if (nums[start] == target) return start;
+        return -1;
+    }
+
 
     // v1-1: 两次二分v1
     public boolean search_1v1(int[] nums, int target) {

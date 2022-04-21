@@ -17,14 +17,14 @@ public class q27_remove_element {
     public int removeElement3(int[] nums, int val) {
         int n = nums.length;
         if (n == 0) return 0;
-        int slow = 0, fast = 0;
-        while (fast < n) {
-            if (nums[fast] != val) {
-                nums[slow++] = nums[fast];
+        int write = 0, read = 0;
+        while (read < n) {
+            if (nums[read] != val) {// vs q26：nums[read] != nums[write-1]
+                nums[write++] = nums[read];
             }
-            fast++;
+            read++;
         }
-        return slow;
+        return write;
     }
 
     // 法2：优化版（避免了需要保留的元素的重复赋值）

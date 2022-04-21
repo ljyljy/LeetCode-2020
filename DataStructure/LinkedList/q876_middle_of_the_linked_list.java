@@ -18,7 +18,7 @@ public class q876_middle_of_the_linked_list {
         }
         return cur;
     }
-    // 法3：快慢指针 - 双指针
+    // 法3：快慢指针 - 双指针, 应用：q876, 234,
     public ListNode middleNode(ListNode head) {
         ListNode slow = head, fast = head;
         /* 扩展

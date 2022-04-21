@@ -75,6 +75,23 @@ public class q70_climbing_stairs {
         return f3;
     }
 
+    // 法1-2：DP迭代-2
+    public int climbStairs(int n) {
+        int bagsize = n;
+        int[] dp = new int[bagsize+1];
+        dp[0] = 1;
+
+        for (int i = 1; i <= n; i++) {
+            if (i == 1) dp[i] = 1;
+            else if (i == 2) dp[i] = 2;
+            else {
+                dp[i] += dp[i-1] + dp[i-2];
+            }
+        }
+
+        return dp[bagsize];
+    }
+
     // 法2：回溯
     Map<Integer, Integer> memo;
     public int climbStairs_dfs_memo(int n) {

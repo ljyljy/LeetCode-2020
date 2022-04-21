@@ -11,7 +11,7 @@ public class q120_triangle_min_pathsum {
     public int minimumTotal(List<List<Integer>> triangle) {
         this.triangle = triangle;
         m = triangle.size(); n = triangle.get(m-1).size();
-        int[][] dp = new int[m+1][n+1]; // 必须维度+1? 否则越界！
+        int[][] dp = new int[m+1][n+1]; // 【哨兵：维度+1】在叶子底下加一行全0行，作为哨兵；
         for (int i = m-1; i >= 0; i--) {
             List<Integer> row = triangle.get(i);
             for (int j = row.size()-1; j >= 0; j--) {

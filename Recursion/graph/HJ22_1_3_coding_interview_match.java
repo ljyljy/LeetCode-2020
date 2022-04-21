@@ -55,7 +55,7 @@ import java.util.Scanner;
  *     [0, 1, 0, 1, 0, 0]
  */
 
-// dfs:类比q37
+// dfs:类比q37，q1293
 // 预处理领接表等：类比HJ22_1_3, Q815
 public class HJ22_1_3_coding_interview_match {
     private static boolean isValid = false;
@@ -103,6 +103,7 @@ public class HJ22_1_3_coding_interview_match {
         // 类比q37, 一维坐标转换二维坐标 ?
         int row = idx / n, col = idx % n;
         if (graph[row][col] == 1) { // 若可配对，则选/不选
+            // 类比q1293，HJ22_1_3
             // 1. 选择面试（配对i-j）
             res[row][col] = 1;
             dfs(res, idx+1);

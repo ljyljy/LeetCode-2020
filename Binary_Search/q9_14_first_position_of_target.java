@@ -1,4 +1,4 @@
-package BinarySearch;
+package Binary_Search;
 
 public class q9_14_first_position_of_target {
     public int binarySearch(int[] nums, int target) {

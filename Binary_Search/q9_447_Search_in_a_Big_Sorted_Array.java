@@ -1,4 +1,4 @@
-package BinarySearch;/////////////// 方法1 倍增
+package Binary_Search;/////////////// 方法1 倍增
 //https://www.jiuzhang.com/solution/search-in-a-big-sorted-array/#tag-highlight-lang-java
 
 /**

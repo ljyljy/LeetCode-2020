@@ -34,7 +34,7 @@ public class q11_container_with_most_water {
         for (int i = 0,  j = height.length-1; i < j; ) {
             // 挪矮的lowH，让高的highH保持不动，这样求得面积可以尽量大
             int minH = height[i] < height[j]? height[i++] : height[j--];
-            int area = (j - i + 1) * minH;
+            int area = (j - i + 1) * minH; // ❤ WHY+1? 因为上一行指针移动了，这里需要"还原"。
             max = Math.max(area, max);
         }
         return max;

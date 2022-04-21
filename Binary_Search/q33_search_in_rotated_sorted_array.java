@@ -1,4 +1,4 @@
-package BinarySearch;
+package Binary_Search;
 
 public class q33_search_in_rotated_sorted_array {
     public int search(int[] nums, int target) {

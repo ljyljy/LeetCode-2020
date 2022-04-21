@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class q19_remove_nth_node_from_end_of_list {
-    // 法3(一趟遍历)：双指针  -  时间：O(N); 空间：O(1)。
+    // 法3(一趟遍历)：双指针 -  时间：O(N); 空间：O(1)。
     public ListNode removeNthFromEnd(ListNode head, int k) {
         ListNode dummy = new ListNode(-1);
         dummy.next = head;

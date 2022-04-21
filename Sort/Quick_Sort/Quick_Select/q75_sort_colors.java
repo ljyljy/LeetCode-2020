@@ -7,12 +7,12 @@ public class q75_sort_colors {
         int left = 0, i = 0, right = n-1;
         while (i <= right) { // while条件❤❤❤
             if (nums[i] == 1) i++; // 跳过
-            else if (nums[i] == 0) {
+            else if (nums[i] == 0) {// 最左多了个0，left++
                 swap(nums, left, i);
                 left++;
                 i++;
             }
-            else if (nums[i] == 2) {
+            else if (nums[i] == 2) { // 最右多了个2，right--
                 swap(nums, right, i);
                 right--;
             }
@@ -38,6 +38,28 @@ public class q75_sort_colors {
             }
         }
         return i; // 或 j+1
+    }
+
+    // 法2-2：O(n) - 2次快选v2（只分区，不排序）
+    public void sortColors2_2(int[] nums) {
+        int n = nums.length;
+        if (n == 1) return ;
+        int pivot_1 = partition2(nums, 0, n-1, 1); // <= 1, > 1 【0 & 1, 2】
+        int pivot_0 = partition2(nums, 0, pivot_1, 0); // <= 0, > 0   [【0, 1】, 2]
+    }
+
+    private int partition2(int[] nums, int start, int end, int pivot) {
+        if (start >= end) return start;
+        int i = start, j = end;
+        while (i <= j) {
+            while (i <= j && nums[i] <= pivot) i++;
+            while (i <= j && nums[j] > pivot) j--;
+            if (i <= j) {
+                swap(nums, i, j);
+                i++; j--;
+            }
+        }
+        return j;
     }
 
 

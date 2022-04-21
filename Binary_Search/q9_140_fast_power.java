@@ -1,3 +1,4 @@
+package Binary_Search;
 
 public class q9_140_fast_power {
 

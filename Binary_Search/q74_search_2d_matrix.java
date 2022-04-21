@@ -56,17 +56,33 @@ public class q74_search_2d_matrix {
         return false;
     }
 
-    // 法1：二分*2次（先第一列-获取行号row_i，后在row_i行继续二分查找target）
-    public boolean searchMatrix_v1(int[][] matrix, int target) {
-        int row_i = BinSearch1_col0(matrix, target);
-        // System.out.println(row_i);
-        if (row_i == -1) return false;
-        return BinSearch2_row(matrix[row_i], target);
+    // 法2-3:（二分模板1）- [left, mid], [mid+1, right]
+    public boolean searchMatrix_v2_3(int[][] matrix, int target) {
+        int m = matrix.length, n = matrix[0].length;
+        int start = 0, end = m * n - 1;
+        while (start < end) {
+            int mid = start + end >> 1;
+            int num = matrix[mid / n][mid % n];
+            if (num == target) {
+                return true;
+            } else if (num < target) start = mid + 1;
+            else end = mid;
+        }
+        if (matrix[start / n][start % n] == target) return true;
+        return false;
     }
 
-    //  找到最后一个不大于target的matrix第一列元素
+    // 法1：二分*2次（先第一列-获取行号row_i，后在row_i行继续二分查找target）
+    public boolean searchMatrix_v1(int[][] matrix, int target) {
+        int row_i = BinSearch1_row(matrix, target);
+        // System.out.println(row_i);
+        if (row_i == -1) return false;
+        return BinSearch2_col(matrix[row_i], target);
+    }
+
+    //  找到最后一个不大于target的matrix所在行
     // 二分1st - [left, mid-1], [mid, right]
-    private int BinSearch1_col0(int[][] matrix, int target) {
+    private int BinSearch1_row(int[][] matrix, int target) {
         int start = -1, end = matrix.length - 1;
         while (start < end) {
             int mid = (start + 1) + end >> 1; //
@@ -79,7 +95,7 @@ public class q74_search_2d_matrix {
 
 
     // 二分2nd - [left, mid-1], mid, [mid+1, right]
-    private boolean BinSearch2_row(int[] row, int target) {
+    private boolean BinSearch2_col(int[] row, int target) {
         int start = 0, end = row.length - 1;
         while (start <= end) {
             int mid = start + end >> 1;

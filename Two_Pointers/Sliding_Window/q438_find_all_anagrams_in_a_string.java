@@ -16,22 +16,21 @@ public class q438_find_all_anagrams_in_a_string {
         int left = 0, right = 0;
         int valid = 0;
         while (right < src.length()) {
-            char char2Add = src.charAt(right);
-            right++;
+            char char2Add = src.charAt(right++);
             if (need.containsKey(char2Add)) {
                 window.put(char2Add, window.getOrDefault(char2Add, 0)+1);
                 if (need.get(char2Add).equals(window.get(char2Add)))
                     valid++;
             }
 
-            // 找到可行解↓(窗口长度，左闭右开❤)，最优化-缩小窗口
+            // ↓不一定找到了可行解，但必须保证滑窗大小固定为tar.length()！❤类比q567,438
+            // ↓(窗口长度，左闭右开❤)，最优化-缩小窗口
             while (right - left >= tar.length()) { // ❤ 取等！
                 if (valid == need.size()) {
                     // System.out.println(left + ", " + right + "; valid = " +valid);
                     res.add(left);
                 }
-                char char2Del = src.charAt(left);
-                left++;
+                char char2Del = src.charAt(left++);
                 if (need.containsKey(char2Del)) {
                     if (need.get(char2Del).equals(window.get(char2Del)))
                         valid--;

@@ -3,6 +3,36 @@ package Recursion.partition_based;
 import java.util.Arrays;
 
 public class q91_decode_ways {
+    // 写法1-2
+    int n;
+    int[] memo;
+    public int numDecodings2(String s) {
+        n = s.length();
+        memo = new int[n];
+        Arrays.fill(memo, -1);
+        return dfs(0, s, memo);
+    }
+
+    private int dfs(int idx, String s, int[] memo) {
+        if (idx == n) return 1;
+        if (memo[idx] != -1) return memo[idx];
+        // 前导‘0’无对应映射 ↓
+        if (s.charAt(idx) == '0') return 0;// 模拟切割s：s以【idx为起始点】
+        // int num = Integer.valueOf(s);
+        // if (1 <= num && num <= 26) return 1; // 【不可】还有别的可能性！
+        // if (num > 26) return 0; // 写法1
+
+        int cnt = 0;
+        for (int i = idx; i < idx+2 && i < n; i++) {
+            String seg = s.substring(idx, i+1);
+            if (Integer.valueOf(seg) > 26) continue; // 写法2
+            cnt += dfs(i+1, s, memo);  // 【不可传入seg！】否则idx会乱套！
+        }
+
+        memo[idx] = cnt;
+        return cnt;
+    }
+
     // 法1：DFS【结合q9_680】 + memo
     // private int ans = 0;
     public int numDecodings_dfs(String s) {

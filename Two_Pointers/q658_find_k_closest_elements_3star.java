@@ -27,6 +27,31 @@ public class q658_find_k_closest_elements_3star {
         return res;
     }
 
+    // 2.二分法1（写法2）
+    public List<Integer> findClosestElements22(int[] arr, int k, int x) {
+        int n = arr.length;
+        // ❤[二分答案]：找"滑动窗口(大小为k)"的第一个起始点left
+        int start = 0, end =  n - k;
+
+        while (start < end) {
+            int mid = start + (end - start) / 2; // 最优左边界mid
+            // 对比左边界[mid,…] vs [mid+k, …]
+            // 从而定位左区间端点的边界值
+            if (x - arr[mid] > arr[mid+k] - x) {// x偏右(非arr[mid+k-1]！！！)
+                // 下一轮搜索区间是 [mid + 1, right]
+                start = mid+1; // 【右半段】候选左边界
+            } else {// 【左半段】x偏左/正中间，说明最优左边界还可以向左挪动！一定要挪到不能再挪为止！
+                end = mid; // 尽量要找到符合要求的【最左/小idx】
+            }
+        }
+
+        List<Integer> res = new ArrayList<>();
+        for (int i = start; i < start + k; i++) {
+            res.add(arr[i]);
+        }
+        return res;
+    }
+
     // 3.二分法2: 双指针中间往两边扩散
     public List<Integer> findClosestElements3(int[] arr, int k, int target) {
         int left = findLowerClosest(arr, target); // target<arr[0]时，left为-1
@@ -67,32 +92,6 @@ public class q658_find_k_closest_elements_3star {
             return target - arr[left] < arr[right] - target;
         }
         return true;// 优先考虑左/小idx
-    }
-
-
-
-    // 2.二分法1（写法2）
-    public List<Integer> findClosestElements22(int[] arr, int k, int x) {
-        int n = arr.length;
-        int left1 = 0, left2 =  n - k;
-
-        while (left1 < left2) {
-            int mid = left1 + (left2 - left1) / 2; // 最优左边界mid
-            // 尝试从长度为 k + 1 的连续子区间删除一个元素
-            // 从而定位左区间端点的边界值
-            if (x - arr[mid] > arr[mid+k] - x) {// x偏右(非arr[mid+k-1]！！！)
-                // 下一轮搜索区间是 [mid + 1, right]
-                left1 = mid+1; // 【右半段】候选左边界
-            } else {// 【左半段】x偏左/正中间，说明最优左边界还可以向左挪动！一定要挪到不能再挪为止！
-                left2= mid; // 尽量要找到符合要求的【最左/小idx】
-            }
-        }
-
-        List<Integer> res = new ArrayList<>();
-        for (int i = left1; i < left1 + k; i++) {
-            res.add(arr[i]);
-        }
-        return res;
     }
 
 

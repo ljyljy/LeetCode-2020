@@ -20,12 +20,12 @@ public class q4_median_of_two_sorted_arrays {
         int len1 = A.length - i, len2 = B.length - j;
         if (len1 > len2) return getKth(B, j, A, i, k);
         if (i == A.length) return B[j + k - 1]; // ①
-        if (k == 1) return Math.min(A[i], B[j]);
+        if (k == 1) return Math.min(A[i], B[j]); // 保小的
 
         int newI = Math.min(i + k/2, A.length);// ①
         int newJ = j + k/2;
         if (A[newI - 1] > B[newJ - 1]) { // B[j:j+k/2]不可能有解-> B从newJ开始
-            return getKth(A, i, B, newJ, k - k/2);
+            return getKth(A, i, B, newJ, k - k/2); // 保大的，舍小的
         } else { // A[i:newI]不可能有解-> A从newI开始
             return getKth(A, newI, B, j, k - (newI - i));
         }

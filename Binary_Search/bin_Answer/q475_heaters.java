@@ -16,11 +16,11 @@ public class q475_heaters {
         return start;
     }
 
-    private boolean check(int[] houses, int[] heaters, int x) {
+    private boolean check(int[] houses, int[] heaters, int tryR) {
         int n1 = houses.length, n2 = heaters.length;
         for (int i = 0, j = 0; i < n1; i++) {
-            while (j < n2 && houses[i] > heaters[j] + x) j++; // 找到合适的右边界
-            if (j < n2 && heaters[j] - x <= houses[i] && houses[i] <= heaters[j] + x) continue; // 换下一个house
+            while (j < n2 && houses[i] > heaters[j] + tryR) j++; // 找到合适的右边界(见例2)
+            if (j < n2 && heaters[j] - tryR <= houses[i] && houses[i] <= heaters[j] + tryR) continue; // 换下一个house
             return false;
         }
         return true;

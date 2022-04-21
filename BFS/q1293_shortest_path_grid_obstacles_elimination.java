@@ -33,6 +33,7 @@ public class q1293_shortest_path_grid_obstacles_elimination {
                 for (int dir = 0; dir < 4; dir++) {
                     int nx = x + _x[dir], ny = y + _y[dir];
                     if (!isValid(nx, ny)) continue;
+                    // 类比q1293，HJ22_1_3
                     // 1) 非障碍物, 仍可消除rest个障碍物
                     if (grid[nx][ny] == 0 && !visited[nx][ny][rest]) {
                         if (nx == m-1 && ny == n-1) {

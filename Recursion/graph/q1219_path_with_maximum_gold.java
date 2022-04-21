@@ -18,8 +18,8 @@ public class q1219_path_with_maximum_gold {
             for (int j = 0; j < n; j++) {
                 if (grid[i][j] != 0 && !visited[i][j]) {
                     visited[i][j] = true;
-                    maxAmount = Math.max(maxAmount,
-                            dfs(i, j));
+                    // 最值类-多源dfs，用memo会WA! 类比q1219,695
+                    maxAmount = Math.max(maxAmount, dfs(i, j));
                     visited[i][j] = false;
                 }
             }
