@@ -19,6 +19,30 @@ public class q121_best_time_to_buy_and_sell_stock {
         return Math.max(dp[(n-1) % MOD][0], dp[(n-1) % MOD][1]);
     }
 
+    // 获取购买日 & 卖出日
+    public int maxProfit_getBuyAndSell(int[] prices) {
+        int n = prices.length;
+        int[][] dp = new int[n][2]; // 0: 持有，1: 不持有
+        dp[0][0] = -prices[0];
+
+        int buy = -1, sell = -1;
+
+        for (int i = 1; i < n; i++) {
+            if (-prices[i] > dp[i-1][0]) {
+                buy = i+1; // 天数=下标i+1
+            }
+            dp[i][0] = Math.max(dp[i-1][0], -prices[i]);
+
+            if (dp[i-1][1] < dp[i-1][0] + prices[i]) {
+                sell = i+1;// 天数=下标i+1
+            }
+            dp[i][1] = Math.max(dp[i-1][1], dp[i-1][0] + prices[i]);
+        }
+
+        System.out.println("buy: " + buy + ", sell: " + sell); // 购买日 & 卖出日
+        return Math.max(dp[n-1][0], dp[n-1][1]);
+    }
+
     // 法1. 贪心: 求max{右max-左min}
     public int maxProfit_greedy(int[] prices) {
         int n = prices.length;

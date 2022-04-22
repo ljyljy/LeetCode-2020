@@ -26,7 +26,7 @@ public class q127_word_ladder {
                 String cur = queue.poll();
                 // if (cur.equals(end)) return minDist; // 法1：本层深度
                 for (String nxt: getNextWords(cur, words)) {
-                    if (visited.contains(nxt)) continue;
+                    if (visited.contains(nxt)) continue; // 【BFS避免成环】，类比q127、HJ22_3_2, 133
                     // 法2：更快-每层遍历ing就时刻检查有无equals(end)
                     if (nxt.equals(end)) return minDist+1; // 直接返回到下一层的长度（for-2内部）
                     queue.offer(nxt);

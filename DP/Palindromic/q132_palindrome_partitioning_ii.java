@@ -19,8 +19,8 @@ public class q132_palindrome_partitioning_ii {
                 f[i] = 0;
                 continue;
             } // 未跳过，说明s[0,i]不是回文(如:"cabb")，
-            // 则需要在其子串(分割点j)中:(1) j后-找s[j,i-1]回文("bb")
-            // (2) j前-最小分割数dp[j] -> ∵分割点j ∴dp[j]+1
+            // 则需要在其子串【分割点j】中:(1) j后-找s[j+1,i]回文("bb")
+            // (2) j前-最小分割数f[j] -> ∵分割点j ∴f[j]+1
             for (int j = 0; j < i; j++) {
                 // s[0,i]不是回文(如:"aab", "ababcb")，需要在其子串中找回文("aa"/"aba")+1("b"/"bcb")
                 if (dp[j+1][i]) // 前提：

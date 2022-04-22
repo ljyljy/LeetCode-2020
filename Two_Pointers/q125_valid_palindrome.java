@@ -52,4 +52,9 @@ public class q125_valid_palindrome {
 //        return (ch+"").matches("[^0-9a-zA-Z]"); // 法2: 效率低
         return !(Character.isDigit(ch) || Character.isLetter(ch));// 法3: 效率高
     }
+
+    public static void main(String[] args) {
+        System.out.println(Character.toLowerCase('A'));
+        System.out.println(Character.toLowerCase('3')); // 数字字符，也可以toLowerCase, 结果无影响！
+    }
 }

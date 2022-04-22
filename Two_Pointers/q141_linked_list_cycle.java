@@ -15,7 +15,6 @@ public class q141_linked_list_cycle {
     }
 
     // 法2：快慢指针  时间O(n), 空间O（1）
-
     public boolean hasCycle(ListNode head) {
         if (head == null || head.next == null) return false;
         // ❤判环：起始必须交错开！（但是求环的起点：起点均head；二次相交时即为所求）
@@ -32,7 +31,7 @@ public class q141_linked_list_cycle {
 
 
 
-        // 法1：哈希表 时&空 O(n)
+    // 法1：哈希表 时&空 O(n)
     public boolean hasCycle1(ListNode head) {
         Set<ListNode> nodeSeen = new HashSet<>();
         while (head != null) {

@@ -35,7 +35,7 @@ public class q133_clone_graph {
                 Node copied = srcCopy.getOrDefault(src, new Node(src.val));
 
                 for (Node neighbor: src.neighbors) {
-                    if (!srcCopy.containsKey(neighbor)) {
+                    if (!srcCopy.containsKey(neighbor)) { // 【BFS避免成环】，类比q127、HJ22_3_2, 133
                         srcCopy.put(neighbor, new Node(neighbor.val));
                         queue.offer(neighbor);
                     }

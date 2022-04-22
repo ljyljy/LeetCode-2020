@@ -22,15 +22,15 @@ public class q139_word_break {
     }
 
 
-    private Map<String, Boolean> memo = new HashMap<>();
+    private Map<Integer, Boolean> memo = new HashMap<>();
     // ·¨1-2: DFS
     public boolean wordBreak_dfs2(String s, List<String> wordDict) {
         return dfs2(s, wordDict, 0, memo);
     }
 
     private boolean dfs2(String s, List<String> wordDict, int idx,
-                         Map<String, Boolean> memo) {
-        String key = idx + "";
+                         Map<Integer, Boolean> memo) {
+        int key = idx;
         if (idx >= s.length()) {
             memo.put(key, true);
             return true;
@@ -50,8 +50,9 @@ public class q139_word_break {
     }
 
     // ·¨1-1: DFS+memo
+    Map<String, Boolean> memo2 = new HashMap<>();
     public boolean wordBreak_dfs1(String s, List<String> wordDict) {
-        return dfs(s, wordDict, memo);
+        return dfs(s, wordDict, memo2);
     }
 
     private boolean dfs(String s, List<String> wordDict,
