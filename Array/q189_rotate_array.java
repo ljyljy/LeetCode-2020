@@ -8,6 +8,7 @@ public class q189_rotate_array {
         swap(nums, 0, k-1); // 2. ·­×ª[0, k-1]
         swap(nums, k, n-1); //    & [k, n-1]
     }
+
     private void swap(int[] nums, int i, int j) {
         while (i < j) {
             int tmp = nums[i];

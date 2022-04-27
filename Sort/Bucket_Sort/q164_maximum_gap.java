@@ -22,19 +22,19 @@ public class q164_maximum_gap {
         if (n < 2) return 0;
         int min = Arrays.stream(nums).min().getAsInt();
         int max = Arrays.stream(nums).max().getAsInt();
-        int k = Math.max(1, (max-min) / (n-1));// // ?假设的平均桶内容量（>=1, 实际可以为0）
-        int cnt = (max-min) / k + 1;// ?桶总数（minmax/k可能有余数，向上取整）
+        int k = Math.max(1, (max-min) / (n-1));// 装载因子k：假设的平均桶内容量（>=1, 实际可以为0）【如：1~9, 分9个桶，每个桶内装载k=8/8=1】
+        int cnt = (max-min) / k + 1;// ?桶总数（minmax/k可能有余数，向上取整）【如：1~9，每个桶1个元素，共8/1+1=9个桶】
         List<List<Integer>> buckets = new ArrayList<>(cnt);
         for (int i = 0; i < cnt; i++) buckets.add(i, new ArrayList<>());
         // 分桶
         for (int num: nums) {
-            int idx = (num-min) / k; // 桶idx=向下取整，助理解：带入maxIdx=cnt-1
+            int idx = (num-min) / k; // 桶idx=向下取整，助理解：带入maxIdx=cnt-1【如：num=1，分在idx=0的桶】
             buckets.get(idx).add(num);
         }
         int prevMax = Integer.MIN_VALUE, maxDiff = 0;
         for (List<Integer> bucket: buckets) {
             if (bucket.isEmpty()) continue; // 空桶跳过
-            if (prevMax != Integer.MIN_VALUE) { // 本桶min - 前桶max（物理上肯定相邻）
+            if (prevMax != Integer.MIN_VALUE) { // 本桶min - 前桶max【物理上肯定相邻，勿反！】
                 maxDiff = Math.max(maxDiff, Collections.min(bucket) - prevMax);
             }
             prevMax = Collections.max(bucket);

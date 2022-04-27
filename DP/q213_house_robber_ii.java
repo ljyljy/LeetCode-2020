@@ -21,7 +21,8 @@ public class q213_house_robber_ii {
         dp[0] = nums[start];
         dp[1] = Math.max(nums[start], nums[start+1]);
         for (int i = 2; i < n; i++) {
-            dp[i % MOD] = Math.max(dp[(i-1) % MOD], dp[(i-2) % MOD] + nums[i+start]);
+            dp[i % MOD] = Math.max(dp[(i-1) % MOD],
+                                    dp[(i-2) % MOD] + nums[i+start]);
         }
         return dp[(n-1) % MOD];
     }

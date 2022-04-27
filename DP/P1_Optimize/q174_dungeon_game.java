@@ -8,7 +8,8 @@ public class q174_dungeon_game {
     // 法3: DP
     public int calculateMinimumHP_dp(int[][] dungeon) {
         int m = dungeon.length, n = dungeon[0].length;
-        int[][] dp = new int[m+1][n+1]; // [i,j]的最小耗血量(>=0, 魔法加血则置0)
+        // 因为就算走到加血的格子，走到的前提也是自身血量>0，不然根本无法行走，因此这个加血在走到格子前是无用的，不可以设置前一步为负血量！
+        int[][] dp = new int[m+1][n+1]; // [i,j]的最小耗血量(>=0, 魔法加血则置0 ↑
         for (int i = 0; i <= m; i++) // ❤勿忘等号 <=m!
             Arrays.fill(dp[i], Integer.MAX_VALUE); // ❤ 网格外围一圈(哨兵)-INT_MAX
         dp[m][n-1] = dp[m-1][n] = 0; // 右下角的→ & ↓

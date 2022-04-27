@@ -72,7 +72,7 @@ public class acw786_topKthSmallest {
         arr[j] = tmp;
     }
 
-    // 法2-2：快速选择 quickSelect 【模板2-荐】          idx需k-1↓
+    // 法2-2：快速选择 quickSelect 【模板2-荐】       【idx】需k'-1↓
     private int quickSelect2(int[] arr, int start, int end, int k) {
         if (start == end) return arr[start];
         int x = arr[start];

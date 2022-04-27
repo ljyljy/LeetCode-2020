@@ -1,6 +1,8 @@
 package DP;
 
 public class q53_maximum_subarray {
+    // 类比：q53 -> 合唱队、q9_42
+
     // 2-贪心[荐!]
     public int maxSubArray2(int[] nums) {
         int n = nums.length;

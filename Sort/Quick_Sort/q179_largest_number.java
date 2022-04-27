@@ -1,13 +1,26 @@
 package Sort.Quick_Sort;
 
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class q179_largest_number {
     // 类比q179, qo_45
-    // 法1：新
+    // 法1：新1
     public String largestNumber(int[] nums) {
+        int n = nums.length;
+        List<String> numStr = new ArrayList<>();
+        for (int num: nums) {
+            numStr.add("" + num);
+        }
+
+        Collections.sort(numStr, (o1, o2)->((o2+o1).compareTo(o1+o2)));
+        StringBuilder sb = new StringBuilder(String.join("", numStr));
+        if (sb.charAt(0) == '0') return "0";
+        return sb.toString();
+    }
+
+    // 新2
+    public String largestNumber2(int[] nums) {
         int n = nums.length;
         String[] numStr = new String[n];
         for (int i = 0; i < n; i++) {
@@ -99,7 +112,7 @@ public class q179_largest_number {
         int i = start + 1, j = end;
         while (i <= j) { // 需要降序！❤
             while (i <= j && (str[i] + pivot).compareTo(pivot + str[i]) > 0) i++; //(567+"4" > "4"+567)
-            while (i <= j && (str[j] + pivot).compareTo(pivot + str[j]) < 0) j--; //(123+"4" - "4"+123)
+            while (i <= j && (str[j] + pivot).compareTo(pivot + str[j]) < 0) j--; //("4"+123 > 123+"4")
             if (i <= j) {
                 swap(str, i, j);
                 i++; j--;
