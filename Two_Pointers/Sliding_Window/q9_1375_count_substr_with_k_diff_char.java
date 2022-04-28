@@ -7,6 +7,8 @@ import java.util.Map;
 // abcabcabc    k = 3, len = 9
 // |  |     |
 // l  r    len       res += (len - r + 1), 类比q315，即从[l, r-1]~[l, len-1]
+
+// 时间O(n), 空间O(|s|)--字符串s中 不同字符数量（valid）
 public class q9_1375_count_substr_with_k_diff_char {
     public long kDistinctCharacters(String s, int k) {
         if (s == null || s.isEmpty()) return 0;
