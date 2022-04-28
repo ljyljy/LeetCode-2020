@@ -3,6 +3,13 @@ package Two_Pointers.Sliding_Window;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 时间复杂度：O(n + m)
+ * 空间复杂度：O(|target| + |source|)
+ *
+ * n, m 为两串长度
+ * |target|，|source| 为两串字符集大小
+ */
 public class q76_minimum_window_substring {
     public String minWindow(String src, String tar) {
         Map<Character, Integer> need = new HashMap<>(), // 目标<字母, 词频>
