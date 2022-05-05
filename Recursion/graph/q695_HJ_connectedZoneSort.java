@@ -11,7 +11,7 @@ import java.util.Random;
  * 2、按照连通块的大小，进行升序输出
  * 【类比q130， 200】
  */
-public class HJ_connectedZoneSort {
+public class q695_HJ_connectedZoneSort {
     private static int m = 5, n = 4;
     private static int[][] graph;
     private static boolean[][] visited;
