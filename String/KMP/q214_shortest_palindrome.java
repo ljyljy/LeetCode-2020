@@ -2,6 +2,10 @@ package String.KMP;
 
 // 类比：ACW831, Q28, 214
 public class q214_shortest_palindrome {
+    // todo: 法3：字符串哈希（略）
+    // https://leetcode-cn.com/problems/shortest-palindrome/solution/by-flix-be4y/
+
+
     // 法2：KMP - O(n+m)：
     public String shortestPalindrome(String s) {
         String s0 = s;
