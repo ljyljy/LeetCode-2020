@@ -1,5 +1,6 @@
 package String;
 
+// 类比：ACW831, Q28, 214
 public class q28_implement_strstr {
     // 法1：BF双指针 - O(m*n)
     public int strStr_bf(String src, String pp) {
@@ -20,13 +21,14 @@ public class q28_implement_strstr {
     // 法2-1：KMP (首位哨兵，next[]中j从0起)
     public int strStr_kmp1(String src, String pp) {
         if (pp.isEmpty()) return 0;
-        int n0 = src.length(), m = pp.length();
+        int n = src.length(), m = pp.length();
         // 避免next[]统一减一：在原串、模式串/匹配串 首位加哨兵（" "）
         src = " " + src; pp = " " + pp;
         char[] s = src.toCharArray(), p = pp.toCharArray();
-        // I) 构造下一跳数组 next[]  - O(m)
+        // I) 构造下一跳数组 next[]，与s无关，只看p的前后缀  - O(m)
         int[] next = new int[m+1]; // ∵有哨兵 ∴长度+1
         // 构造过程 i=2nd(∵i之前有哨兵、j)，j=0 开始，i ≤ 匹配串长度 【构造 i 从 2 开始】
+            // next[0]无意义，next[1]=0就是从头开始，j退无可退，无需计算next[1]，因此【next从p[2:]起始】
         // ❤ WHY j=0起？∵加入哨兵，且【jの意义为：截止i处,最长匹配的前缀长度】
         for (int i = 2, j = 0; i <= m; i++) {
             // ↓ 1) 哨兵后(j>0)  2) ∵哨兵 ∴j+1正串才开始
@@ -38,14 +40,46 @@ public class q28_implement_strstr {
         // II) 匹配过程 O(n)
         //    i = 1(∵哨兵在0处)，j = 0 开始，i ≤ 原串长度 【匹配 i 从 1 开始】
         // WHY j=0起？ - ∵next[0]=0(起始位置)
-        for (int i = 1, j = 0; i <= n0; i++) {
+        for (int i = 1, j = 0; i <= n; i++) {
             // vs 构造：将p[i]替换为s[i]
             while (j > 0 && s[i] != p[j+1]) j = next[j]; // 匹配不成功，回溯到下一跳
             if (s[i] == p[j+1]) j++; // 匹配成功的话，先j++，结束本次循环后 i++
-            if (j == m) return i - m; // 整一段匹配成功，直接返回下标
+            if (j == m) {
+                return i - m; // 整一段匹配成功，直接返回下标
+                // j = next[j]; // 若需要匹配多个，还需要将j后移！（q28不需要）
+            }
+
         }
         return -1;
     }
+
+
+    // 法2-1：KMP (首位哨兵，next[]中j从0起)
+    public int strStr_kmp1_clear(String src, String pp) {
+        if (pp.isEmpty()) return 0;
+        int n0 = src.length(), m = pp.length();
+        src = " " + src; pp = " " + pp;
+        char[] s = src.toCharArray(), p = pp.toCharArray();
+
+        int[] next = new int[m+1];
+        // I) 构造下一跳数组 next[]
+        for (int i = 2, j = 0; i <= m; i++) {
+            while (j > 0 && p[i] != p[j+1]) j = next[j];
+            if (p[i] == p[j+1]) j++;
+            next[i] = j;
+        }
+        // II) 匹配过程 O(n)
+        for (int i = 1, j = 0; i <= n0; i++) {
+            while (j > 0 && s[i] != p[j+1]) j = next[j];
+            if (s[i] == p[j+1]) j++;
+            if (j == m) {
+                return i - m;// 整一段匹配成功，直接返回下标
+                // j = next[j]; // 若需要匹配多个，还需要将j后移！（q28不需要）
+            }
+        }
+        return -1;
+    }
+
 
     // 法2：next[]统一减1
     public int strStr_kmp2(String src, String pp) {
