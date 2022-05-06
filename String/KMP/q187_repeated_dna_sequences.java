@@ -12,7 +12,7 @@ public class q187_repeated_dna_sequences {
     int[] h, p;
     public List<String> findRepeatedDnaSequences(String s) {
         int n = s.length();
-        h = new int[n+10]; p = new int[n+10];
+        h = new int[n+1]; p = new int[n+1];
         List<String> res = new ArrayList<>();
         // Ô¤´¦Àí-×Ö·û´®¹şÏ£¡¾ÀàËÆ<Ç°×ººÍ>¡¿
         p[0] = 1; h[0] = 0;
@@ -22,12 +22,21 @@ public class q187_repeated_dna_sequences {
         }
 
         Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 1; i + 10 - 1 <= n; i++) {
-            int j = i + 10 - 1; // »¬´°Ä©¶Ë
-            int hash = h[j] - h[i-1] * p[j-i+1];
-            int cnt = map.getOrDefault(hash, 0) + 1;
-            if (cnt == 2) res.add(s.substring(i-1, i+10-1));
-            map.put(hash, cnt);
+//        for (int i = 1; i + 10 - 1 <= n; i++) { // idxÕûÌåÇ°ÒÆ1Î»(-1)
+//            int j = i + 10; // »¬´°Ä©¶Ë, str[i-1, j-1]
+//            int hash_ij = h[j-1] - h[i-1] * p[j-i];
+//            int cnt = map.getOrDefault(hash_ij, 0) + 1;
+//            if (cnt == 2) res.add(s.substring(i-1, j-1));
+//            map.put(hash_ij, cnt);
+//        }
+
+        // ×ó±ÕÓÒ¿ªstr[i,j)
+        for (int i = 0; i + 10 <= n; i++) {
+            int j = i + 10; // »¬´°Ä©¶Ë, str[i, j]
+            int hash_ij = h[j] - h[i] * p[j-i];
+            int cnt = map.getOrDefault(hash_ij, 0) + 1;
+            if (cnt == 2) res.add(s.substring(i, j));
+            map.put(hash_ij, cnt);
         }
         return res;
     }

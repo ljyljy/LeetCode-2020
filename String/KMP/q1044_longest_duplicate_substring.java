@@ -3,7 +3,7 @@ package String.KMP;
 import java.util.HashSet;
 import java.util.Set;
 
-
+// 类比：ACW831, Q28, 214, 1044
 public class q1044_longest_duplicate_substring {
     // 法2--二分答案【子串长度】 + 字符串哈希
     int n;
@@ -38,7 +38,7 @@ public class q1044_longest_duplicate_substring {
         for (int i = 1; i+len-1 <= n; i++) {
             int j = i+len-1;
             String subStr = s.substring(i-1, j); // str[i-1, i-1+len)
-            long hash = h[j] - h[i-1] * p[j-i+1];
+            long hash = h[j] - h[i-1] * p[j-(i-1)];
             if (set2.contains(hash)) return subStr;
             set2.add(hash);
         }
@@ -89,10 +89,12 @@ public class q1044_longest_duplicate_substring {
                 if (pp[i] == pp[j+1]) j++;
                 next[i] = j;
             }
+
+            // 对比q218：只需要取next[m-1]！
             // 坑：不可以只看next[m-1]！因为不能只考虑以j=m-1为结尾的前后缀！
             // 需要考虑p的所有子串中，最长前后缀长度！即遍历next[]！
             for (int len: next) {
-                // 截取时去掉开头的哨兵   ↓ (idx=0处)
+                // 截取时去掉开头的哨兵   ↓ (idx=0处)，因此截取需要整体后移1位(+1)
                 String tmp = p.substring(1, len+1); // 或 p[m-next[m-1]:m)
                 //            String tmp = p.substring(m-next[m-1], m);
 //                System.out.println(tmp);
