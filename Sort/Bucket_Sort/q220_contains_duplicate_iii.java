@@ -5,18 +5,42 @@ import java.util.Map;
 import java.util.TreeSet;
 
 public class q220_contains_duplicate_iii {
-    // 法1：滑动窗口(长度k) + 有序集合（TreeSet）
+    // 法1-1（掌握）：滑窗 + Treeset
+    // |x-y| <= t -> x-t <= y <= x+t（【防止INT溢出】-> 设为Long）
+    // 类比q219, 220
+    public boolean containsNearbyAlmostDuplicate1(int[] nums, int k, int t) {
+        TreeSet<Long> tset = new TreeSet<>();
+        int n = nums.length;
+        int left = 0, right = 0;
+        while (right < n) {
+            Long num = (long)nums[right];
+            Long upper = (long)num + (long)t, bottom = (long) num - (long)t;
+            Long num_j = tset.ceiling(bottom); //
+            if (num_j != null && num_j <= upper) {
+                return true;
+            }
+            tset.add(num);
+            right++;
+
+            while (right - left > k) { // 保证窗口<=k
+                tset.remove((long)nums[left++]);
+            }
+        }
+        return false;
+    }
+
+    // 法1-2：滑动窗口(长度k) + 有序集合（TreeSet）
     // 遍历x∈nums，查找:
     // 1) y∈[x-t, y-t] 等价于 满足 y=(x-t)min <= (x+t);
     // 2)下标 i-j <= k
-    public boolean containsNearbyAlmostDuplicate1(int[] nums, int k, int t) {
+    public boolean containsNearbyAlmostDuplicate1_2(int[] nums, int k, int t) {
         if (nums == null || nums.length == 0 || k < 0) return false;
         TreeSet<Long> set = new TreeSet<>();
         for (int i = 0; i < nums.length; i++) {
-            Long diff = (long)nums[i] - (long)t,
-                  sum = (long)nums[i] + (long)t;
-            Long y = set.ceiling(diff); // ❤返回set中 ≥ num的[最小]元素
-            if (y != null && y <= sum) return true;
+            Long bottom = (long)nums[i] - (long)t,
+                  upper = (long)nums[i] + (long)t;
+            Long y = set.ceiling(bottom); // ❤返回set中 ≥ num的[最小]元素
+            if (y != null && y <= upper) return true;
 
             set.add((long)nums[i]);
             if (set.size() > k) // i >= k
