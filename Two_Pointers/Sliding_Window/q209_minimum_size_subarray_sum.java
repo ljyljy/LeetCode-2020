@@ -7,9 +7,9 @@ public class q209_minimum_size_subarray_sum {
         int left = 0, right = 0;
         int tmpSum = 0, minLen = Integer.MAX_VALUE;
         while (right < n) {
-            while(right < n && tmpSum < sum) {
+//            while(right < n && tmpSum < sum) {
                 tmpSum += nums[right++];
-            }
+//            }
             // whileÍË³ö£¬Âú×ãtmpSum >= sum¡£ËõÐ¡´°¿Ú£¬×ó±ß½ç++
             while (tmpSum >= sum) {
                 minLen = Math.min(minLen, right - left);

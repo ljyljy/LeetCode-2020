@@ -2,6 +2,7 @@ package DataStructure.Heap;
 
 import java.util.PriorityQueue;
 
+// 类比q373, 786, 719
 public class q786_k_th_smallest_prime_fraction {
 //    （第k小）大根堆 – 堆内k个数，第k小.poll()（堆内max）∴大根堆
 // 时间复杂度：扫描所有的点对复杂度为 O(n^2)；将二元组入堆和出堆的复杂度为O(logk)。整体复杂度为 O(n^2∗logk)
