@@ -34,34 +34,43 @@ public class q207_course_schedule {
     }
 
 
-    // 法2：DFS-判断成环 ?（不熟）
+    // 法2：DFS-判断成环 【必掌握！】
+    // 时空：O(V+E)
     int n;
+    int[] visited;
     int[][] prerequisites;
     List<List<Integer>> adjList = new ArrayList<>(); // 领接表<pre, cur>
     public boolean canFinish_dfs(int n, int[][] prerequisites) {
         this.n = n; this.prerequisites = prerequisites;
+        visited = new int[n];
+
         for (int i = 0; i < n; i++) adjList.add(new ArrayList<>());
         for (int[] pair: prerequisites) { // pair <cur, pre>
             int cur = pair[0], pre = pair[1];
             adjList.get(pre).add(cur);
         }
 
-        int[] visited = new int[n];
         for (int i = 0; i < n; i++) {
-            if (!dfs(i, visited)) return false; // 有向图内存在环
+            if (!dfs(i))
+                return false; // 有向图内存在环
         }
         return true;
     }
 
-    private boolean dfs(int i, int[] visited) {
-        if (visited[i] == 1) return false; // 成环
-        if (visited[i] == -1) return true; // 回溯过，已知i~end不成环
+    private boolean dfs(int i) {
+        if (visited[i] == 1) return false; // 成环【回溯过，已知i~邻边成环】
+        if (visited[i] == -1) return true; //??? 【回溯过，已知i~所有邻边不成环】
+
         visited[i] = 1;
         for (int nxt: adjList.get(i)) {
-            if (!dfs(nxt, visited)) return false;
+            // 写法1↓ 类比q210，在【下探nxt时判环】
+            // 【可加速，但不写不会像q210无效！】！
+            if (visited[nxt] == 1 || !dfs(nxt)) {
+                return false;
+            }
+            // if (!dfs(nxt)) return false; // 写法2，也行
         }
-        visited[i] = -1;
-
+        visited[i] = -1;// 改为-1！不可改回为0（与unvisited混淆）！
         return true;
     }
 }

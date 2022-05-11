@@ -37,4 +37,53 @@ public class q210_course_schedule_ii {
         if (n == 0) return path;
         else return new int[]{}; // 说明有课程落单，【成环】
     }
+
+
+    // 法2：DFS -- 时空O(V+E)
+    int n, idx;// 栈下标
+    List<List<Integer>> adjList = new ArrayList<>();
+    int[] path, visited;
+    int[][] prerequisites;
+    boolean valid = true; // 判断有向图中是否有环
+    public int[] findOrder_dfs(int n, int[][] prerequisites) {
+        this.n = n; this.prerequisites = prerequisites;
+        path = new int[n];  visited = new int[n];
+        this.idx = n-1;
+
+        for (int i = 0; i < n; i++) adjList.add(i, new ArrayList<>());
+        for (int[] pair: prerequisites) {
+            int pre = pair[1], nxt = pair[0];
+            adjList.get(pre).add(nxt);
+        }
+
+        for (int i = 0; i < n && valid; i++) {
+            if (visited[i] == 0) {
+                dfs(i);
+            }
+        }
+        return valid? path: new int[]{};
+    }
+
+    private void dfs(int cur) {
+        // ??【判环必须在下探nxt时进行！入口处无效！??】
+        // if (visited[cur] == 1) { // 成环【回溯过，已知i~邻边成环】
+        //     valid = false;
+        //     return;
+        // } else if (visited[cur] == -1) {
+        //     return; //??? 【回溯过，已知i~所有邻边不成环】
+        // }
+
+        visited[cur] = 1;
+        for (int nxt: adjList.get(cur)) {
+            if (visited[nxt] == 0) {
+                dfs(nxt);
+            } else if (visited[nxt] == 1) { // 必须在【下探nxt时判环】！【在dfs入口处判断成环无效】！！
+                // 成环【回溯过，已知i~邻边成环】
+                valid = false;
+                return;
+            }
+        }
+        visited[cur] = -1;
+        path[idx--] = cur;// ?将节点入栈【dfs-栈-path从后往前】！
+    }
 }
