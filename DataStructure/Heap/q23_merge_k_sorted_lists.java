@@ -16,7 +16,7 @@ public class q23_merge_k_sorted_lists {
         }
     }
 
-    // 法1：归并排序 - 写法1（写法2: 两两合并见py法2）
+    // 法1：归并排序O(NlogK) - 写法1（写法2: 两两合并见py法2）
     public ListNode mergeKLists_v1(ListNode[] lists) {
         if (lists == null || lists.length == 0)
             return null;
@@ -51,19 +51,22 @@ public class q23_merge_k_sorted_lists {
         return dummy.next;
     }
 
-    // 法2：最小堆minHeap（每次将K个头结点放入堆，pop出的就是最小的元素）
+    // 法2：多路归并&最小堆minHeap（每次将K个头结点放入堆，pop出的就是最小的元素）
     //  - 每次 O(logK) 比较 K个指针求 min, 时间复杂度：O(NlogK)
-    private Comparator<ListNode> listNodeComparator = new Comparator<ListNode>() {
-        @Override
-        public int compare(ListNode l1, ListNode l2) {
-            return l1.val - l2.val; // 升序 l1 < l2 < ...
-        }
-    };
+    // 图解：https://leetcode.cn/problems/design-twitter/solution/ha-xi-biao-lian-biao-you-xian-dui-lie-java-by-liwe/
+    // 类比q23, 373, 786, 719（PQ超时 -> 二分+双指针）
 
+//    private Comparator<ListNode> listNodeComparator = new Comparator<ListNode>() {
+//        @Override
+//        public int compare(ListNode l1, ListNode l2) {
+//            return l1.val - l2.val; // 升序 l1 < l2 < ...
+//        }
+//    };
     public ListNode mergeKLists_v2(ListNode[] lists) {
         if (lists == null || lists.length == 0)
             return null;
-        PriorityQueue<ListNode> heap = new PriorityQueue<>(lists.length, listNodeComparator);
+        PriorityQueue<ListNode> heap = new PriorityQueue<>(lists.length,
+                (l1, l2)-> l1.val - l2.val); // 升序 l1 < l2 < ...
         for (ListNode head : lists){
             if (head == null) continue; // 勿漏！！！ 形如:[[]]
             heap.add(head); // 加入的只有每个链表的头部
