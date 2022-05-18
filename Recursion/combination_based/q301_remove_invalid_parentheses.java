@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 public class q301_remove_invalid_parentheses {
-     Set<String> set = new HashSet<>();
-     int n, maxScore, ansLen;
-     String s;
+    Set<String> set = new HashSet<>();
+    int n, maxScore, ansLen;
+    String s;
 
     // 法1：dfs+剪枝预处理--[两重剪枝]（1-可匹配的最大score，2-最终答案长度）
     // 时间：O(n * 2^n), 空间：O(n)
@@ -36,7 +36,7 @@ public class q301_remove_invalid_parentheses {
          ansLen = n - invalidL - invalidR; // 剪枝2：最终有效答案的长度
          dfs(0, "", invalidL, invalidR, 0);
          return new ArrayList<>(set);
-     }
+    }
 
     private void dfs(int idx, String cur, int invalidL, int invalidR, int score) {
         if (invalidL < 0 || invalidR < 0  // 当前串非法（括号不匹配）
@@ -99,4 +99,7 @@ public class q301_remove_invalid_parentheses {
             dfs0(idx+1, cur+c, score);
         }
     }
+
+    // 其他：todo: BFS
+    //  https://leetcode.cn/problems/remove-invalid-parentheses/solution/java-bfs-hui-su-liang-chong-fang-fa-shi-pin-jiang-/
 }

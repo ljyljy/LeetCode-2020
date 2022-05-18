@@ -6,7 +6,6 @@ public class q679_24_game_ii {
 //    TODO: 返回结果，并打印出合法的表达式
     private static final int TARGET = 24;
     private static final double EPS = 1e-6;
-
     public boolean judgePoint24(int[] cards) {
         if (cards == null || cards.length != 4) return false;
         double[] nxtCards = new double[4];
