@@ -2,7 +2,8 @@ package Recursion.combination_based;
 
 import java.util.*;
 
-// 类比q399,q990
+// 类比q399,q990；
+// 法3-并查集版本见UF
 public class q399_evaluate_division {
     List<List<String>> equations;
     double[] values;
