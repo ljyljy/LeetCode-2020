@@ -3,7 +3,7 @@ package DP;
 import java.util.*;
 
 public class q300_longest_increasing_subsequence {
-    // 法2: DP
+    // 法2: DP - 类比q334（TLE）
     public int lengthOfLIS_DP(int[] nums) {
         int n = nums.length;
         if (n <= 1) return n;
