@@ -1,5 +1,6 @@
 package Array;
 
+// 类比q287， 268
 public class q287_find_the_duplicate_number {
     // 时间O(n)，空间O(1)-原地哈希：类比q41、qo_3、qo_53, q287
     public int findDuplicate(int[] nums) {
