@@ -1,5 +1,7 @@
 package DP;
 
+import java.util.Arrays;
+
 public class q53_maximum_subarray {
     // 类比：q53 -> 合唱队、q9_42
 
@@ -66,6 +68,14 @@ public class q53_maximum_subarray {
                 res[1] = i;//记录下起始和终止位置
             }
         }
+        System.out.println("maxSum = " + maxSum);
+        System.out.println("起止点idx：" + Arrays.toString(res));
         return res;
+    }
+
+    public static void main(String[] args) {
+        q53_maximum_subarray sol = new q53_maximum_subarray();
+        int[] nums = {-2,1,-3,4,-1,2,1,-5,4};
+        sol.maxSubArrayIdx(nums);
     }
 }
