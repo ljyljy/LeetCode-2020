@@ -4,9 +4,9 @@ import java.util.*;
 
 public class q93_restore_ip_addresses {
     private List<String> res = new ArrayList<>();
-    private Deque<String> path = new ArrayDeque<>(4); // ³¤¶ÈÎª4¶Î[0,255]µÄÊı×Ö
+    private Deque<String> path = new ArrayDeque<>(4); // é•¿åº¦ä¸º4æ®µ[0,255]çš„æ•°å­—
 
-    // Ğ´·¨2
+    // å†™æ³•2
     public List<String> restoreIpAddresses_v2(String s) {
         int n = s.length();
         if (n < 4 || n > 12) return res;
@@ -16,7 +16,7 @@ public class q93_restore_ip_addresses {
 
     private void dfs2(String s, int len, int idx, int valid, Deque<String> path) {
         if (idx == len) {
-            if (valid == 4) // ?ÎğÍü£¡
+            if (valid == 4) // ?å‹¿å¿˜ï¼
                 res.add(String.join(".", path));
             return;
         }
@@ -40,11 +40,11 @@ public class q93_restore_ip_addresses {
         if (n < 1 || n > 3) return false;
         if (curSeg.charAt(0) == '0' && n != 1) return false;
 
-        int val = Integer.valueOf(curSeg); // »ò Integer.parseInt
+        int val = Integer.valueOf(curSeg); // æˆ– Integer.parseInt
         return 0 <= val && val <= 255;
     }
 
-    // Ğ´·¨1
+    // å†™æ³•1
     public List<String> restoreIpAddresses(String s) {
         int n = s.length();
         if (n < 4 || n > 12) return res;
@@ -53,35 +53,35 @@ public class q93_restore_ip_addresses {
     }
 
     private void dfs(String s, int n, int idx, int validSplitNum, Deque<String> path) {
-        if (idx == n) { // Èô·Ö¸îidx==n
-            if (validSplitNum == 4) // ºÏ·¨·Ö¶ÎÊı=4
+        if (idx == n) { // è‹¥åˆ†å‰²idx==n
+            if (validSplitNum == 4) // åˆæ³•åˆ†æ®µæ•°=4
                 res.add(String.join(".", path)); // py: '.'.join(path)
             return;
         }
-        // ¼ôÖ¦1£ºÊ£ÓàÊı×Ö¸öÊı/³¤¶È ? (ºÏ·¨)´ı±éÀúÊı×Ö¸öÊıÇø¼ä[remainSplit, 3*remainSplit]
-        int remainLen = n - idx; // Ê£Óà´ıËÑË÷µÄÊı×Ö¸öÊı/³¤¶È
-        int remainSplit = 4 - validSplitNum;    // ¡ı ×Ó¶Î[0, 255], ³¤¶È¡Ê[1, 3]
+        // å‰ªæ1ï¼šå‰©ä½™æ•°å­—ä¸ªæ•°/é•¿åº¦ ? (åˆæ³•)å¾…éå†æ•°å­—ä¸ªæ•°åŒºé—´[remainSplit, 3*remainSplit]
+        int remainLen = n - idx; // å‰©ä½™å¾…æœç´¢çš„æ•°å­—ä¸ªæ•°/é•¿åº¦
+        int remainSplit = 4 - validSplitNum;    // â†“ å­æ®µ[0, 255], é•¿åº¦âˆˆ[1, 3]
         if (remainLen < remainSplit || remainLen > 3 * remainSplit)
             return;
 
-        // ¡ß ²»ÊÇÅÅÁĞ ¡à i´ÓidxÆğÊ¼
+        // âˆµ ä¸æ˜¯æ’åˆ— âˆ´ iä»idxèµ·å§‹
         for (int i = idx; i < n; i++) {
             int curSeg = check(s, idx, i);
-            if (curSeg == -1) continue; // ¼ôÖ¦2£º×Ó¶Îs[idx, i]·Ç·¨Ìø¹ı
-            path.addLast(curSeg + ""); // »òString.valueOf(curSeg)
-            dfs(s, n, i+1, validSplitNum+1, path); // ¡ß²»¿ÉÖØ¸´È¡Êı ¡ài+1
+            if (curSeg == -1) continue; // å‰ªæ2ï¼šå­æ®µs[idx, i]éæ³•è·³è¿‡
+            path.addLast(curSeg + ""); // æˆ–String.valueOf(curSeg)
+            dfs(s, n, i+1, validSplitNum+1, path); // âˆµä¸å¯é‡å¤å–æ•° âˆ´i+1
             path.removeLast();
         }
     }
 
     private int check(String s, int start, int end) {
         int len = end - start + 1;
-        // 1) ³¤¶È¡Ê [1, 3]
+        // 1) é•¿åº¦âˆˆ [1, 3]
         if (len < 1 || len > 3) return -1;
-        // 2) ÔÊĞíµ¥¶À'0'·Ö¶Î, µ«³¤¶È>1Ê± ²»ÔÊĞíÓĞ"Ç°µ¼0"(ĞÎÈç"011" ¡Á)
+        // 2) å…è®¸å•ç‹¬'0'åˆ†æ®µ, ä½†é•¿åº¦>1æ—¶ ä¸å…è®¸æœ‰"å‰å¯¼0"(å½¢å¦‚"011" Ã—)
         if (s.charAt(start) == '0' && len != 1) return -1;
-        // 3) ×Ó¶Î Êı×Öres¡Ê[0, 255]
-        /*// ·¨2: Çóres
+        // 3) å­æ®µ æ•°å­—resâˆˆ[0, 255]
+        /*// æ³•2: æ±‚res
         res = 0;
         for (int i = start; i <= end; i++)
             res = res * 10 + (s.charAt(i) - '0');

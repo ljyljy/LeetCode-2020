@@ -5,7 +5,6 @@ import java.util.Arrays;
 public class q135_candy {
     public int candy(int[] ratings) {
         int n = ratings.length;
-        int res = 0;
         int[] candies = new int[n];
         Arrays.fill(candies, 1); // 至少1颗
         // 对candies[i]的左右两侧(i±1)分别遍历，每次保证单侧符合要求

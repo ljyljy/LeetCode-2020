@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 public class q406_queue_reconstruction_by_height {
     public int[][] reconstructQueue(int[][] people) {
-        // 1) ÅÅĞò£º°´Éí¸ß½µĞò£¨o[0]£©; 2)²åÈë£ºÔÙ°´kÖµÉıĞò£¨o[1]£©
+        // 1) æ’åºï¼šæŒ‰èº«é«˜é™åºï¼ˆo[0]ï¼‰; 2)æ’å…¥ï¼šå†æŒ‰kå€¼å‡åºï¼ˆo[1]ï¼‰
         Arrays.sort(people, (o1, o2)->(o1[0] != o2[0]? o2[0]-o1[0]: o1[1]-o2[1]));
 
         LinkedList<int[]> res = new LinkedList<>();

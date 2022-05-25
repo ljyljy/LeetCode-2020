@@ -6,7 +6,7 @@ public class q55_jump_game {
         int n = nums.length;
         int farthest = nums[0];
         for (int i = 0; i < n; i++) {
-            if (i <= farthest) { // ?大前提：必须可达！
+            if (i <= farthest) { // 新大前提：必须可达！
                 farthest = Math.max(farthest, i + nums[i]);
                 if (farthest >= n-1) {
                     return true;

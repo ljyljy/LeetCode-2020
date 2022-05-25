@@ -1,25 +1,25 @@
 package Array.prefixSum;
 
 public class q238_product_of_array_except_self {
-    // ·¨2£º¿Õ¼äO(1)
+    // æ³•2ï¼šç©ºé—´O(1)
     public int[] productExceptSelf(int[] nums) {
         int n = nums.length;
         int[] res = new int[n];
 
-        // ÏÈÇóÇ°×º»ıprod_L
+        // å…ˆæ±‚å‰ç¼€ç§¯prod_L
         res[0] = 1;
         for (int i = 1; i < n; i++) {
-            res[i] = res[i-1] * nums[i-1]; // ´Óres[1]¿ªÊ¼¿¼ÂÇnums[0]
+            res[i] = res[i-1] * nums[i-1]; // ä»res[1]å¼€å§‹è€ƒè™‘nums[0]
         }
-        // ÔÙÇóºó×º»ıprod_R
+        // å†æ±‚åç¼€ç§¯prod_R
         int prod_R = 1;
         for (int i = n-1; i >= 0; i--) {
-            res[i] = res[i] * prod_R; // ´Óres[n-2]¿ªÊ¼¿¼ÂÇnums[n-1]
+            res[i] = res[i] * prod_R; // ä»res[n-2]å¼€å§‹è€ƒè™‘nums[n-1]
             prod_R *= nums[i];
         }
         return res;
     }
-    // ·¨1:³£¹æÇ°×º»ı & ºó×º»ı
+    // æ³•1:å¸¸è§„å‰ç¼€ç§¯ & åç¼€ç§¯
     public int[] productExceptSelf1(int[] nums) {
         int n = nums.length;
         int[] res = new int[n];
@@ -30,7 +30,7 @@ public class q238_product_of_array_except_self {
             prod_L[i] = prod_L[i-1] * nums[i-1];
         }
         for (int i = n-1; i >= 0; i--) {
-            prod_R[i] = nums[i] * prod_R[i+1]; // ×¢ÒâÏÂ±ê£¡
+            prod_R[i] = nums[i] * prod_R[i+1]; // æ³¨æ„ä¸‹æ ‡ï¼
         }
 
         // for (int num: prod_L) System.out.print(num + "\t");
@@ -38,7 +38,7 @@ public class q238_product_of_array_except_self {
         // for (int num: prod_R) System.out.print(num + "\t");
 
         for (int i = 0; i < n; i++) {
-            res[i] = prod_L[i] * prod_R[i+1]; // ×¢ÒâÏÂ±ê:prod_L[0:n-1], prod_R[1:n]£¡
+            res[i] = prod_L[i] * prod_R[i+1]; // æ³¨æ„ä¸‹æ ‡:prod_L[0:n-1], prod_R[1:n]ï¼
         }
         return res;
     }

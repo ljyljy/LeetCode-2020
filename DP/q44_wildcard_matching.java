@@ -27,7 +27,7 @@ public class q44_wildcard_matching {
             for (int j = 1; j < nP; j++) { // dp[>0][j=0]一定是false，无需遍历
                 if (pp[j] != '*') {
                     dp[i][j] = (i-1 >= 0 && dp[i-1][j-1]) && match(i, j);
-                } else {
+                } else { // ?不匹配(b & b*) || 匹配多次(bacd & b*)
                     dp[i][j] = dp[i][j-1] || (i-1 >= 0 && dp[i-1][j]);
                 }
             }
