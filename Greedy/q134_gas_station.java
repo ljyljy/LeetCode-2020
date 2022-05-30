@@ -1,31 +1,31 @@
 package Greedy;
 
 public class q134_gas_station {
-//    Ğ´·¨2£º¡¾¼ö£¬²Î¿¼LC_Ë¼Â·2¡¿
+    //    å†™æ³•2ï¼šã€èï¼Œå‚è€ƒLC_æ€è·¯2ã€‘
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int n = gas.length;
-        for (int i = 0; i < n; ) {
+        for (int i = 0; i < n; ) {  // éå†èµ·å§‹ç‚¹
             int curLeft = 0, curCost = 0;
             int cnt = 0;
             while (cnt < n) {
-                int j = (i + cnt) % n; // ±ØĞë¸³ÁÙÊ±Öµj£¬·ñÔò»á¸²¸Çi¾ÉÖµ???
+                int j = (i + cnt) % n; // å¿…é¡»èµ‹ä¸´æ—¶å€¼jï¼Œå¦åˆ™ä¼šè¦†ç›–iæ—§å€¼???
                 curLeft += gas[j];
                 curCost += cost[j];
                 if (curLeft < curCost) {
                     break;
                 }
                 cnt++;
-                // i = (i+cnt) % n; // Ã¶¾Ù£º±¾ÂÖÄÜ·ñ×ßÍêÕûÒ»È¦£¨Ñ­»·£¬È¡Óà£©
+                // i = (i+cnt) % n; // æšä¸¾ï¼šæœ¬è½®èƒ½å¦èµ°å®Œæ•´ä¸€åœˆï¼ˆå¾ªç¯ï¼Œå–ä½™ï¼‰
             }
             if (cnt == n) return i;
-            i = i + cnt + 1; // Ë¼Â·¼ûÓÅ»¯2
-// ÒÀ´Î±éÀúÆğÊ¼µã(´ÓÎŞ½âµÄi+cntºóÒ»Î»¿ªÊ¼retry)£¬²»¿ÉÈ¡Óà
-            // ¡ü (i+cnt)´¦µ¼ÖÂÎŞ½â£¬ËµÃ÷¸Ã´¦costºÜ´ó£¬´ÓÏÂÒ»Î»¿ªÊ¼£¬¾¡Á¿ÈÃ(i+cnt)°ÚÔÚºóÎ»(¾¡Á¿»ıÔÜ¸ü¶àµÄÊ£ÓàÓÍÁ¿curLeft)
+            i = i + cnt + 1; // æ€è·¯è§ä¼˜åŒ–2
+// ä¾æ¬¡éå†èµ·å§‹ç‚¹(ä»æ— è§£çš„i+cntåä¸€ä½å¼€å§‹retry)ï¼Œä¸å¯å–ä½™
+            // â†‘ (i+cnt)å¤„å¯¼è‡´æ— è§£ï¼Œè¯´æ˜è¯¥å¤„costå¾ˆå¤§ï¼Œä»ä¸‹ä¸€ä½å¼€å§‹ï¼Œå°½é‡è®©(i+cnt)æ‘†åœ¨åä½(å°½é‡ç§¯æ”’æ›´å¤šçš„å‰©ä½™æ²¹é‡curLeft)
         }
         return -1;
     }
 
-    // Ğ´·¨2
+    // å†™æ³•2
     public int canCompleteCircuit2(int[] gas, int[] cost) {
         int n = gas.length;
         for (int i = 0; i < n; i++) {

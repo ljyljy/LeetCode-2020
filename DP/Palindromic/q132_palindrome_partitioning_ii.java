@@ -23,7 +23,8 @@ public class q132_palindrome_partitioning_ii {
             // (2) j前-最小分割数f[j] -> ∵分割点j ∴f[j]+1
             for (int j = 0; j < i; j++) {
                 // s[0,i]不是回文(如:"aab", "ababcb")，需要在其子串中找回文("aa"/"aba")+1("b"/"bcb")
-                if (dp[j+1][i]) // 前提：
+                // ↓ 勿忘j+1！不是dp[j][i]！
+                if (dp[j+1][i]) // 前提：s[j+1:i]是回文 & 已知s[0,j]的最小分割次数f[j]
                     f[i] = Math.min(f[i], f[j]+1);  // 此处'+1'指代回文子串s[j+1, i]
             }
         }

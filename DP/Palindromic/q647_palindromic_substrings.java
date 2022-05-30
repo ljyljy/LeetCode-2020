@@ -3,8 +3,8 @@ package DP.Palindromic;
 public class q647_palindromic_substrings {
     public int countSubstrings(String s) {
         int n = s.length();
-        boolean[][] dp = new boolean[n][n]; // s[i,j]ÊÇ·ñÎª»ØÎÄ(×ó±ÕÓÒ±Õ, j>=i)
-        // ³õÊ¼»¯È«false
+        boolean[][] dp = new boolean[n][n]; // s[i,j]æ˜¯å¦ä¸ºå›žæ–‡(å·¦é—­å³é—­, j>=i)
+        // åˆå§‹åŒ–å…¨false
         char[] ch = s.toCharArray();
         int cnt = 0;
         for (int i = n-1; i >= 0; i--) {

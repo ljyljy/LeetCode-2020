@@ -3,16 +3,16 @@ package Greedy;
 import java.util.Arrays;
 
 public class q781_rabbits_in_forest {
-    // ·¨1£ºÌ°ĞÄ: Ä£Äâ½â·¨
-    // ÏÈÉıĞòanswers£¬±éÀúcntÊ±£¬½«Æä¶Ô´ğ°¸µÄÓ°ÏìÓ¦ÓÃµ½ansÖĞ£¨ans += cnt + 1£©£¬²¢½«ºóÃæµÄ cnt ¸ö cnt ½øĞĞºöÂÔ¡£
+    // æ³•1ï¼šè´ªå¿ƒ: æ¨¡æ‹Ÿè§£æ³•
+    // å…ˆå‡åºanswersï¼Œéå†cntæ—¶ï¼Œå°†å…¶å¯¹ç­”æ¡ˆçš„å½±å“åº”ç”¨åˆ°ansä¸­ï¼ˆans += cnt + 1ï¼‰ï¼Œå¹¶å°†åé¢çš„ cnt ä¸ª cnt è¿›è¡Œå¿½ç•¥ã€‚
     public int numRabbits(int[] answers) {
-        Arrays.sort(answers); // ÉıĞòÅÅÁĞ
+        Arrays.sort(answers); // å‡åºæ’åˆ—
         int n = answers.length;
         int total = 0;
         for (int i = 0; i < n; i++) {
             int cnt = answers[i];
-            total += cnt + 1; // »Ø´ğÕß×Ô¼º+ÆäËûÍÃ
-            // Ìø¹ıÆäËû(cnt)¸öans[i], ½«ÏÂ±êiºóÒÆcnt´Î£¬¼ÙÉèÊÇÍ¬ÑÕÉ«µÄÍÃ×Ó(ÒÑ¸üĞÂµ½total)
+            total += cnt + 1; // å›ç­”è€…è‡ªå·±+å…¶ä»–å…”
+            // è·³è¿‡å…¶ä»–(cnt)ä¸ªans[i], å°†ä¸‹æ ‡iåç§»cntæ¬¡ï¼Œå‡è®¾æ˜¯åŒé¢œè‰²çš„å…”å­(å·²æ›´æ–°åˆ°total)
             int k = cnt;
             while (k-- > 0 && i+1 < n && answers[i] == answers[i+1]) i++;
         }
