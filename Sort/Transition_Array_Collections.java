@@ -1,61 +1,69 @@
 package Sort;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Transition_Array_Collections {
-    // JavaÖĞList, Integer[], int[]µÄÏà»¥×ª»»
+    // Javaä¸­List, Integer[], int[]çš„ç›¸äº’è½¬æ¢
     public static void main(String[] args) {
         int[] data = {4, 5, 3, 6, 2, 5, 1};
 
-        // int[] ×ª List<Integer>
-        List<Integer> list1 = Arrays.stream(data).boxed().collect(Collectors.toList());
-        // Arrays.stream(arr) ¿ÉÒÔÌæ»»³ÉIntStream.of(arr)¡£
-        // 1.Ê¹ÓÃArrays.stream½«int[]×ª»»³ÉIntStream¡£
-        // 2.Ê¹ÓÃIntStreamÖĞµÄboxed()×°Ïä¡£½«IntStream×ª»»³ÉStream<Integer>¡£
-        // 3.Ê¹ÓÃStreamµÄcollect()£¬½«Stream<T>×ª»»³ÉList<T>£¬Òò´ËÕıÊÇList<Integer>¡£
+        // int[] è½¬ List<Integer>
 
-        // int[] ×ª Integer[]
+        ArrayList<Integer> list0 = Arrays.stream(data)
+                .boxed()
+                .collect(Collectors.toCollection(ArrayList::new));
+        List<Integer> list1 = Arrays.stream(data)
+                .boxed()
+                .collect(Collectors.toList());
+        // Arrays.stream(arr) å¯ä»¥æ›¿æ¢æˆIntStream.of(arr)ã€‚
+        // 1.ä½¿ç”¨Arrays.streamå°†int[]è½¬æ¢æˆIntStreamã€‚
+        // 2.ä½¿ç”¨IntStreamä¸­çš„boxed()è£…ç®±ã€‚å°†IntStreamè½¬æ¢æˆStream<Integer>ã€‚
+        // 3.ä½¿ç”¨Streamçš„collect()ï¼Œå°†Stream<T>è½¬æ¢æˆList<T>ï¼Œå› æ­¤æ­£æ˜¯List<Integer>ã€‚
+
+        // int[] è½¬ Integer[]
         Integer[] integers1 = Arrays.stream(data).boxed().toArray(Integer[]::new);
-        // Ç°Á½²½Í¬ÉÏ£¬´ËÊ±ÊÇStream<Integer>¡£
-        // È»ºóÊ¹ÓÃStreamµÄtoArray£¬´«ÈëIntFunction<A[]> generator¡£
-        // ÕâÑù¾Í¿ÉÒÔ·µ»ØIntegerÊı×é¡£
-        // ²»È»Ä¬ÈÏÊÇObject[]¡£
+        // å‰ä¸¤æ­¥åŒä¸Šï¼Œæ­¤æ—¶æ˜¯Stream<Integer>ã€‚
+        // ç„¶åä½¿ç”¨Streamçš„toArrayï¼Œä¼ å…¥IntFunction<A[]> generatorã€‚
+        // è¿™æ ·å°±å¯ä»¥è¿”å›Integeræ•°ç»„ã€‚
+        // ä¸ç„¶é»˜è®¤æ˜¯Object[]ã€‚
 
-        // List<Integer> ×ª Integer[]
+        // List<Integer> è½¬ Integer[]
         Integer[] integers2 = list1.toArray(new Integer[0]);
-        //  µ÷ÓÃtoArray¡£´«Èë²ÎÊıT[] a¡£ÕâÖÖÓÃ·¨ÊÇÄ¿Ç°ÍÆ¼öµÄ¡£
-        // List<String>×ªString[]Ò²Í¬Àí¡£
+        //  è°ƒç”¨toArrayã€‚ä¼ å…¥å‚æ•°T[] aã€‚è¿™ç§ç”¨æ³•æ˜¯ç›®å‰æ¨èçš„ã€‚
+        // List<String>è½¬String[]ä¹ŸåŒç†ã€‚
 
-        // List<Integer> ×ª int[]
+        // List<Integer> è½¬ int[]
         int[] arr1 = list1.stream().mapToInt(Integer::valueOf).toArray();
-        // ÏëÒª×ª»»³Éint[]ÀàĞÍ£¬¾ÍµÃÏÈ×ª³ÉIntStream¡£
-        // ÕâÀï¾ÍÍ¨¹ımapToInt()°ÑStream<Integer>µ÷ÓÃInteger::valueOfÀ´×ª³ÉIntStream
-        // ¶øIntStreamÖĞÄ¬ÈÏtoArray()×ª³Éint[]¡£
+        int[] arr0 = list0.parallelStream().mapToInt(Integer::valueOf).toArray();
+        // æƒ³è¦è½¬æ¢æˆint[]ç±»å‹ï¼Œå°±å¾—å…ˆè½¬æˆIntStreamã€‚
+        // è¿™é‡Œå°±é€šè¿‡mapToInt()æŠŠStream<Integer>è°ƒç”¨Integer::valueOfæ¥è½¬æˆIntStream
+        // è€ŒIntStreamä¸­é»˜è®¤toArray()è½¬æˆint[]ã€‚
 
 
-        // Integer[] ×ª int[]
+        // Integer[] è½¬ int[]
         int[] arr2 = Arrays.stream(integers1).mapToInt(Integer::valueOf).toArray();
-        // Ë¼Â·Í¬ÉÏ¡£ÏÈ½«Integer[]×ª³ÉStream<Integer>£¬ÔÙ×ª³ÉIntStream¡£
+        // æ€è·¯åŒä¸Šã€‚å…ˆå°†Integer[]è½¬æˆStream<Integer>ï¼Œå†è½¬æˆIntStreamã€‚
 
-        // Integer[] ×ª List<Integer>
-        // ¡¾ljy?£º°ü×°ÀàµÄÊı×éÓë¼¯ºÏ¿ÉÒÔ»¥×ª(Arrays.asList(°ü×°ÀàArr)) // °ü×°ÀàList.toArray()¡¿
+        // Integer[] è½¬ List<Integer>
+        // ã€ljy?ï¼šåŒ…è£…ç±»çš„æ•°ç»„ä¸é›†åˆå¯ä»¥äº’è½¬(Arrays.asList(åŒ…è£…ç±»Arr)) // åŒ…è£…ç±»List.toArray()ã€‘
         List<Integer> list2 = Arrays.asList(integers1);
-        // ×î¼òµ¥µÄ·½Ê½¡£String[]×ªList<String>Ò²Í¬Àí¡£
+        // æœ€ç®€å•çš„æ–¹å¼ã€‚String[]è½¬List<String>ä¹ŸåŒç†ã€‚
 
-        // Í¬Àí
+        // åŒç†
         String[] strings1 = {"a", "b", "c"};
-        // String[] ×ª List<String>
+        // String[] è½¬ List<String>
         List<String> list3 = Arrays.asList(strings1);
-        // List<String> ×ª String[]
+        // List<String> è½¬ String[]
         String[] strings2 = list3.toArray(new String[0]);
 
 
-//        ¶ÔÓÚ»ù±¾ÀàĞÍµÄÊı×éÈçint[], double[], char[] ,ArraysÀàÖ»Ìá¹©ÁËÄ¬ÈÏµÄÉıĞòÅÅÁĞ£¬
-//        Ã»ÓĞ½µĞò£¬ĞèÒª´«Èë×Ô¶¨Òå±È½ÏÆ÷£¬Ê¹ÓÃArrays.sort(num,c)£¬´«ÈëÒ»¸öÊµÏÖÁËComparator½Ó¿ÚµÄÀàµÄ¶ÔÏóc¡£
-        // ±ØĞëÊÇInteger[], »ù±¾µÄint[]Ã»ÓĞ½µĞò£¬Ò²²»ÄÜÊ¹ÓÃ±È½ÏÆ÷£¡?
+//        å¯¹äºåŸºæœ¬ç±»å‹çš„æ•°ç»„å¦‚int[], double[], char[] ,Arraysç±»åªæä¾›äº†é»˜è®¤çš„å‡åºæ’åˆ—ï¼Œ
+//        æ²¡æœ‰é™åºï¼Œéœ€è¦ä¼ å…¥è‡ªå®šä¹‰æ¯”è¾ƒå™¨ï¼Œä½¿ç”¨Arrays.sort(num,c)ï¼Œä¼ å…¥ä¸€ä¸ªå®ç°äº†Comparatoræ¥å£çš„ç±»çš„å¯¹è±¡cã€‚
+        // å¿…é¡»æ˜¯Integer[], åŸºæœ¬çš„int[]æ²¡æœ‰é™åºï¼Œä¹Ÿä¸èƒ½ä½¿ç”¨æ¯”è¾ƒå™¨ï¼?
         Arrays.sort(integers1,new Comparator<Integer>(){
             public int compare(Integer a, Integer b){
                 return b-a;

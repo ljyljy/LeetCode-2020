@@ -30,7 +30,7 @@ public class q658_find_k_closest_elements_3star {
     // 2.二分法1（写法2）
     public List<Integer> findClosestElements22(int[] arr, int k, int x) {
         int n = arr.length;
-        // ❤[二分答案]：找"滑动窗口(大小为k)"的第一个起始点left
+        // ❤[二分答案]：找"滑动窗口(大小为k)"的【左边界left∈ [0, n-k]】
         int start = 0, end =  n - k;
 
         while (start < end) {

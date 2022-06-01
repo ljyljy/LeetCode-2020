@@ -14,7 +14,7 @@ public class q34_find_first_and_last_position_of_element_in_sorted_array {
         while (start < end) { // [L, mid] [mid+1, R]
             int mid = start + end >> 1;
             if (target <= nums[mid]) {
-                end = mid;
+                end = mid;  // 直到找到最左边界
             } else{
                 start = mid+1;
             }
@@ -29,7 +29,7 @@ public class q34_find_first_and_last_position_of_element_in_sorted_array {
             if (target < nums[mid]) {
                 end = mid-1;
             } else{ // >=
-                start = mid;
+                start = mid; // 直到找到最右边界
             }
         }
         return nums[start] == target? start: -1;
