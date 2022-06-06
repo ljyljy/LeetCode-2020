@@ -12,7 +12,7 @@ public class q9_390_find_peak_element_ii {
         List<Integer> res = new ArrayList<>();
 
         int up = 0, down = n_row - 1; // 对行'二分'
-        while (up < down) { // [up, mid(ret)]  [mid+1, down]
+        while (up < down) { // 二分峰值： [up, mid] & [mid+1, down]
             int mid = up + down >> 1;
             int max_col = maxCol(mid); // 1.横向对比(当前行中的最大值)
             // 2. 纵向对比(若[mid][max_col]再比其上下元素都大，则找到山峰)

@@ -17,7 +17,10 @@ public class q560_subarray_sum_equals_k {
             // 先获得前缀和为 sum - target 的个数，加到计数变量ans里
             int key = sum - target;
             cnt += map.getOrDefault(key, 0);
-            // 然后维护 preSumFreqMap 的定义
+            // 然后维护 preSumFreqMap 的定义（key
+            //
+            //
+            // ）
             map.put(sum, map.getOrDefault(sum, 0)+1);
         }
 
