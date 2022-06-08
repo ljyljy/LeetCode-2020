@@ -7,6 +7,11 @@ public class q231_power_of_two {
         return (n & -n) == n; // 或 && (n > 0)
     }
 
+    // 法3 -- O(1)
+    public boolean isPowerOfTwo3(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+
     // 法2 -- O(logN)
     public boolean isPowerOfTwo2(int n) {
         if (n <= 0) return false;

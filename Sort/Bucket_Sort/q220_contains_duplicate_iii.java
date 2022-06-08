@@ -1,21 +1,24 @@
 package Sort.Bucket_Sort;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
+import java.util.stream.LongStream;
 
 public class q220_contains_duplicate_iii {
     // 法1-1（掌握）：滑窗 + Treeset
     // |x-y| <= t -> x-t <= y <= x+t（【防止INT溢出】-> 设为Long）
     // 类比q219, 220
     public boolean containsNearbyAlmostDuplicate1(int[] nums, int k, int t) {
+//        long[] nums_L = Arrays.stream(nums).mapToLong(Long::valueOf).toArray();
         TreeSet<Long> tset = new TreeSet<>();
         int n = nums.length;
         int left = 0, right = 0;
         while (right < n) {
             Long num = (long)nums[right];
             Long upper = (long)num + (long)t, bottom = (long) num - (long)t;
-            Long num_j = tset.ceiling(bottom); //
+            Long num_j = tset.ceiling(bottom); // ❤返回tset中 ≥ bottom的[最小]元素
             if (num_j != null && num_j <= upper) {
                 return true;
             }
@@ -24,6 +27,28 @@ public class q220_contains_duplicate_iii {
 
             while (right - left > k) { // 保证窗口<=k
                 tset.remove((long)nums[left++]);
+            }
+        }
+        return false;
+    }
+
+    // 写法2：流处理 - int[]转long[]
+    public boolean containsNearbyAlmostDuplicate_mapToLong(int[] nums, int k, int t) {
+        long[] nums_L = Arrays.stream(nums).mapToLong(Long::valueOf).toArray();
+        TreeSet<Long> tset = new TreeSet<>();
+        int left = 0, right = 0, n = nums.length;
+
+        while (right < n) {
+            Long num = nums_L[right++];
+            Long upper = num + t, bottom = num - t;
+            Long num_j = tset.ceiling(bottom);// ❤返回tset中 ≥ bottom的[最小]元素
+            if (num_j != null && num_j <= upper) {
+                return true;
+            }
+            tset.add(num);
+
+            while (right - left > k) {
+                tset.remove(nums_L[left++]);
             }
         }
         return false;

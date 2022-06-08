@@ -12,7 +12,6 @@ public class Transition_Array_Collections {
         int[] data = {4, 5, 3, 6, 2, 5, 1};
 
         // int[] 转 List<Integer>
-
         ArrayList<Integer> list0 = Arrays.stream(data)
                 .boxed()
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -69,6 +68,14 @@ public class Transition_Array_Collections {
                 return b-a;
             }
         });
+
+
+        // int[]转long[]
+        long[] nums_L = Arrays.stream(data).mapToLong(Long::valueOf).toArray();
+        // long[]转List<Long>
+        ArrayList<Long> list_L = Arrays.stream(nums_L).boxed().collect(Collectors.toCollection(ArrayList::new));
+        List<Long> list_L2 = Arrays.stream(nums_L).boxed().collect(Collectors.toList());
+
     }
 }
 

@@ -11,6 +11,7 @@ import java.util.Map;
  * |target|，|source| 为两串字符集大小
  */
 public class q76_minimum_window_substring {
+    // 同向双指针（不回头）：O(n)
     public String minWindow(String src, String tar) {
         Map<Character, Integer> need = new HashMap<>(), // 目标<字母, 词频>
                                 window = new HashMap<>(); // 当前窗口内的<字母, 词频>
@@ -23,8 +24,7 @@ public class q76_minimum_window_substring {
         int ans_start = 0, ans_len = Integer.MAX_VALUE;
         while (right < src.length()) {
             // char2Add 是将移入窗口的字符
-            char char2Add = src.charAt(right);
-            right++;
+            char char2Add = src.charAt(right++);
             // 1、扩大窗口(右边界++)
             // 进行窗口内数据的一系列更新，until找到'可行解'
             if (need.containsKey(char2Add)) { // 如遇到tar中字母:'A/B/C'
@@ -43,8 +43,7 @@ public class q76_minimum_window_substring {
                     ans_start = left;
                 }
 
-                char char2Del = src.charAt(left);
-                left++;
+                char char2Del = src.charAt(left++);
                 if (need.containsKey(char2Del)) {
                     if (window.get(char2Del).equals(need.get(char2Del))) {
                         valid--; // 即将把char2Del除去，其词频就不满足要求了
