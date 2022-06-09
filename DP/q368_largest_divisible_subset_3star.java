@@ -2,31 +2,30 @@ package DP;
 
 import java.util.*;
 
-public class q368_largest_divisible_subset {
+public class q368_largest_divisible_subset_3star {
     // 法2: 动归【dp + int[] prevs回溯路径】
     public List<Integer> largestDivisibleSubset_DP(int[] nums) {
         Arrays.sort(nums); // 升序
         int n = nums.length;
         int[] dp = new int[n]; // 以i结尾的最长整除子集の长度
         int[] prevs = new int[n]; // 回溯路径用
+        Arrays.fill(dp, 1);
+
+        // 遍历 dp，取得「最大长度dp[i]」和「对应下标i-路径res的终点！」
+        int maxLen = -1, end = -1;
+
         for (int i = 0; i < n; i++) {
-            int len = 1, prev = i; // 最长长度、前继初始化（=自身i）
-            for (int j = 0; j < i; j++) {
+            int prev = i; // i的前继（初始化为自身i）
+            for (int j = 0; j < i; j++) { // 从前向后, j++
                 if (nums[i] % nums[j] == 0) {
                     // dp[i] = Math.max(dp[i], dp[j] + 1) = len; 类似q300、q132
-                    if (len < dp[j] + 1) {
-                        len = dp[j] + 1;
+                    if (dp[i] < dp[j] + 1) { // dp[i]: 记录「最终长度」
+                        dp[i] = dp[j] + 1;
                         prev = j;
                     }
                 }
             }
-            dp[i] = len; // 记录「最终长度」
             prevs[i] = prev; // 「从何转移而来」 -- i 或 j
-        }
-
-        // 遍历 dp，取得「最大长度dp[i]」和「对应下标i-路径res的终点！」
-        int maxLen = -1, end = -1;
-        for (int i = 0; i < n; i++) {
             if (maxLen < dp[i]) {
                 maxLen = dp[i];
                 end = i;
@@ -35,7 +34,7 @@ public class q368_largest_divisible_subset {
 
         // 回溯path
         List<Integer> res = new ArrayList<>();
-        while (res.size() != maxLen) {
+        while (res.size() < maxLen) {
             res.add(0, nums[end]); // 头插！从终点(idx0)向前(prev)回溯
             end = prevs[end];// 回溯到prev
         }
@@ -54,9 +53,9 @@ public class q368_largest_divisible_subset {
     private void dfs(int[] nums, int idx) {
         if (LDSlist.size() < path.size()) {// 写法1、path回溯下来需要先特判整除！
             LDSlist = new ArrayList<>(path);
+            System.out.println(path); // todo: test
 //            × return;×  // <回溯-子集> 不return，继续下探
         } // 满足要求才可能替换LSDlist！
-
 
 //        if (idx == nums.length) return; // 可不写，与for中i<n重复
         for (int i = idx; i < nums.length; i++) {
@@ -78,5 +77,16 @@ public class q368_largest_divisible_subset {
         // }
         // return true;
         return (newNum % path.peekLast() == 0);// [优化]path递增，path最后一个元素须能被new整除
+    }
+
+    public static void main(String[] args) {
+        q368_largest_divisible_subset_3star sol = new q368_largest_divisible_subset_3star();
+        int[] nums = {1, 2, 4, 8, 12, 16, 36, 72};
+        List<Integer> res1 = sol.largestDivisibleSubset_DP(nums);
+        System.out.println("res1: " + res1);
+
+        System.out.println("--------- dfs ---------");
+        List<Integer> res2 = sol.largestDivisibleSubset_TLE(nums);
+        System.out.println("res2: " + res2);
     }
 }

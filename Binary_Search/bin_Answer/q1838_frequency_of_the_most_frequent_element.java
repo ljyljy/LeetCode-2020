@@ -15,7 +15,7 @@ public class q1838_frequency_of_the_most_frequent_element {
             sum[i] = sum[i-1] + nums[i-1];
 
         // 二分前提：保持升序(∴前缀和↑)
-        int start = 0, end = n; // 二分答案ans∈[0,n]
+        int start = 0, end = n; // 二分答案 ans频数∈[0,n]
         while (start + 1 < end) {
             int mid = start + (end - start) / 2;
             if (check(mid))  // 说明满足要求，mid可以再加(右区间)
@@ -24,6 +24,15 @@ public class q1838_frequency_of_the_most_frequent_element {
         }
         if (check(end)) return end;
         if (check(start)) return start;
+
+//        // 写法2
+//        while (start < end) { // [L, mid-1] & [mid, R]
+//            int mid = start + end + 1 >> 1;
+//            // 相等时，往右找有没有更大的频数（但mid，R需在一个区间）
+//            if (check(mid)) start = mid;
+//            else end = mid-1;
+//        }
+//        if (check(start)) return start;
         return 1;
     }
 
@@ -51,7 +60,7 @@ public class q1838_frequency_of_the_most_frequent_element {
         List<Integer> nums0 = new ArrayList<>(map.keySet());
         Collections.sort(nums0);
 
-        int res = 1; // 答案频数>=1
+        int maxCnt = 1; // 答案频数>=1
         for (int i = 0; i < nums0.size(); i++) {
             int x = nums0.get(i), cnt_x = map.get(x);
             int k0 = k;
@@ -61,14 +70,14 @@ public class q1838_frequency_of_the_most_frequent_element {
                     int diff = x - y;
                     // if (diff == 0) continue;
                     if (k0 >= diff) {
-                        int min = Math.min(cnt_y, k0 / diff);
-                        k0 -= min * diff; // ↑ 保证k0>=0
-                        cnt_x += min;
+                        int curCnt = Math.min(cnt_y, k0 / diff);
+                        k0 -= curCnt * diff; // ↑ 保证k0>=0
+                        cnt_x += curCnt;
                     } else break;
                 }
             }
-            res = Math.max(res, cnt_x);
+            maxCnt = Math.max(maxCnt, cnt_x);
         }
-        return res;
+        return maxCnt;
     }
 }

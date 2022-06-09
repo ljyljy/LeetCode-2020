@@ -1,18 +1,18 @@
 package Binary_Search.bin_Answer;
 
 public class q29_divide_two_integers {
-    // 3*(2^1) <  10 < 3*(2^2) -- ±¶Ôö(cnt¡¢divisor)/¿ìËÙ³Ë
+    // 3*(2^1) <  10 < 3*(2^2) -- å€å¢(cntã€divisor)/å¿«é€Ÿä¹˜
     private static final int MAX = Integer.MAX_VALUE;
     private static final int MIN = Integer.MIN_VALUE;
     public int divide(int dividend, int divisor) {
-        // Òç³öÇé¿ö¡¾¸ºÒç->ÕıMAX¡¿£¨|MIN|=|MAX|+1£©
+        // æº¢å‡ºæƒ…å†µã€è´Ÿæº¢->æ­£MAXã€‘ï¼ˆ|MIN|=|MAX|+1ï¼‰
         if (dividend == MIN && divisor == -1) return MAX;
-        // ¼ÇÂ¼½á¹ûµÄ·ûºÅ
+        // è®°å½•ç»“æœçš„ç¬¦å·
         int sign = 1;
         if (dividend > 0 && divisor < 0 || dividend < 0 && divisor > 0) {
             sign = -1;
         }
-        // È«²¿×ª»»³É¸ºÊı£¬·ÀÖ¹Òç³ö
+        // å…¨éƒ¨è½¬æ¢æˆè´Ÿæ•°ï¼Œé˜²æ­¢æº¢å‡º
         dividend = dividend > 0? -dividend:dividend;
         divisor = divisor > 0? -divisor:divisor;
 
@@ -20,20 +20,20 @@ public class q29_divide_two_integers {
         return sign > 0? ans: -ans;
     }
 
-    // ±¶³Ë·¨£¬×¢Òâ¶¼ÊÇ¸ºÊıÁË£¬±È½ÏµÄÊ±ºòÓëÕıÊıÏà·´£¡(|divided| >= |divisor|)
-    // ¼òµ¥µãÀí½â£¬¾ÍÊÇÃ¿´Î¼õÈ¥³ıÊıµÄ2^x.±¶Êı(tmp == divisor*(2^x) = divisor*cnt)£¬Ê£ÏÂµÄ²¿·Ö¼ÌĞø°´ÕâÑùµÄ¹æÔò¼ÌĞø
+    // å€ä¹˜æ³•ï¼Œæ³¨æ„éƒ½æ˜¯è´Ÿæ•°äº†ï¼Œæ¯”è¾ƒçš„æ—¶å€™ä¸æ­£æ•°ç›¸åï¼(|divided| >= |divisor|)
+    // ç®€å•ç‚¹ç†è§£ï¼Œå°±æ˜¯æ¯æ¬¡å‡å»é™¤æ•°çš„2^x.å€æ•°(tmp == divisor*(2^x) = divisor*cnt)ï¼Œå‰©ä¸‹çš„éƒ¨åˆ†ç»§ç»­æŒ‰è¿™æ ·çš„è§„åˆ™ç»§ç»­
     private int div(int dividend, int divisor) {
         int ans = 0;
         while (dividend <= divisor) {
-            int tmp = divisor, cnt = 1; // ?Ò»¶¨ÔÚwhileÄÚ£¡Ã¿ÂÖÖØĞÂ¸³Öµ£¡
-            // ÕâÀï×¢Òâ²»ÒªĞ´³É tmp + tmp >= dividend£¬ÕâÑùĞ´¼Ó·¨ÓĞ¿ÉÄÜ»áÒç³öµ¼ÖÂËÀÑ­»·
-            // ?ÊÇwhile£¡·Çif£¡
-            while (tmp >= dividend - tmp) { // ÕıÊıtmp + tmp <= dividend£¬µßµ¹ & ·ÀÒç
-                // tmp ºÍ cnt Ã¿´Î¶ÔÓ¦Ôö¼ÓÒ»±¶£¨*2£©£¬ËùÒÔ½Ğ±¶Ôö
-                cnt <<= 1; // ¼´ 2^x
-                tmp <<= 1; // ¼´
+            int tmp = divisor, cnt = 1; // ?ä¸€å®šåœ¨whileå†…ï¼æ¯è½®é‡æ–°èµ‹å€¼ï¼
+            // è¿™é‡Œæ³¨æ„ä¸è¦å†™æˆ tmp + tmp >= dividendï¼Œè¿™æ ·å†™åŠ æ³•æœ‰å¯èƒ½ä¼šæº¢å‡ºå¯¼è‡´æ­»å¾ªç¯
+            // ?æ˜¯whileï¼éifï¼
+            while (tmp >= dividend - tmp) { // æ­£æ•°tmp + tmp <= dividendï¼Œé¢ å€’ & é˜²æº¢
+                // tmp å’Œ cnt æ¯æ¬¡å¯¹åº”å¢åŠ ä¸€å€ï¼ˆ*2ï¼‰ï¼Œæ‰€ä»¥å«å€å¢
+                cnt <<= 1; // å³ 2^x
+                tmp <<= 1; // å³
             }
-            // ±»³ıÊı¼õÈ¥³ıÊıµÄ 2^x ±¶Êı×öÎªĞÂµÄ±»³ıÊı
+            // è¢«é™¤æ•°å‡å»é™¤æ•°çš„ 2^x å€æ•°åšä¸ºæ–°çš„è¢«é™¤æ•°
             dividend -= tmp;
             ans += cnt;
         }
