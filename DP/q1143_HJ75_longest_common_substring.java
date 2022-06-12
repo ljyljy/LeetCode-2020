@@ -3,7 +3,7 @@ package DP;
 import java.util.Scanner;
 
 public class q1143_HJ75_longest_common_substring {
-    // ¶Ô±Èq1143£º×î³¤¹«¹²×ÓĞòÁĞLCSeq(²»ÒªÇóÁ¬Ğø) ¡Ù LCStr(±¾Ìâ£¬ÒªÇóÁ¬Ğø£¡)
+    // å¯¹æ¯”q1143ï¼šæœ€é•¿å…¬å…±å­åºåˆ—LCSeq(ä¸è¦æ±‚è¿ç»­) â‰  LCStr(æœ¬é¢˜ï¼Œè¦æ±‚è¿ç»­ï¼)
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {
@@ -14,15 +14,15 @@ public class q1143_HJ75_longest_common_substring {
 
     private static int getLCStr(String s, String p) {
         int n1 = s.length(), n2 = p.length();
-        int[][] dp = new int[n1+1][n2+1]; // s[0,i-1]Óëp[0,j-1]µÄ×î³¤¹«¹²×Ó´®(Á¬ĞøLCStr)
+        int[][] dp = new int[n1+1][n2+1]; // s[0,i-1]ä¸p[0,j-1]çš„æœ€é•¿å…¬å…±å­ä¸²(è¿ç»­LCStr)
         int maxLen = 0;
         for (int i = 1; i <= n1; i++) {
             for (int j = 1; j <= n2; j++) {
                 if (s.charAt(i-1) == p.charAt(j-1)) {
                     dp[i][j] = dp[i-1][j-1] + 1;
                 } else {
-                    dp[i][j] = 0; // ¡ß¹«¹²×Ó´®£¨Á¬Ğø£©¡à×ÔÁ¢ÃÅ»§Ê±£¬ÖØĞÂ¼ÆÊı
-                    // vs-q1143: LCS×ÓĞòÁĞ(²»Á¬Ğø): dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+                    dp[i][j] = 0; // âˆµå…¬å…±å­ä¸²ï¼ˆè¿ç»­ï¼‰âˆ´è‡ªç«‹é—¨æˆ·æ—¶ï¼Œé‡æ–°è®¡æ•°
+                    // vs-q1143: LCSå­åºåˆ—(ä¸è¿ç»­): dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
                 }
                 maxLen = Math.max(maxLen, dp[i][j]);
             }

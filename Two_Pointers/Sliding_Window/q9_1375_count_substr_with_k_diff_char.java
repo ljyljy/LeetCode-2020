@@ -3,18 +3,18 @@ package Two_Pointers.Sliding_Window;
 import java.util.HashMap;
 import java.util.Map;
 
-// Çó×Ó´®ÊıÁ¿£¬Àà±È£ºq9_1870, Q9_1375 / Àà±Èq315
+// æ±‚å­ä¸²æ•°é‡ï¼Œç±»æ¯”ï¼šq9_1870, Q9_1375 / ç±»æ¯”q315
 // abcabcabc    k = 3, len = 9
 // |  |     |
-// l  r    len       res += (len - r + 1), Àà±Èq315£¬¼´´Ó[l, r-1]~[l, len-1]
+// l  r    len       res += (len - r + 1), ç±»æ¯”q315ï¼Œå³ä»[l, r-1]~[l, len-1]
 
-// Ê±¼äO(n), ¿Õ¼äO(|s|)--×Ö·û´®sÖĞ ²»Í¬×Ö·ûÊıÁ¿£¨valid£©
+// æ—¶é—´O(n), ç©ºé—´O(|s|)--å­—ç¬¦ä¸²sä¸­ ä¸åŒå­—ç¬¦æ•°é‡ï¼ˆvalidï¼‰
 public class q9_1375_count_substr_with_k_diff_char {
     public long kDistinctCharacters(String s, int k) {
         if (s == null || s.isEmpty()) return 0;
         int n = s.length();
         long cnt = 0;
-        int valid = 0; // ²»Í¬×Ö·ûµÄ¸öÊı, ¼´window.size()
+        int valid = 0; // ä¸åŒå­—ç¬¦çš„ä¸ªæ•°, å³window.size()
         Map<Character, Integer> window = new HashMap<>();
         int left = 0, right = 0;
 
@@ -26,7 +26,7 @@ public class q9_1375_count_substr_with_k_diff_char {
             }
 
             while (valid >= k) {
-                cnt += (n - right + 1); // ?¡¾cntµÄ¸üĞÂÎ»ÖÃ£¬²»¿ÉÒÔÔÚwhile(valid>k)ºóÃæ£¬·ñÔò»áÂ©µôvalid>kµÄÇé¿ö£¡¡¿
+                cnt += (n - right + 1); // ?ã€cntçš„æ›´æ–°ä½ç½®ï¼Œä¸å¯ä»¥åœ¨while(valid>k)åé¢ï¼Œå¦åˆ™ä¼šæ¼æ‰valid>kçš„æƒ…å†µï¼ã€‘
                 char ch2Del = s.charAt(left++);
                 window.put(ch2Del, window.getOrDefault(ch2Del, 0) - 1);
                 if (window.get(ch2Del) == 0) {
@@ -46,7 +46,7 @@ public class q9_1375_count_substr_with_k_diff_char {
 //                }
 //            }
 //
-//            if (valid == k) { // »áÂ©µôvalid > kÊ±µÄÇé¿ö£¡
+//            if (valid == k) { // ä¼šæ¼æ‰valid > kæ—¶çš„æƒ…å†µï¼
 //                cnt += (n - right + 1);
 //            }
         }

@@ -1,7 +1,7 @@
 package DP;
 
 public class q1035_uncrossed_lines {
-    // 与q1143. LCS相同
+    // 涓巕1143. LCS鐩稿悓
     public int maxUncrossedLines(int[] nums1, int[] nums2) {
         int n = nums1.length, m = nums2.length;
         int[][] dp = new int[n+1][m+1];
@@ -9,7 +9,7 @@ public class q1035_uncrossed_lines {
             for (int j = 1; j <= m; j++) {
                 if (nums1[i-1] == nums2[j-1]) {
                     dp[i][j] = dp[i-1][j-1] + 1;
-                } else {  // ?类比q115, 1143, 392
+                } else {  // 绫绘瘮q115, 1143, 392
                     dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
                 }
             }

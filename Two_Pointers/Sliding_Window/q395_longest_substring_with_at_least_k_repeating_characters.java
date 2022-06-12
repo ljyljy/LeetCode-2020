@@ -4,39 +4,45 @@ import java.util.Arrays;
 
 public class q395_longest_substring_with_at_least_k_repeating_characters {
 
-    // ×Ô¶¨ÒåÏŞÖÆÌõ¼ş£º»¬¶¯´°¿Ú
+    // æ³•0ï¼šåˆ†æ²»ï¼ˆtodoï¼Œæ›´ç®€å•ï¼‰
+    // https://leetcode.cn/problems/longest-substring-with-at-least-k-repeating-characters/solution/jie-ben-ti-bang-zhu-da-jia-li-jie-di-gui-obla/
+
+    // è‡ªå®šä¹‰é™åˆ¶æ¡ä»¶ï¼šæ»‘åŠ¨çª—å£
     public int longestSubstring(String s, int k) {
         int n = s.length();
         int maxLen = 0;
-        int[] window = new int[26];
+        int[] window = new int[26]; // æ•°ç»„ä»£æ›¿å“ˆå¸Œ
 
         for (int nType = 1; nType <= 26; nType++) {
-            Arrays.fill(window, 0); // Ã¿ÂÖÖØÖÃ
+            Arrays.fill(window, 0); // æ¯è½®é‡ç½®
             int left = 0, right = 0, uniqueValid = 0, uniqueCnt = 0;
 
             while (right < n) {
                 char ch2Add = s.charAt(right++);
                 int cntAdd = ++window[ch2Add - 'a'];
-                if (cntAdd == 1) uniqueCnt++; // ²»Í¬×Ö·ûµÄÊıÁ¿
-                if (cntAdd == k) uniqueValid++; // Âú×ã¡¾ËùÓĞ×Ö·ûÆµÊı>=k¡¿
+                if (cntAdd == 1) uniqueCnt++; // ä¸åŒå­—ç¬¦çš„æ•°é‡
+                if (cntAdd == k) uniqueValid++; // æ»¡è¶³ã€æ‰€æœ‰å­—ç¬¦é¢‘æ•°>=kã€‘
 
-//            ¡¾ÈçºÎËõĞ¡»¬´°¡¿£¿£¿ -- valid¸öÊıÎŞÏŞÖÆ£¨ÎŞ·¨×÷ÎªËõĞ¡Ìõ¼ş£©¡¢
-                // ¡ª¡ª ÀûÓÃÌáÊ¾£ºs ½öÓÉĞ¡Ğ´Ó¢ÎÄ×ÖÄ¸×é³É£¨×î¶à26ÖÖ×ÖÄ¸£¡£©
+// 	ã€å¦‚ä½•ç¼©å°æ»‘çª—ã€‘ï¼Ÿï¼Ÿ -- validæœ€å¤šå…±26ç§å­—ç¬¦å‡è¾¾åˆ°è¦æ±‚ï¼ˆä½†æœ¬èº«é¢˜ç›®æ— é™åˆ¶è¦æ±‚ï¼Œæ•…æ— æ³•ä½œä¸ºç¼©å°æ¡ä»¶ï¼‰ã€‚
+// æ€è·¯--ã€åˆ›é€ æ¡ä»¶ã€‘è§„å®šæ¯æ¬¡æ»‘çª—å†…ï¼Œå­—ç¬¦ç§ç±»çš„ä¸ªæ•°nTypeâˆˆ[1,26]ï¼Œå½“éå†æ—¶unique-Cnt > è§„å®šçš„nTypeï¼Œå³å¯ç¼©å°çª—å£
                 while (uniqueCnt > nType) {
                     char ch2Del = s.charAt(left++);
                     int cntDel = --window[ch2Del - 'a'];
                     if (cntDel == 0) uniqueCnt--;
-                    if (cntDel == k-1) uniqueValid--; // ²»ÊÇ<k! Ã¿¸ö×Ö·ûÖ»ÄÜ×Ô¼õÒ»´Î£¡
+                    if (cntDel == k-1) uniqueValid--; // ä¸æ˜¯<k! æ¯ä¸ªå­—ç¬¦åªèƒ½è‡ªå‡ä¸€æ¬¡ï¼
                 }
-                if (uniqueCnt == uniqueValid)
+                // æ»‘çª—å†…ï¼Œä¸åŒå­—ç¬¦ç§ç±»==ç¬¦åˆæ¡ä»¶çš„å­—ç¬¦æ•°ï¼Œå³æ»‘çª—å†…æ‰€æœ‰å­—ç¬¦å‡æ»¡è¶³æ¡ä»¶ã€é¢‘æ•°>=kã€‘
+                if (uniqueCnt == uniqueValid){
                     maxLen = Math.max(maxLen, right - left);
+                }
+
             }
 
         }
         return maxLen;
     }
 
-//    // trial£ºÆÕÍ¨»¬¶¯´°¿Ú
+//    // trialï¼šæ™®é€šæ»‘åŠ¨çª—å£
 //    public int longestSubstring_trial(String s, int k) {
 //        int n = s.length();
 //        int maxLen = 0;
@@ -47,11 +53,11 @@ public class q395_longest_substring_with_at_least_k_repeating_characters {
 //        while (right < n) {
 //            char ch2Add = s.charAt(right++);
 //            window[ch2Add - 'a']++;
-////            if (window[ch2Add - 'a'] == 1) cnt++; ²»Í¬×Ö·ûµÄÊıÁ¿
-//            if (window[ch2Add - 'a'] == k) valid++; // Âú×ã¡¾ËùÓĞ×Ö·ûÆµÊı>=k¡¿
+////            if (window[ch2Add - 'a'] == 1) cnt++; ä¸åŒå­—ç¬¦çš„æ•°é‡
+//            if (window[ch2Add - 'a'] == k) valid++; // æ»¡è¶³ã€æ‰€æœ‰å­—ç¬¦é¢‘æ•°>=kã€‘
 //
-////            ¡¾ÈçºÎËõĞ¡»¬´°¡¿£¿£¿ -- valid¸öÊıÎŞÏŞÖÆ£¨ÎŞ·¨×÷ÎªËõĞ¡Ìõ¼ş£©¡¢
-//            // ¡ª¡ª ÀûÓÃÌáÊ¾£ºs ½öÓÉĞ¡Ğ´Ó¢ÎÄ×ÖÄ¸×é³É£¨×î¶à26ÖÖ×ÖÄ¸£¡£©
+////            ã€å¦‚ä½•ç¼©å°æ»‘çª—ã€‘ï¼Ÿï¼Ÿ -- validä¸ªæ•°æ— é™åˆ¶ï¼ˆæ— æ³•ä½œä¸ºç¼©å°æ¡ä»¶ï¼‰ã€
+//            // â€”â€” åˆ©ç”¨æç¤ºï¼šs ä»…ç”±å°å†™è‹±æ–‡å­—æ¯ç»„æˆï¼ˆæœ€å¤š26ç§å­—æ¯ï¼ï¼‰
 //        }
 //    }
 }
