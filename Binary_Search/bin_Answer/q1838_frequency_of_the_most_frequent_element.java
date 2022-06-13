@@ -28,8 +28,8 @@ public class q1838_frequency_of_the_most_frequent_element {
 //        // 写法2
 //        while (start < end) { // [L, mid-1] & [mid, R]
 //            int mid = start + end + 1 >> 1;
-//            // 相等时，往右找有没有更大的频数（但mid，R需在一个区间）
-//            if (check(mid)) start = mid;
+//            // 相等时，往右找有没有更大的频数
+//            if (check(mid)) start = mid;   // 保证R与mid在一个区间！（类比q1838，475, 9_183）
 //            else end = mid-1;
 //        }
 //        if (check(start)) return start;

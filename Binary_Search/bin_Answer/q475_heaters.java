@@ -4,13 +4,13 @@ import java.util.Arrays;
 
 
 /**
- * ÅÅĞò heaters£¬O(m * logm)
- * ±éÀúÃ¿Ò»¸ö·¿Îİ house£¬O(n)
- * ¶ş·Ö house ÔÚ heaters ÖĞµÄ²åÈëÎ»ÖÃ£¬O(logm)
- * ×ÜÊ±¼ä¸´ÔÓ¶È£ºO((n + m) * logm)
+ * æ’åº heatersï¼ŒO(m * logm)
+ * éå†æ¯ä¸€ä¸ªæˆ¿å±‹ houseï¼ŒO(n)
+ * äºŒåˆ† house åœ¨ heaters ä¸­çš„æ’å…¥ä½ç½®ï¼ŒO(logm)
+ * æ€»æ—¶é—´å¤æ‚åº¦ï¼šO((n + m) * logm)
  */
 public class q475_heaters {
-    // ·¨1£º¶ş·Ö´ğ°¸
+    // æ³•1ï¼šäºŒåˆ†ç­”æ¡ˆ
     public int findRadius0(int[] houses, int[] heaters) {
         Arrays.sort(houses);
         Arrays.sort(heaters);
@@ -18,6 +18,8 @@ public class q475_heaters {
         int start = 0, end = (int)1e9;
         while (start < end) { // [L, mid], [mid+1, R]
             int mid = start + end >> 1;
+            // ä¿è¯Lä¸midåœ¨ä¸€ä¸ªåŒºé—´ï¼ï¼ˆç±»æ¯”q1838ï¼Œ475, 9_183ï¼‰
+            //   ans=mid=Ræ—¶ï¼Œå¾€å·¦åŒºé—´æœç´¢(æœ€ç»ˆå¤¹é€¼L=mid)ï¼Œä½†ä¸èƒ½è·¨åŒºé—´ï¼
             if (check(houses, heaters, mid)) end = mid;
             else start = mid+1;
         }
@@ -27,14 +29,15 @@ public class q475_heaters {
     private boolean check(int[] houses, int[] heaters, int tryR) {
         int n1 = houses.length, n2 = heaters.length;
         for (int i = 0, j = 0; i < n1; i++) {
-            while (j < n2 && houses[i] > heaters[j] + tryR) j++; // ÕÒµ½ºÏÊÊµÄÓÒ±ß½ç(¼ûÀı2)
-            if (j < n2 && heaters[j] - tryR <= houses[i] && houses[i] <= heaters[j] + tryR) continue; // »»ÏÂÒ»¸öhouse
+            while (j < n2 && houses[i] > heaters[j] + tryR) j++; // æ‰¾åˆ°åˆé€‚çš„å³è¾¹ç•Œ(è§ä¾‹2)
+            if (j < n2 && heaters[j] - tryR <= houses[i] && houses[i] <= heaters[j] + tryR)
+                continue; // æ¢ä¸‹ä¸€ä¸ªhouse // j < n2 && Math.abs(houses[i] - heaters[j]) <= tryR
             return false;
         }
         return true;
     }
 
-//    ½â·¨¶ş£ºÍ¬ÏòË«Ö¸Õë
+    //    è§£æ³•äºŒï¼šåŒå‘åŒæŒ‡é’ˆ
     public int findRadius(int[] houses, int[] heaters) {
         Arrays.sort(houses);
         Arrays.sort(heaters);
@@ -48,7 +51,7 @@ public class q475_heaters {
             if (j + 1 < n2) {
                 nxtR = Math.abs(houses[i] - heaters[j+1]);
             }
-            if (curR < nxtR) { // max{¿ÉĞĞ½âµÄÏÂÏŞ}
+            if (curR < nxtR) { // max{å¯è¡Œè§£çš„ä¸‹é™}
                 radius = Math.max(radius, curR);
                 i++;
             } else j++;

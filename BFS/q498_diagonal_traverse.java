@@ -1,31 +1,34 @@
 package BFS;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 /*
-1. ¶ÔÃ¿¸öÔªËØ¹ã¶ÈÓÅÏÈËÑË÷ÆäÓÒ±ßµÄÒ»¸öÔªËØ£¬ÌØÊâÇé¿öµ±ÁĞÎª0£¬ĞĞĞ¡ÓÚ×îºóÒ»ĞĞÊ±£¬¶îÍâ¶àËÑË÷ÆäÏÂÃæµÄÒ»¸öÔªËØ¡£
-2. sizeÎª0Ê±Ò»¸ö¶Ô½ÇÏß±éÀúÍê£¬Èç¹ûflagÎª-1ÔòÖ±½Ó¼Óµ½res£¬Èç¹ûflagÎª1£¬½«±éÀú½á¹û·´×ªºó¼Óµ½res¡£
-3. flagÈ¡·´¡£
-4. ×îºó±éÀúres£¬´æÈëÊı×é£¬·µ»Ø¸ÃÊı×é¡£
+1. å¯¹æ¯ä¸ªå…ƒç´ å¹¿åº¦ä¼˜å…ˆæœç´¢å…¶å³è¾¹çš„ä¸€ä¸ªå…ƒç´ ï¼Œç‰¹æ®Šæƒ…å†µå½“åˆ—ä¸º0ï¼Œè¡Œå°äºæœ€åä¸€è¡Œæ—¶ï¼Œé¢å¤–å¤šæœç´¢å…¶ä¸‹é¢çš„ä¸€ä¸ªå…ƒç´ ã€‚
+2. sizeä¸º0æ—¶ä¸€ä¸ªå¯¹è§’çº¿éå†å®Œï¼Œå¦‚æœflagä¸º-1åˆ™ç›´æ¥åŠ åˆ°resï¼Œå¦‚æœflagä¸º1ï¼Œå°†éå†ç»“æœåè½¬ååŠ åˆ°resã€‚
+3. flagå–åã€‚
+4. æœ€åéå†resï¼Œå­˜å…¥æ•°ç»„ï¼Œè¿”å›è¯¥æ•°ç»„ã€‚
 
-1. ×ø±êË÷ÒıÓÃx£¬yÀ´±íÊ¾£¬ÌâÄ¿mºÍnĞ¡ÓÚ10000£¬ÓÃx*10001+y´æÈë¶ÓÁĞ¡£
-2. ×¢Òâ±ß½ç£ºy<n-1 ²ÅÄÜËÑË÷ÓÒ±ßÔªËØ£¬¡¾y==0 ÇÒ x < m-1¡¿²ÅÄÜËÑË÷ÏÂ±ßÒ»¸öÔªËØ¡£
+1. åæ ‡ç´¢å¼•ç”¨xï¼Œyæ¥è¡¨ç¤ºï¼Œé¢˜ç›®må’Œnå°äº10000ï¼Œç”¨x*10001+yå­˜å…¥é˜Ÿåˆ—ã€‚
+2. æ³¨æ„è¾¹ç•Œï¼šy<n-1 æ‰èƒ½æœç´¢å³è¾¹å…ƒç´ ï¼Œã€y==0 ä¸” x < m-1ã€‘æ‰èƒ½æœç´¢ä¸‹è¾¹ä¸€ä¸ªå…ƒç´ ã€‚
 
  */
 public class q498_diagonal_traverse {
-    private int[] _row = {0, 1}; // ·¨1£ºÓÒ£¬ÏÂ£¨dirĞèÒªÈ¥ÖØvisited£©
+    private int[] _row = {0, 1}; // æ³•1ï¼šå³ï¼Œä¸‹ï¼ˆdiréœ€è¦å»é‡visitedï¼‰
     private int[] _col = {1, 0};
     private int m, n;
     private int[][] mat;
     private List<Integer> res = new ArrayList<Integer>();
     private Queue<int[]> queue = new ArrayDeque<>(); // (x, y)
-    private boolean[][] visited; // ·¨1
+    private boolean[][] visited; // æ³•1
 
     public int[] findDiagonalOrder(int[][] mat) {
         this.mat = mat; m = mat.length; n = mat[0].length;
 
         bfs();
 
+        // List<Integer> è½¬ int[]ï¼š
+//        int[] ans2 = res.stream().mapToInt(Integer::intValue).toArray();
         int[] ans = new int[m * n];
         int k = 0;
         for (int num: res) {
@@ -46,17 +49,17 @@ public class q498_diagonal_traverse {
                 int[] loc = queue.poll();
                 int row = loc[0], col = loc[1];
                 level.add(mat[row][col]);
-                // ·¨1£º³£¹æBFS
+                // æ³•1ï¼šå¸¸è§„BFS
                 for (int dir = 0; dir < 2; dir++) {
                     int nx = row + _row[dir], ny = col + _col[dir];
                     if (!isValid(nx, ny) || visited[nx][ny]) continue;
                     visited[nx][ny] = true;
-                    queue.offer(new int[]{nx, ny}); // ÓÒ¡¢ÏÂ
+                    queue.offer(new int[]{nx, ny}); // å³ã€ä¸‹
                 }
-                // ·¨2[¼ö]£º½öÁĞ0Ê±£¬ÏòÏÂËÑË÷£¬ÆäËû½áµãÖ»ÏòÓÒËÑË÷£»
-                //      ÎŞĞèfor(dir...)¡¢visited
-//                if (col+1 < n) queue.offer(new int[]{row, col+1}); // ÓÒ
-//                if (col == 0 && row+1 < m) queue.offer(new int[]{row+1, col}); // ÏÂ
+                // æ³•2[è]ï¼šä»…åˆ—0æ—¶ï¼Œå‘ä¸‹æœç´¢ï¼Œå…¶ä»–ç»“ç‚¹åªå‘å³æœç´¢ï¼›
+                //      æ— éœ€for(dir...)ã€visited
+//                if (col+1 < n) queue.offer(new int[]{row, col+1}); // å³
+//                if (col == 0 && row+1 < m) queue.offer(new int[]{row+1, col}); // ä¸‹
             }
             if (flag) Collections.reverse(level);
             res.addAll(level);
