@@ -10,7 +10,7 @@ import java.util.Random;
  * 1、求等于0的连通块
  * 2、按照连通块的大小，进行升序输出
  * 【类比q130， 200】
- */
+ * **/
 public class q695_HJ_connectedZoneSort {
     private static int m = 5, n = 4;
     private static int[][] graph;
@@ -55,8 +55,8 @@ public class q695_HJ_connectedZoneSort {
 
     private static int dfs(int i, int j) {
         int cnt = 1;
-//        ↓ 必须对graph做原地修改，visited无用！【类比q130】
-        graph[i][j] = -1; // DFS的时候一定要将她改掉！不然会影响判断！可以不加visited，改掉以后自然就visited了
+         //        ↓ 必须对graph做原地修改，visited无用！【类比q130】
+         graph[i][j] = -1; // DFS的时候一定要将她改掉！不然会影响判断！可以不加visited，改掉以后自然就visited了
         for (int dir= 0; dir < 4; dir++) {
             int newX = i + _x[dir], newY = j + _y[dir];
             if (!check(newX, newY)) continue;

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
-    <file url="file://$PROJECT_DIR$/Greedy/q406_queue_reconstruction_by_height.java" charset="UTF-8" />
-    <file url="PROJECT" charset="UTF-8" />
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/DP/Palindromic/q5_HJ32_codeCut.java" charset="GBK" />
   </component>
 </project>
