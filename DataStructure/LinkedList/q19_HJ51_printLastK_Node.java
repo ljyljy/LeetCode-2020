@@ -10,7 +10,7 @@ import java.util.Scanner;
 //}
 
 public class q19_HJ51_printLastK_Node {
-    // ÀàËÆLC_Q19£ºÉ¾³ıµ¹ÊıµÚk¸ö½áµã£¨ĞèÒªslow_prev = dummy£©
+    // ç±»ä¼¼LC_Q19ï¼šåˆ é™¤å€’æ•°ç¬¬kä¸ªç»“ç‚¹ï¼ˆéœ€è¦slow_prev = dummyï¼‰
     private static ListNode getLastKNode(ListNode head, int k) {
         if (head == null) return null;
         ListNode slow = head, fast = head;
@@ -29,7 +29,7 @@ public class q19_HJ51_printLastK_Node {
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {
             int n = sc.nextInt();
-            // Éú³ÉÁ´±í?
+            // ç”Ÿæˆé“¾è¡¨
             ListNode dummy = new ListNode(-1);
             ListNode p = dummy;
             for (int i = 0; i < n; i++) {

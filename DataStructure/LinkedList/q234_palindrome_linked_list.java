@@ -4,14 +4,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class q234_palindrome_linked_list {
-    // ·¨2£º³£¹æ£¬O(1)¿Õ¼ä
+    // æ³•2-2ï¼ˆæ›´ç®€å•ï¼Œå¤æ‚åº¦ä»‹äºæ³•1~2ä¹‹é—´ï¼‰
+    //      å…ˆå¤åˆ¶é“¾è¡¨ï¼Œç„¶ååè½¬-ã€‹revã€‚åŒå‘åŒæŒ‡é’ˆã€‚
+    public boolean isPalindrome2_2(ListNode head) {
+        ListNode copy = copyNode(head);
+        ListNode rev = reverseNode(copy);
+        // while (rev != null) {
+        //     System.out.println(rev.val);
+        //     rev = rev.next;
+        // }
+
+        while (rev != null && head != null) {
+            if (rev.val != head.val) return false;
+            rev = rev.next;
+            head = head.next;
+        }
+        return true;
+    }
+
+    private ListNode copyNode (ListNode head) {
+        ListNode dummy = new ListNode(-1);
+        ListNode node = new ListNode(-1);
+        dummy = node;
+        ListNode p = head;
+        while (p != null) {
+            node.next = new ListNode(p.val);
+            p = p.next;
+            node = node.next;
+        }
+        return dummy.next;
+    }
+
+    private ListNode reverseNode (ListNode head) {
+        ListNode prev = null;
+        ListNode cur = head;
+        while (cur != null) {
+            ListNode nxt = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = nxt;
+        }
+        return prev;
+    }
+
+    // æ³•2ï¼šå¸¸è§„ï¼ŒO(1)ç©ºé—´
     public boolean isPalindrome(ListNode head) {
         if (head == null) return true;
-        // ÕÒµ½Ç°°ë²¿·ÖÁ´±íµÄÎ²½Úµã¡¾Ë«ÊıÎªÖĞºóÕß¡¿
+        // æ‰¾åˆ°å‰åŠéƒ¨åˆ†é“¾è¡¨çš„å°¾èŠ‚ç‚¹ã€åŒæ•°ä¸ºä¸­åè€…ã€‘
         ListNode firstHalfEnd = getFirstHalfEnd(head);
-        // ·´×ªºó°ë²¿·ÖÁ´±í
-        ListNode secondHalfStart = reverseList(firstHalfEnd); // Ô­end
-        // ÅĞ¶ÏÊÇ·ñ»ØÎÄ
+        // åè½¬ååŠéƒ¨åˆ†é“¾è¡¨
+        ListNode secondHalfStart = reverseList(firstHalfEnd); // åŸend
+        // åˆ¤æ–­æ˜¯å¦å›æ–‡
         ListNode p1 = head;
         ListNode p2 = secondHalfStart;
         while (p2 != null) {
@@ -21,18 +64,18 @@ public class q234_palindrome_linked_list {
             p1 = p1.next;
             p2 = p2.next;
         }
-        // »Ö¸´ºó°ë²¿·ÖÁ´±í
-        firstHalfEnd.next = reverseList(secondHalfStart); // Ô­end
+        // æ¢å¤ååŠéƒ¨åˆ†é“¾è¡¨
+        firstHalfEnd.next = reverseList(secondHalfStart); // åŸend
         return true;
     }
 
     private ListNode getFirstHalfEnd(ListNode head) {
         ListNode slow = head, fast = head;
-        /* À©Õ¹(q876)
-        * // ÈôÎª½ÚµãÊıÎªË«Êı£¬ÔòÒÔÏÂ·µ»Ø¡¾Ç°Õß¡¿
+        /* æ‰©å±•(q876)
+        * // è‹¥ä¸ºèŠ‚ç‚¹æ•°ä¸ºåŒæ•°ï¼Œåˆ™ä»¥ä¸‹è¿”å›ã€å‰è€…ã€‘
         while (fast.next != null && fast.next.next != null) {
         * */
-        // ÈôÎª½ÚµãÊıÎªË«Êı£¬ÔòÒÔÏÂ·µ»Ø¡¾ºóÕß¡¿
+        // è‹¥ä¸ºèŠ‚ç‚¹æ•°ä¸ºåŒæ•°ï¼Œåˆ™ä»¥ä¸‹è¿”å›ã€åè€…ã€‘
         while(fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
@@ -51,7 +94,7 @@ public class q234_palindrome_linked_list {
         return pre;
     }
 
-    // ·¨1£º³£¹æ£¬O(n)¿Õ¼ä
+    // æ³•1ï¼šå¸¸è§„ï¼ŒO(n)ç©ºé—´
     public boolean isPalindrome1(ListNode head) {
         if (head == null) return true;
         List<Integer> nodes = new ArrayList<>();

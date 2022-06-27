@@ -1,8 +1,9 @@
 package DataStructure.LinkedList;
 
 public class q25_reverse_nodes_in_k_group {
+    // ç±»æ¯”q206, 92, 25
     // dummy/pre -> (start, ..., end) -> next...
-    // dummy/pre -> (end, ..., start/pre2/end2) -> next
+    // dummy/pre -> (end, ..., start/pre'ã€end') -> next
     public ListNode reverseKGroup(ListNode head, int k) {
         if (head == null) return null;
         ListNode dummy = new ListNode(-1);
@@ -10,10 +11,10 @@ public class q25_reverse_nodes_in_k_group {
         ListNode pre = dummy, end = dummy;
 
         while (end.next != null) {
-            // endÖ¸Ïòk_1×éÄ©Î²
+            // endæŒ‡å‘k_1ç»„æœ«å°¾
             for (int i = 0; i < k && end != null; i++) end = end.next;
             if (end == null) break;
-            // nxtÖ¸Ïòk_2×éµÄ¿ªÍ·
+            // nxtæŒ‡å‘k_2ç»„çš„å¼€å¤´
             ListNode next = end.next, start = pre.next;
 
             end.next = null;
@@ -39,27 +40,26 @@ public class q25_reverse_nodes_in_k_group {
         return pre;
     }
 
-    // Á·Ï°£ºÁ´±íµÄÊäÈëÊä³ö
+    // ç»ƒä¹ ï¼šé“¾è¡¨çš„è¾“å…¥è¾“å‡º(è§q206, q25)
     public static void main(String[] args) {
         q25_reverse_nodes_in_k_group sol = new q25_reverse_nodes_in_k_group();
         int n = 5; // sc
         int[] head = new int[]{1,2,3,4,5}; // sc
         int k = 2; // sc
         ListNode dummy = new ListNode(-1);
-        ListNode cur = new ListNode(-1);
-        dummy = cur; // ¡¾·Ç.next£¡¡¿
+        ListNode p = dummy;
         for (int i = 0; i < n; i++) {
-            cur.next = new ListNode(head[i]);// sc ¡¾·Çcur=...¡¿
-            cur = cur.next;
+            p.next = new ListNode(head[i]); // sc ã€écur=...ã€‘
+            p = p.next;
         }
 
         ListNode reversed = sol.reverseKGroup(dummy.next, k);
-        printNodes(reversed);
-
+        reversed.printNodes(); // æ³•1
+        System.out.println();
+        printNodes(reversed); // æ³•2
     }
-
-    private static void printNodes(ListNode reversed) {
-        ListNode p = reversed; // dummy.next;
+    private static void printNodes(ListNode head) {
+        ListNode p = head; // dummy.next;
         while (p != null) {
             System.out.print(p.val + " ");
             p = p.next;

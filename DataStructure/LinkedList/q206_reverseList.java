@@ -1,8 +1,10 @@
 package DataStructure.LinkedList;
 
+import java.util.Scanner;
+
 public class q206_reverseList {
-    // ·¨1£ºµü´ú£¨new£©
-    // Àà±Èq25, 92, 206?
+    // æ³•1ï¼šè¿­ä»£ï¼ˆnewï¼‰
+    // ç±»æ¯”q206, 92, 25
     // dummy/pre -> head/cur -> nxt ...
     // dummy/pre <- head/cur <- nxt
     public ListNode reverseList1(ListNode head) {
@@ -19,17 +21,65 @@ public class q206_reverseList {
         return pre;
     }
 
-    // ·¨2£ºµİ¹é
-    // Àà±Èq92, 206?
+    // æ³•2ï¼šé€’å½’
+    // ç±»æ¯”q206, 92, 25
     //      head -> nxt ... -> end -> ^
     // ^ <- head <- [nxt ... <- end/last]
     public ListNode reverseList(ListNode head) {
         if (head == null || head.next == null) return head;
         ListNode nxt = head.next;
-        ListNode last = reverseList(nxt); // ·µ»Ø[end <- ... <- nxt/last], Î²²¿µ¹ĞòKO
-        // ½«Í·µ¹Ğò
+        ListNode last = reverseList(nxt); // è¿”å›[end <- ... <- nxt/last], å°¾éƒ¨å€’åºKO
+        // å°†å¤´å€’åº
         nxt.next = head;
-        head.next = null; // ?ÎğÍü£¡·ñÔò³É»·£¡Ô­Ê¼head.nextÃ»ÓĞ¶Ï¿ª£¡
+        head.next = null; // ?å‹¿å¿˜ï¼å¦åˆ™æˆç¯ï¼åŸå§‹head.nextæ²¡æœ‰æ–­å¼€ï¼
         return last;
+    }
+
+
+    private void printListNode (ListNode head) {
+        StringBuilder sb = new StringBuilder();
+        ListNode p = head;
+        while (p != null) {
+            sb.append(p.val).append("->");
+            p = p.next;
+        }
+        // å»æ‰æœ€åçš„"->"
+        sb.deleteCharAt(sb.length()-1);
+        sb.deleteCharAt(sb.length()-1);
+        System.out.println(sb);
+    }
+
+    // ç»ƒä¹ ï¼šé“¾è¡¨çš„è¾“å…¥è¾“å‡º(è§q206, q25)
+    public static void main(String[] args) {
+        q206_reverseList sol = new q206_reverseList();
+        Scanner sc = new Scanner(System.in);
+        while (sc.hasNext()) {
+            int n = sc.nextInt();
+            ListNode dummy = new ListNode();
+            ListNode p = dummy;
+            for (int i = 0; i < n; i++) {
+                p.next = new ListNode(sc.nextInt()); // å¿…é¡»æ˜¯.nextï¼
+                p = p.next;
+            }
+            p = null;
+
+            System.out.println("origin ListNode: ");
+            sol.printListNode(dummy.next);
+
+            System.out.println("after reversion: ");
+            ListNode reversed = sol.reverseList(dummy.next);
+            sol.printListNode(reversed);
+
+            /**
+             * è¾“å…¥ï¼š
+             * 5
+             * 1 2 3 4 5
+             * è¾“å‡ºï¼š
+             * origin ListNode:
+             * 1->2->3->4->5
+             * after reversion:
+             * 5->4->3->2->1
+             */
+        }
     }
 }

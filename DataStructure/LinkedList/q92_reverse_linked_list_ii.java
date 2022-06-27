@@ -9,24 +9,24 @@ public class q92_reverse_linked_list_ii {
     public ListNode reverseBetween1(ListNode head, int left, int right) {
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
-        ListNode p = head, start_prev = dummy, end = dummy;
+        ListNode start_prev = dummy, end = dummy;
         for (int i = 0; i < left-1; i++) start_prev = start_prev.next;
         for (int i = 0; i < right; i++) end = end.next;
         ListNode start = start_prev.next;
         ListNode nxt = end.next;
 
         end.next = null;
-        start_prev.next = reverse_1(start, end);
+        start_prev.next = reverse_1(start);
         start.next = nxt;
         return dummy.next;
     }
 
-    // 可以不传入end，类比q25❤
-    private ListNode reverse_1(ListNode start, ListNode end) {
+    // 法1：q206，类比q25❤
+    private ListNode reverse_1(ListNode head) {
         // pre -> (start/cur, nxt, ..., end)
         // pre <- (start/cur, nxt, ..., end)
         ListNode pre = null;
-        ListNode cur = start;
+        ListNode cur = head;
         while (cur != null) {
             ListNode nxt = cur.next;
             cur.next = pre;
@@ -36,6 +36,18 @@ public class q92_reverse_linked_list_ii {
         return pre;
     }
 
+    // 法2：递归，类比q92, 206?
+    //      head -> nxt ... -> end -> ^
+    // ^ <- head <- [nxt ... <- end/last]
+    private ListNode reverse_2(ListNode head) {
+        if (head == null || head.next == null) return head;// 而非 返回null！
+        ListNode nxt = head.next;
+        ListNode last = reverse_2(nxt); // 返回[end <- ... <- nxt/last], 尾部倒序KO
+        // 将头倒序
+        nxt.next = head;
+        head.next = null; // 勿忘！否则成环！原始head.next没有断开！
+        return last;
+    }
 
     // 法1-迭代写法2（old）
     public ListNode reverseBetween_V1_old(ListNode head, int left, int right){

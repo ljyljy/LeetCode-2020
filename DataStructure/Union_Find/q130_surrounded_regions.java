@@ -3,8 +3,8 @@ package DataStructure.Union_Find;
 import java.util.*;
 
 public class q130_surrounded_regions {
-    // Àà±Èq130,547
-    // ·¨1: DFS(ÕÆÎÕ)-v1
+    // ç±»æ¯”q130,547
+    // æ³•1: DFS(æŒæ¡)-v1
     int[] _x = {1, 0, -1, 0};
     int[] _y = {0, 1, 0, -1};
     int m, n;
@@ -16,10 +16,10 @@ public class q130_surrounded_regions {
         this.board = board;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                // ¶Ô±ß½çÉîËÑ£¬ÈÎºÎÓë±ß½çÏàÁ¬µÄ'O'¶¼²»¿É±ä'X',
-                // ÎªÓëÄÚÂ½'O'Çø·Ö£¬dfs½«±ß½ç'O'È«²¿ÁÙÊ±±ê¼ÇÎª¡®*¡¯
+                // å¯¹è¾¹ç•Œæ·±æœï¼Œä»»ä½•ä¸è¾¹ç•Œç›¸è¿çš„'O'éƒ½ä¸å¯å˜'X',
+                // ä¸ºä¸å†…é™†'O'åŒºåˆ†ï¼Œdfså°†è¾¹ç•Œ'O'å…¨éƒ¨ä¸´æ—¶æ ‡è®°ä¸ºâ€˜*â€™
                 if (!isBorder(i, j)) continue;
-                if (board[i][j] == 'O') { // Ğ´·¨2-1
+                if (board[i][j] == 'O') { // å†™æ³•2-1
                     dfsBorder(i, j);
                 }
             }
@@ -27,22 +27,22 @@ public class q130_surrounded_regions {
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (board[i][j] == '*') board[i][j] = 'O'; // »Ö¸´±ß½çµÄ'O'
+                if (board[i][j] == '*') board[i][j] = 'O'; // æ¢å¤è¾¹ç•Œçš„'O'
                 else board[i][j] = 'X';
             }
         }
     }
 
     private void dfsBorder(int x, int y) {
-//        if (board[x][y] == 'X') return;  // Ğ´·¨2-2(ÓëĞ´·¨2-1Ñ¡Ò»¸ö¼´¿É)
+//        if (board[x][y] == 'X') return;  // å†™æ³•2-2(ä¸å†™æ³•2-1é€‰ä¸€ä¸ªå³å¯)
 
-//         ¡ı ±ØĞë¶Ôgraph×öÔ­µØĞŞ¸Ä£¬visitedÎŞÓÃ£¡¡¾Àà±Èq130¡¢connectedZoneSort¡¿
-        board[x][y] = '*';// DFSµÄÊ±ºòÒ»¶¨Òª½«Ëı¸Äµô£¡²»È»»áÓ°ÏìÅĞ¶Ï£¡¿ÉÒÔ²»¼Óvisited£¬¸ÄµôÒÔºó×ÔÈ»¾ÍvisitedÁË
+//         â†“ å¿…é¡»å¯¹graphåšåŸåœ°ä¿®æ”¹ï¼Œvisitedæ— ç”¨ï¼ã€ç±»æ¯”q130ã€connectedZoneSortã€‘
+        board[x][y] = '*';// DFSçš„æ—¶å€™ä¸€å®šè¦å°†å¥¹æ”¹æ‰ï¼ä¸ç„¶ä¼šå½±å“åˆ¤æ–­ï¼å¯ä»¥ä¸åŠ visitedï¼Œæ”¹æ‰ä»¥åè‡ªç„¶å°±visitedäº†
         for (int dir = 0; dir < 4; dir++) {
             int newX = x + _x[dir], newY = y + _y[dir];
             if (isValid(newX, newY)) {
-                // ¡ıËµÃ÷visited
-                if (board[newX][newY] == '*') continue; // Ğ´·¨1-¡¾ÎğÂ©£¡Èô²»Ğ´ÏÂ¾ä£¬»áTLE£¡¡¿
+                // â†“è¯´æ˜visited
+                if (board[newX][newY] == '*') continue; // å†™æ³•1-ã€å‹¿æ¼ï¼è‹¥ä¸å†™ä¸‹å¥ï¼Œä¼šTLEï¼ã€‘
                 if (board[newX][newY] == 'O')
                     dfsBorder(newX, newY);
             }
@@ -57,15 +57,15 @@ public class q130_surrounded_regions {
         return 0 <= i && i < m && 0 <= j && j < n;
     }
 
-    // dfs£ºĞ´·¨2
+    // dfsï¼šå†™æ³•2
     public void solve_dfs2(char[][] board) {
         m = board.length;
         n = board[0].length;
         this.board = board;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                // ¶Ô±ß½çÉîËÑ£¬ÈÎºÎÓë±ß½çÏàÁ¬µÄ'O'¶¼²»¿É±ä'X',
-                // ÎªÓëÄÚÂ½'O'Çø·Ö£¬dfs½«±ß½ç'O'È«²¿ÁÙÊ±±ê¼ÇÎª¡®*¡¯
+                // å¯¹è¾¹ç•Œæ·±æœï¼Œä»»ä½•ä¸è¾¹ç•Œç›¸è¿çš„'O'éƒ½ä¸å¯å˜'X',
+                // ä¸ºä¸å†…é™†'O'åŒºåˆ†ï¼Œdfså°†è¾¹ç•Œ'O'å…¨éƒ¨ä¸´æ—¶æ ‡è®°ä¸ºâ€˜*â€™
                 if (!isBorder(i, j)) continue;
                 dfsBorder2(i, j);
             }
@@ -73,7 +73,7 @@ public class q130_surrounded_regions {
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (board[i][j] == '*') board[i][j] = 'O'; // »Ö¸´±ß½çµÄ'O'
+                if (board[i][j] == '*') board[i][j] = 'O'; // æ¢å¤è¾¹ç•Œçš„'O'
                 else board[i][j] = 'X';
             }
         }
@@ -87,15 +87,15 @@ public class q130_surrounded_regions {
         for (int dir = 0; dir < 4; dir++) {
             int newX = x + _x[dir], newY = y + _y[dir];
             if (isValid(newX, newY)) {
-                // ¡ıËµÃ÷visited
-                if (board[newX][newY] == '*') continue; // ¡¾ÎğÂ©£¡·ñÔòTLE£¡¡¿???
+                // â†“è¯´æ˜visited
+                if (board[newX][newY] == '*') continue; // ã€å‹¿æ¼ï¼å¦åˆ™TLEï¼ã€‘???
                 dfsBorder(newX, newY);
             }
         }
     }
 
 
-    // ·¨2£º²¢²é¼¯[´úÂëÁ¿´ó£¬²»ÍÆ¼ö]
+    // æ³•2ï¼šå¹¶æŸ¥é›†[ä»£ç é‡å¤§ï¼Œä¸æ¨è]
 //    int m, n;
 //    char[][] board;
     int[] _i = {1, 0, -1, 0};
@@ -105,14 +105,14 @@ public class q130_surrounded_regions {
         m = board.length;
         n = board[0].length;
         this.board = board;
-        UnionFind uf = new UnionFind(m * n + 1); // ĞÂÔö½áµãdummy, idx=m*n£¬×÷Îª±ß½çµÄ¼¯ºÏ
-        int dummy = m * n; // ±ß½ç¼¯ºÏµÄroot/dummy
+        UnionFind uf = new UnionFind(m * n + 1); // æ–°å¢ç»“ç‚¹dummy, idx=m*nï¼Œä½œä¸ºè¾¹ç•Œçš„é›†åˆ
+        int dummy = m * n; // è¾¹ç•Œé›†åˆçš„root/dummy
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if (board[i][j] == 'X') continue;
-                if (isBorder(i, j)) { // ±ß½ç¡®O¡¯¼¯ºÏºÏ²¢£¨ÓëdummyÁ¬Í¨£©
+                if (isBorder(i, j)) { // è¾¹ç•Œâ€˜Oâ€™é›†åˆåˆå¹¶ï¼ˆä¸dummyè¿é€šï¼‰
                     uf.union(getID(i, j), dummy);
-                } else {  // ËÄÖÜËÑË÷£¬±ß½çÄÚ²¿Í¬Ñù¼ÆËãÁ¬Í¨¿é
+                } else {  // å››å‘¨æœç´¢ï¼Œè¾¹ç•Œå†…éƒ¨åŒæ ·è®¡ç®—è¿é€šå—
                     for (int dir = 0; dir < 4; dir++) {
                         int newI = i + _i[dir], newJ = j + _j[dir];
                         if (!isValid(newI, newJ)) continue;
@@ -127,7 +127,7 @@ public class q130_surrounded_regions {
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if (board[i][j] == 'O') {
-                    // ±ß½ç'O'Ìø¹ı£¬ ÓëdummyÏàÁ¬
+                    // è¾¹ç•Œ'O'è·³è¿‡ï¼Œ ä¸dummyç›¸è¿
                     // if (uf.find(getID(i, j)) == dummy) continue;
                     if (uf.isConnected(getID(i, j), dummy)) continue;
                     else board[i][j] = 'X';
@@ -142,12 +142,12 @@ public class q130_surrounded_regions {
     }
 
     class UnionFind {
-        int[] father; // Êı×éĞÎÊ½
+        int[] father; // æ•°ç»„å½¢å¼
 
         public UnionFind(int n) {
             this.father = new int[n];
             for (int i = 0; i < n; i++) {
-                father[i] = i; // ³õÊ¼»¯£ºrootÖ¸Ïò×Ô¼º
+                father[i] = i; // åˆå§‹åŒ–ï¼šrootæŒ‡å‘è‡ªå·±
             }
         }
 
@@ -160,15 +160,15 @@ public class q130_surrounded_regions {
 
         private int find(int i) {
             while (father[i] != i) {
-                father[i] = find(father[i]); // µİ¹é-·¨1
+                father[i] = find(father[i]); // é€’å½’-æ³•1
             }
-//            // µü´ú-·¨2
+//            // è¿­ä»£-æ³•2
 //            if (i == father[i]) return i;
-//            List<Integer> path = new ArrayList<>(); // ĞèÒª¸üĞÂ/¸ÄÏòrootµÄÂ·¾¶
+//            List<Integer> path = new ArrayList<>(); // éœ€è¦æ›´æ–°/æ”¹å‘rootçš„è·¯å¾„
 //            while (i != father[i]) {
 //                path.add(i);
-//                i = father[i]; // ÍùÇ°ÕÒroot
-//            } // ÍË³öÊ±£¬i == father[i]
+//                i = father[i]; // å¾€å‰æ‰¾root
+//            } // é€€å‡ºæ—¶ï¼Œi == father[i]
 //            for (int node: path) {
 //                father[node] = i;
 //            }

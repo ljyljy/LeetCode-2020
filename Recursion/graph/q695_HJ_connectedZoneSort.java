@@ -7,16 +7,16 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * 1¡¢ÇóµÈÓÚ0µÄÁ¬Í¨¿é
- * 2¡¢°´ÕÕÁ¬Í¨¿éµÄ´óĞ¡£¬½øĞĞÉıĞòÊä³ö
- * ¡¾Àà±Èq130£¬ 200¡¿
+ * 1ã€æ±‚ç­‰äº0çš„è¿é€šå—
+ * 2ã€æŒ‰ç…§è¿é€šå—çš„å¤§å°ï¼Œè¿›è¡Œå‡åºè¾“å‡º
+ * ã€ç±»æ¯”q130ï¼Œ 200ã€‘
  */
 public class q695_HJ_connectedZoneSort {
     private static int m = 5, n = 4;
     private static int[][] graph;
     private static boolean[][] visited;
     private static List<Integer> connCnts = new ArrayList<>();
-    private static int[] _x = {0, 1, 0, -1, 1, 1, -1, -1}; // ÉÏÏÂ×óÓÒ£¬¶Ô½ÇÏß ¹²8¸ö·½Ïò
+    private static int[] _x = {0, 1, 0, -1, 1, 1, -1, -1}; // ä¸Šä¸‹å·¦å³ï¼Œå¯¹è§’çº¿ å…±8ä¸ªæ–¹å‘
     private static int[] _y = {1, 0, -1, 0, 1, -1, 1, -1};
 
     public static void main(String[] args) {
@@ -32,7 +32,7 @@ public class q695_HJ_connectedZoneSort {
             System.out.println();
         }
 
-        // ·¨1£ºdfs ²éÕÒÁ¬Í¨¿é£¬±ØĞë¶Ôgraph×öÔ­µØĞŞ¸Ä£¬visitedÎŞÓÃ£¡¡¾Àà±Èq130¡¿
+        // æ³•1ï¼šdfs æŸ¥æ‰¾è¿é€šå—ï¼Œå¿…é¡»å¯¹graphåšåŸåœ°ä¿®æ”¹ï¼Œvisitedæ— ç”¨ï¼ã€ç±»æ¯”q130ã€‘
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if (graph[i][j] == 0 && !visited[i][j]) {
@@ -43,7 +43,7 @@ public class q695_HJ_connectedZoneSort {
             }
         }
 
-        // ·¨2£º²¢²é¼¯£¨ÂÔ£©£¬²Î¿¼q130
+        // æ³•2ï¼šå¹¶æŸ¥é›†ï¼ˆç•¥ï¼‰ï¼Œå‚è€ƒq130
 
         System.out.println("find 0-zone, sort:");
         Collections.sort(connCnts);
@@ -55,13 +55,13 @@ public class q695_HJ_connectedZoneSort {
 
     private static int dfs(int i, int j) {
         int cnt = 1;
-//        ¡ı ±ØĞë¶Ôgraph×öÔ­µØĞŞ¸Ä£¬visitedÎŞÓÃ£¡¡¾Àà±Èq130¡¿
-        graph[i][j] = -1; // DFSµÄÊ±ºòÒ»¶¨Òª½«Ëı¸Äµô£¡²»È»»áÓ°ÏìÅĞ¶Ï£¡¿ÉÒÔ²»¼Óvisited£¬¸ÄµôÒÔºó×ÔÈ»¾ÍvisitedÁË
+//        â†“ å¿…é¡»å¯¹graphåšåŸåœ°ä¿®æ”¹ï¼Œvisitedæ— ç”¨ï¼ã€ç±»æ¯”q130ã€‘
+        graph[i][j] = -1; // DFSçš„æ—¶å€™ä¸€å®šè¦å°†å¥¹æ”¹æ‰ï¼ä¸ç„¶ä¼šå½±å“åˆ¤æ–­ï¼å¯ä»¥ä¸åŠ visitedï¼Œæ”¹æ‰ä»¥åè‡ªç„¶å°±visitedäº†
         for (int dir= 0; dir < 4; dir++) {
             int newX = i + _x[dir], newY = j + _y[dir];
             if (!check(newX, newY)) continue;
             if (visited[newX][newY]) continue;
-//            visited[newX][newY] = true; // ¿ÉÒÔ²»¼Ó
+//            visited[newX][newY] = true; // å¯ä»¥ä¸åŠ 
             cnt += dfs(newX, newY);
 //            visited[newX][newY] = false;
         }

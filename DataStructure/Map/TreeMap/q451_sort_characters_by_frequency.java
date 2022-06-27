@@ -1,12 +1,12 @@
 package DataStructure.Map.TreeMap;
 
-import javafx.scene.layout.Priority;
+//import javafx.scene.layout.Priority;
 
 import java.util.*;
 
 public class q451_sort_characters_by_frequency {
     public String frequencySort(String s) {
-        Map<Character, Integer> map = new HashMap<>(); // ´ÊÆµ½µÐò
+        Map<Character, Integer> map = new HashMap<>(); //   Æµ
         for(char c : s.toCharArray()){
             map.put(c, map.getOrDefault(c, 0) + 1);
         }

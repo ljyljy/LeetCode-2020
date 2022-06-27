@@ -2,6 +2,7 @@ package DataStructure.LinkedList;
 
 import java.util.Random;
 
+// 类比q206, 92, 25
 public class q92_reverse_n_linked_node {
     ListNode successor = null;  // 后驱结点
 
