@@ -16,6 +16,7 @@ public class q179_largest_number {
         Collections.sort(numStr, (o1, o2)->((o2+o1).compareTo(o1+o2)));
         StringBuilder sb = new StringBuilder(String.join("", numStr));
         if (sb.charAt(0) == '0') return "0";
+//        或： while (sb.length() > 1 && sb.charAt(0) == sb.charAt(1) && sb.charAt(0) == '0') sb.deleteCharAt(0);
         return sb.toString();
     }
 
@@ -79,10 +80,11 @@ public class q179_largest_number {
 
     // 法1-写法2： 精简
     public String largestNumber_short(int[] nums) {
+        // int[]无法排序，但Integer[]可以！
         Integer[] ns = Arrays.stream(nums).boxed().toArray(Integer[]::new);
         Arrays.sort(ns, (a, b) -> ("" + b + a).compareTo("" + a + b));
-        return Arrays.stream(ns).mapToInt(x -> x).sum() == 0 ?
-                "0" : Arrays.stream(ns).map(Object::toString)
+        return Arrays.stream(ns).mapToInt(x -> x).sum() == 0 ? "0" :
+                Arrays.stream(ns).map(Object::toString)
                         .collect(Collectors.joining(""));
     }
 

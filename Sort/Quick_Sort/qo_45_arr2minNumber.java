@@ -37,7 +37,9 @@ public class qo_45_arr2minNumber {
         String pivot = nums[start]; // "10"
         int i = start + 1, j = end; // "2"
         while (i <= j) { // 需要升序！
-            while (i <= j && (pivot + nums[i]).compareTo(nums[i] + pivot) > 0) i++;
+            // 100 10 < 10 100, 100([i])要放在pivot前
+            while (i <= j && (nums[i] + pivot).compareTo(pivot + nums[i]) < 0) i++;
+            // 10  2  < 2  10, 2([j])要放在pivot后
             while (i <= j && (pivot + nums[j]).compareTo(nums[j] + pivot) < 0) j--;
             if (i <= j) {
                 swap(nums, i, j);

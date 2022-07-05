@@ -1,7 +1,5 @@
 package DataStructure.Tree;
 
-import com.sun.source.tree.Tree;
-
 import java.util.*;
 
 public class q652_q297_HJ22_2_3 {
@@ -13,14 +11,14 @@ public class q652_q297_HJ22_2_3 {
         Scanner sc = new Scanner(System.in);
 //        while (sc.hasNext()) {
 //            String[] nodeStr = sc.nextLine().split("\\s");
-            String line1 = "1,2,3,1,null,2,null,null,null,null,null,1,null"; // WA
-            String line2 = "1,2,3,4,null,2,4,null,null,4,null"; // pass
-            String[] nodeStr = line2.split(",");
-            Deque<String> nodes = new ArrayDeque<>(Arrays.asList(nodeStr));
+        String line1 = "1,2,3,1,null,2,null,null,null,null,null,1,null"; // WA
+        String line2 = "1,2,3,4,null,2,4,null,null,4,null"; // pass
+        String[] nodeStr = line2.split(",");
+        Deque<String> nodes = new ArrayDeque<>(Arrays.asList(nodeStr));
 
-            TreeNode root = deserialize_BFS(nodes);
+        TreeNode root = deserialize_BFS(nodes);
 
-            dfs(root);
+        dfs(root);
 //        }
 
         System.out.println("ALL ANS: ");
@@ -76,8 +74,8 @@ public class q652_q297_HJ22_2_3 {
         cntMap.put(serial, cntMap.getOrDefault(serial, 0) + 1);
         if (cntMap.get(serial) == 2) {
 //            if (serial.split(",").length >= 2) {
-                ans.add(node);
-                serials.add(serial);
+            ans.add(node);
+            serials.add(serial);
 //            }
         }
         return serial;
