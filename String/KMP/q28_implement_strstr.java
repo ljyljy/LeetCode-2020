@@ -1,4 +1,4 @@
-package String;
+package String.KMP;
 
 // 类比：ACW831, Q28, 214
 public class q28_implement_strstr {
