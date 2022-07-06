@@ -29,11 +29,11 @@ public class q28_implement_strstr {
         int[] next = new int[m+1]; // ∵有哨兵 ∴长度+1
         // 构造过程 i=2nd(∵i之前有哨兵、j)，j=0 开始，i ≤ 匹配串长度 【构造 i 从 2 开始】
             // next[0]无意义，next[1]=0就是从头开始，j退无可退，无需计算next[1]，因此【next从p[2:]起始】
-        // ❤ WHY j=0起？∵加入哨兵，且【jの意义为：截止i处,最长匹配的前缀长度】
+        // ❤ WHY j=0起？∵加入哨兵，且【jの意义为：截止i处,最长匹配的[前缀]长度】
         for (int i = 2, j = 0; i <= m; i++) {
             // ↓ 1) 哨兵后(j>0)  2) ∵哨兵 ∴j+1正串才开始
-            while (j > 0 && p[i] != p[j+1]) j = next[j]; // 匹配不成功，回溯到下一个可能的匹配点(下一跳)
-            if (p[i] == p[j+1]) j++; // 匹配成功
+            while (j > 0 && p[i] != p[j+1]) j = next[j]; // 匹配不成功，持续回溯到下一个可能的匹配点(下一跳)
+            if (p[i] == p[j+1]) j++; // 匹配成功，前缀长度++
             // ↓ 匹配成功与否(改变j)，都将最终的j赋给next[i]
             next[i] = j; // j-前缀的长度；结束本次循环，i++
         }
@@ -48,7 +48,6 @@ public class q28_implement_strstr {
                 return i - m; // 整一段匹配成功，直接返回下标
                 // j = next[j]; // 若需要匹配多个，还需要将j后移！（q28不需要）
             }
-
         }
         return -1;
     }
@@ -79,7 +78,6 @@ public class q28_implement_strstr {
         }
         return -1;
     }
-
 
     // 法2：next[]统一减1
     public int strStr_kmp2(String src, String pp) {
