@@ -18,7 +18,7 @@ public class q28_implement_strstr {
         return -1;
     }
 
-    // 法2-1：KMP (首位哨兵，next[]中j从0起)
+    // 法2-1（推荐）：KMP (首位哨兵，next[]中j从0起)
     public int strStr_kmp1(String src, String pp) {
         if (pp.isEmpty()) return 0;
         int n = src.length(), m = pp.length();
@@ -54,7 +54,7 @@ public class q28_implement_strstr {
     }
 
 
-    // 法2-1：KMP (首位哨兵，next[]中j从0起)
+    // 法2-1（无注释版本）：KMP (首位哨兵，next[]中j从0起)
     public int strStr_kmp1_clear(String src, String pp) {
         if (pp.isEmpty()) return 0;
         int n0 = src.length(), m = pp.length();
