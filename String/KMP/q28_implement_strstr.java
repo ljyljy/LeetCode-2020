@@ -1,5 +1,8 @@
 package String.KMP;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // 类比：ACW831, Q28, 214
 public class q28_implement_strstr {
     // 法1：BF双指针 - O(m*n)
@@ -56,7 +59,7 @@ public class q28_implement_strstr {
     // 法2-1（无注释版本）：KMP (首位哨兵，next[]中j从0起)
     public int strStr_kmp1_clear(String src, String pp) {
         if (pp.isEmpty()) return 0;
-        int n0 = src.length(), m = pp.length();
+        int n = src.length(), m = pp.length();
         src = " " + src; pp = " " + pp;
         char[] s = src.toCharArray(), p = pp.toCharArray();
 
@@ -68,7 +71,7 @@ public class q28_implement_strstr {
             next[i] = j;
         }
         // II) 匹配过程 O(n)
-        for (int i = 1, j = 0; i <= n0; i++) {
+        for (int i = 1, j = 0; i <= n; i++) {
             while (j > 0 && s[i] != p[j+1]) j = next[j];
             if (s[i] == p[j+1]) j++;
             if (j == m) {
@@ -98,5 +101,41 @@ public class q28_implement_strstr {
             if(j == m-1) return i-j;
         }
         return -1;
+    }
+
+
+    // 类比ACW831_KMP，多次匹配子串，打印所有结果
+    public void strStr_KMP_multiple_match(String src, String pp) {
+        if (pp.isEmpty()) System.out.println(0);
+        int n = src.length(), m = pp.length();
+        src = " " + src; pp = " " + pp; // 勿忘！
+        char[] s = src.toCharArray(), p = pp.toCharArray();
+        List<Integer> res = new ArrayList<>();
+
+        int[] next = new int[m+1];
+        // I) 构造下一跳数组 next[]
+        for (int i = 2, j = 0; i <= m; i++) {
+            while (j > 0 && p[i] != p[j+1]) j = next[j];
+            if (p[i] == p[j+1]) j++;
+            next[i] = j;
+        }
+
+        for (int i = 1, j = 0; i <= n; i++) {
+            while (j > 0 && s[i] != p[j+1]) j = next[j];
+            if (s[i] == p[j+1]) j++;
+            if (j == m) {
+                // 匹配子串，打印在s中的起始下标（末尾s_i - 子串长度m）
+                res.add(i-m); // 匹配串的起始下标
+                j = next[j];// 若需要【匹配多个】，还需要将j前移！（q28不需要）
+                // ↑ 准备匹配下一个：回溯到'好前缀'，否则下一轮pp[j+1]越界(j==m)！
+            }
+        }
+        System.out.println(res);
+    }
+
+    public static void main(String[] args) {
+        String src = "ababacaba", pattern = "aba";
+        q28_implement_strstr sol = new q28_implement_strstr();
+        sol.strStr_KMP_multiple_match(src, pattern);
     }
 }

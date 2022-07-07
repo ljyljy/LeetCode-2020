@@ -75,8 +75,10 @@ public class acw831_KMP {
             while (j > 0 && ss[i] != pp[j+1]) j = next[j];
             if (ss[i] == pp[j+1]) j++;
             if (j == m) {
+                // 匹配子串，打印在s中的起始下标（末尾s_i - 子串长度m）
                 writer.write((i - m) + " ");
-                j = next[j];
+                j = next[j]; // 若需要【匹配多个】，还需要将j前移！（q28不需要）
+                // ↑ 准备匹配下一个：回溯到'好前缀'，否则下一轮pp[j+1]越界(j==m)！
             }
         }
 

@@ -11,7 +11,7 @@ public class q459_repeated_substring_pattern {
     public boolean repeatedSubstringPattern0(String s) {
         // "a[bb abb]" -> “[]”内第一个abb出现在整体idx=len(s)处
         // "a[bc(abc abc)abc]" -> “[]”内第一个abcabc出现在整体idx=len(abc)处
-        // System.out.println((s + s).indexOf(s, 1));
+        System.out.println((s + s).indexOf(s, 1)); // test
         return (s + s).indexOf(s, 1) != s.length();
     }
 
@@ -26,8 +26,17 @@ public class q459_repeated_substring_pattern {
             if (p.charAt(i) == p.charAt(j+1)) j++;
             next[i] = j;
         }
-        int maxLen = next[m]; // 最长前后缀的长度，如"abcdabcd abcd" -> next[m] = 8
+        int maxLen = next[m]; // 最长前后缀的长度，如"abcdabc(d) abc(d)" -> next[m] = 8
         System.out.println(maxLen);
-        return maxLen != 0 && m % (m - maxLen) == 0;
+        return maxLen != 0 && m % (m - maxLen) == 0; // 如： 12 % (12-8) = 0
+    }
+
+    public static void main(String[] args) {
+        q459_repeated_substring_pattern sol = new q459_repeated_substring_pattern();
+        String s1 = "abcabc";
+        System.out.println(sol.repeatedSubstringPattern0(s1));
+
+        s1 = "abcab";
+        System.out.println(sol.repeatedSubstringPattern0(s1));
     }
 }

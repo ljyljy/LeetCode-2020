@@ -4,24 +4,29 @@ package String.KMP;
 public class q214_shortest_palindrome {
     // 法2【荐】：KMP - O(n+m)：
     public String shortestPalindrome(String s) {
+        // 1) 预处理s
         String s0 = s;
         StringBuffer rev_s = new StringBuffer(s).reverse();
 //        String rev_s = reverseStr(s);
-        s = " " + s + "#" + rev_s.toString(); // 开头KMP哨兵！
-        System.out.println("processed: " + s);
+        s = s + "#" + rev_s.toString();
         String p = s;
+        System.out.println("processed: " + s);
+
+        // 2) KMP模板
         int n = s.length(), m = p.length();
+        s = " " + s; p = " " + p; // 开头KMP哨兵！
+
         char[] ss = s.toCharArray(), pp = p.toCharArray();
 
-        // 1) 构造next数组
-        int[] next = new int[m]; // m包含了哨兵，无需m+1（与q28，acw831同！）
-        for (int i = 2, j = 0; i <= m-1; i++) {
+        // 2-1) 构造next数组
+        int[] next = new int[m+1];
+        for (int i = 2, j = 0; i <= m; i++) {
             while (j > 0 && pp[i] != pp[j+1]) j = next[j];
             if (pp[i] == pp[j+1]) j++;
             next[i] = j;
         }
 
-//        // 2) 匹配 - 无需
+//        // 2-2) 匹配 - 无需
 //        for (int i = 1, j = 0; i <= n; i++) {
 //            while (j > 0 && ss[i] != pp[j+1]) j = next[j];
 //            if (ss[i] == pp[j+1]) j++;
@@ -31,7 +36,8 @@ public class q214_shortest_palindrome {
 //            }
 //        }
         // 对比q1044：需要遍历next数组！
-        int maxLen = next[m-1]; // 最长回文前缀的长度, 即以j=m=end为终点的最长匹配前缀长度
+        int maxLen = next[m]; // 最长回文前缀的长度, 即以j=m=end为终点的最长匹配前缀长度
+        System.out.println("maxLen = next[m] = " + next[m]);
 //        System.out.println("KMP.maxLen=" + maxLen);
         String fillPrefix = new StringBuilder(s0.substring(maxLen)).reverse().toString(); // 非回文的后缀.翻转=>作为非回文的前缀
 
@@ -43,7 +49,7 @@ public class q214_shortest_palindrome {
     public String shortestPalindrome_BF(String s) {
         int n = s.length();
         String rev_s = reverseStr(s); // (anana)bc -> cb(anana)
-        for (int i = n; i >= 0; i--) {
+        for (int i = n; i >= 0; i--) { // i--：保证最先遍历到最长的回文前缀
             // i = n-2时，str[0:n-2) == "anana" == rev_s[2:n)
             if (s.substring(0, i).equals(rev_s.substring(n-i))) {
                 return rev_s.substring(0, n-i) + s;
@@ -61,6 +67,11 @@ public class q214_shortest_palindrome {
             ss[j] = tmp;
         }
         return new String(ss);
+    }
+
+    private String reverseStr2(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        return sb.reverse().toString();
     }
 
     // todo: 法3：字符串哈希

@@ -1,14 +1,14 @@
 package DP.P1_Optimize;
 
-public class q471_encode_str_with_shortest_len {
+public class q471_encode_str_with_shortest_len_5star {
     String[][] dp; // dp[i][j=i+len-1] = s[i,j]的最短编码串，【左闭右闭】
     public String encode(String s){
         int n = s.length();
-        dp = new String[n][n]; // dp[i][j]: 切分起始idx=i，长度=len
+        dp = new String[n][n]; // dp[i][j]: 切分起始idx=i，长度=len, j=i+len-1
+        int i = -1, j = -1;
 
         for (int len = 1; len <= n; len++) {
-            for (int i = 0; i + len - 1 < n; i++) {
-                int j = i + len - 1;
+            for ( i = 0; (j = i + len - 1) < n; i++) {
                 dp[i][j] = getEncodedStr(s, i, j);
                 if (len > 4) { // 切分子串长度>如"aaaa"="4[a]"
                     for (int k = i; k+1 <= j; k++) {
