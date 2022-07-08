@@ -2,7 +2,7 @@ package DataStructure.Tree;
 
 public class q109_convert_sorted_list_to_BST {
     // 法1：中序遍历+构造
-    ListNode cur;
+    ListNode cur; // 记录当前的中点/root的值，类比q108中的【nums[mid]】
     public TreeNode sortedListToBST(ListNode head) {
         if (head == null) return null;
         cur = head;
@@ -21,7 +21,7 @@ public class q109_convert_sorted_list_to_BST {
         int mid = start + end + 1>> 1; // [L, mid] [mid+1, end]
         TreeNode root = new TreeNode(); // 可以不传入值！
 
-        root.left = build(start, mid-1); // 左
+        root.left = build(start, mid-1); // 左, 【期间 cur会右移到mid】！
         root.val = cur.val; // 中：必须在此处更新/覆盖root值！
         cur = cur.next;
         root.right = build(mid+1, end); // 右

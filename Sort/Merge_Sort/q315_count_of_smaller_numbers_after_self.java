@@ -1,4 +1,4 @@
-package DataStructure.SegmentTree;
+package Sort.Merge_Sort;
 
 import java.util.*;
 

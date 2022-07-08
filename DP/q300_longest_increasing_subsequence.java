@@ -3,19 +3,19 @@ package DP;
 import java.util.*;
 
 public class q300_longest_increasing_subsequence {
-    // 法2: DP - 类比q334（TLE）
-    public int lengthOfLIS_DP(int[] nums) {
+    // 法2: DP - 类比q334-TLE
+    public int lengthOfLIS(int[] nums) {
         int n = nums.length;
-        if (n <= 1) return n;
         int[] dp = new int[n];
-        Arrays.fill(dp, 1);
-        int LIS = 0;
+        Arrays.fill(dp, 1); // 勿忘！
+        int LIS = 1;
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j <= i; j++) {
-                if (nums[j] < nums[i]) // 满足'递增'
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) { // 满足'递增'
                     dp[i] = Math.max(dp[i], dp[j] + 1);
-                if (LIS < dp[i]) LIS = dp[i];
+                }
             }
+            LIS = Math.max(LIS, dp[i]);
         }
         return LIS;
     }

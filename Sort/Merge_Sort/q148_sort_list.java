@@ -1,24 +1,31 @@
-package DataStructure.LinkedList;
+package Sort.Merge_Sort;
+
+import DataStructure.LinkedList.ListNode;
 
 public class q148_sort_list {
+    // 类比q147：插入排序 O(n^2)
+
+    // 法1：归并排序：O(nlogn)
     public ListNode sortList(ListNode head) {
         if (head == null) return null;
-        return sortList(head, null); // 二分-归并排序-左闭右开
+        return sortListHelper(head, null); // 二分-归并排序-左闭右开
     }
 
-    private ListNode sortList(ListNode head, ListNode tail) {
+    // 分治
+    private ListNode sortListHelper(ListNode head, ListNode tail) {
         if (head == null) return null;
         if (head.next == tail) {
-            head.next = null; // ?分割左右边界！
+            head.next = null; // ?分割左右边界，左闭右开, tail不包括！
             return head;
         }
 
         ListNode mid = getMid(head, tail);
-        ListNode left = sortList(head, mid); // 左闭右开
-        ListNode right = sortList(mid, tail);
+        ListNode left = sortListHelper(head, mid); // 左闭右开
+        ListNode right = sortListHelper(mid, tail);
         return merge(left, right);
     }
 
+    // 归并
     private ListNode merge(ListNode l1, ListNode l2) {
         ListNode dummy = new ListNode(-1);
         ListNode p = dummy;
@@ -37,6 +44,7 @@ public class q148_sort_list {
         return dummy.next;
     }
 
+    // 类比 q109,143,234,876
     private ListNode getMid(ListNode head, ListNode tail) {
         ListNode slow = head, fast = head;
         // 取中后(如len=4, mid=3rd)

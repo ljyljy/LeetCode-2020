@@ -10,7 +10,7 @@ public class q125_valid_palindrome {
 
         // 类似快排
         while (i < j) {
-            while (i < j && !check(s.charAt(i))) i++;
+            while (i < j && !check(s.charAt(i))) i++; // 跳过空格或其他特殊字符
             while (i < j && !check(s.charAt(j))) j--;
 
             char lf = Character.toLowerCase(s.charAt(i));
