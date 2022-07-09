@@ -18,16 +18,17 @@ public class q735_asteroid_collision {
 
         for (int i = 0; i < n; i++) {
             boolean flag = true;
-            // 只有栈顶正，新值负 才会碰撞！！！
+            // 只有栈顶正，新值负 才会碰撞！！！ 【while中，栈顶可能会变，但num一直不变】！
             while (!stack.isEmpty() && nums[stack.peek()] > 0 && nums[i] < 0) {
                 int val_peek = Math.abs(nums[stack.peek()]);
                 int val_cur = Math.abs(nums[i]);
-                if (val_cur > val_peek) { // stack弹栈，cur压栈
+                if (val_cur > val_peek) { // stack弹栈，cur压栈【继续while，看次栈顶】
                     stack.pop();
-                } else if (val_cur < val_peek) { // cur不压栈，stack不变化
+                    // flag = true;  // 可写可不写
+                } else if (val_cur < val_peek) { // cur不压栈，stack不变化, 退出while
                     flag = false;
                     break;
-                } else if (val_cur == val_peek) { // cur不压栈，stack弹栈
+                } else if (val_cur == val_peek) { // cur不压栈，stack弹栈, 【退出while,才能看下个num】
                     stack.pop();
                     flag = false;
                     break; // 【勿漏break！】
@@ -35,6 +36,7 @@ public class q735_asteroid_collision {
             }
             if (flag)  stack.push(i);
         }
+
         int m = stack.size();
         int[] res = new int[m];
         for (int i = m-1; i >= 0; i--) {
