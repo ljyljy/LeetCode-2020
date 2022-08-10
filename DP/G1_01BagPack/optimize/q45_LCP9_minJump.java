@@ -12,14 +12,19 @@ public class q45_LCP9_minJump {
         Arrays.fill(dp, Integer.MAX_VALUE);
 
         dp[n-1] = 1; // 边界再弹1次，即可跳出
-        for (int i = n-2; i >= 0; i--) {
+        for (int i = n-2; i >= 0; i--) {// 注意dp【倒叙】！易错！
             // 若越界，则再弹一次即可；否则，需要跳1次到i + jump[i]，并再跳dp[i + jump[i]]次
             dp[i] = i + jump[i] >= n? 1: dp[i + jump[i]] + 1;
             // 因为后面可以往前跳，所以往后遍历一次把后面次数过大的替换掉
-            for(int j = i + 1; j < n; j++){
+            for(int j = i + 1; j < n; j++){ // ? 往后看！因为dp是倒叙
                 if (dp[j] <= dp[i]) break; // 剪枝，此后应从j跳，不更新
                 dp[j] = dp[i] + 1;// Math.min(dp[j], dp[i] + 1);
             }
+// 【WA】 ↓ dp倒叙，不应该更新还没遍历计算过的前方，应该更新后面遍历过的
+//            for (int j = 0; j < i; j++) {
+//                if (dp[j] >= dp[i]) break;
+//                dp[i] = Math.min(dp[i], dp[j] + 1);
+//            }
         }
         return dp[0];
     }

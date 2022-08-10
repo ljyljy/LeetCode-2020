@@ -17,7 +17,7 @@ public class q316_removeDuplicateLetters {
                 }
                 stack.push(ch);
             }
-            cnts[ch]--;
+            cnts[ch]--; // 不论是否contains，【只要遍历到】，就要【自减】！
         }
         StringBuilder sb = new StringBuilder();
         while (!stack.isEmpty()) sb.insert(0, stack.pop());

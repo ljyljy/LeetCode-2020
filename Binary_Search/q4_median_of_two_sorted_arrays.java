@@ -16,6 +16,8 @@ public class q4_median_of_two_sorted_arrays {
         }
     }
 
+    // ①k是第几个，不是下标索引，从1开始
+    // ②line21 newI newJ转索引需要下标-1
     private double getKth(int[] A, int i, int[] B, int j, int k) {
         int len1 = A.length - i, len2 = B.length - j;
         if (len1 > len2) return getKth(B, j, A, i, k);
@@ -26,6 +28,7 @@ public class q4_median_of_two_sorted_arrays {
         int newJ = j + k/2;
         if (A[newI - 1] > B[newJ - 1]) { // B[j:j+k/2]不可能有解-> B从newJ开始
             return getKth(A, i, B, newJ, k - k/2); // 保大的，舍小的
+                                    // k - (newJ - j)
         } else { // A[i:newI]不可能有解-> A从newI开始
             return getKth(A, newI, B, j, k - (newI - i));
         }

@@ -29,9 +29,9 @@ public class q10_regular_expression_matching {
                 // if (j+1 <nP && pp[j+1] == '*') continue; // 本句随意加不加
                 if (pp[j] != '*') { // 情况1) & 2)
                     dp[i][j] = (i-1>=0 && dp[i-1][j-1]) && matches(i, j);
-                } else { // 情况3 ?不匹配(b & ba*) || 匹配多次(baaa & ba*)
+                } else { // 情况3 匹配0次(b & ba*) || 匹配多次(baaa & ba*)
                     dp[i][j] = dp[i][j-2] || (i-1 >= 0 && dp[i-1][j] && matches(i, j-1));
-                }
+                }                   // ↑ j-2：整个(a*)都不匹配，需要j-2！
             }
         }
         return dp[nS-1][nP-1];

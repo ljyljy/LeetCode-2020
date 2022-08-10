@@ -11,6 +11,26 @@ public class q151_reverse_words_in_a_string {
         return String.join(" ", words);
     }
 
+    // 写法2：常规（bew）
+    public String reverseWords1(String s) {
+        s = s.trim();
+        int n = s.length();
+        StringBuilder res = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            if (c == ' ') {
+                if (sb.length() == 0) continue; // 多个连续空格，跳过
+                res.insert(0, " " + sb);
+                sb.setLength(0);
+            } else {
+                sb.append(c);
+            }
+        }
+        res.insert(0, sb);
+        return res.toString().trim();
+    }
+
     // 写法2：常规
     public String reverseWords2(String s) {
         s = s.trim();

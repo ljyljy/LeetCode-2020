@@ -4,6 +4,44 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class q445_add_two_numbers_ii {
+
+    // v1
+    public ListNode reverse(ListNode list) {
+        ListNode cur = list, prev = null;
+        while (cur != null) {
+            ListNode nxt = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = nxt;
+        }
+        return prev;
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int carry = 0;
+        ListNode p1 = reverse(l1), p2 = reverse(l2);
+        ListNode dummy = new ListNode(-1);
+        ListNode cur = dummy;
+
+        while (p1 != null || p2 != null || carry != 0) {
+            int curSum = carry;
+            if (p1 != null) {
+                curSum += p1.val;
+                p1 = p1.next;
+            }
+            if (p2 != null) {
+                curSum += p2.val;
+                p2 = p2.next;
+            }
+            cur.next = new ListNode(curSum % 10);
+            carry = curSum / 10;
+            cur = cur.next;
+        }
+        return reverse(dummy.next);
+    }
+
+
+    // v2
     // 法1：栈（FIFO）-- 无需翻转链表，就可从后向前做加法
     // 类比q415, 445, 43, 67
     public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {

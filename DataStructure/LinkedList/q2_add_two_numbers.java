@@ -3,26 +3,49 @@ package DataStructure.LinkedList;
 import java.util.Scanner;
 
 public class q2_add_two_numbers {
+
+//          class ListNode {
+//             ListNode next;
+//             int val;
+//             public ListNode(int val) {
+//                 this.val = val;
+//                 next = null;
+//             }
+//         }
+
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int carry = 0;
+        ListNode p1 = l1, p2 = l2;
         ListNode dummy = new ListNode(-1);
         ListNode cur = dummy;
-        int carry = 0;
-        while (l1 != null || l2 != null || carry != 0) {
-            if (l1 != null) {
-                carry += l1.val;
-                l1 = l1.next;
+        while (p1 != null || p2 != null || carry != 0) {
+            int curSum = carry;
+            if (p1 != null) {
+                curSum += p1.val;
+                p1 = p1.next;
             }
-            if (l2 != null) {
-                carry += l2.val;
-                l2 = l2.next;
+            if (p2 != null) {
+                curSum += p2.val;
+                p2 = p2.next;
             }
-            cur.next = new ListNode(carry % 10);
+            cur.next = new ListNode(curSum % 10);
+            carry = curSum / 10;
             cur = cur.next;
-            carry /= 10;
         }
         return dummy.next;
     }
 
+    public static void main(String[] args) {
+        //        Scanner sc = new Scanner(System.in);
+        int[] l1 = {2, 4, 3};
+        int[] l2 = {5, 6, 4};
+
+        q2_add_two_numbers sol = new q2_add_two_numbers();
+        ListNode list1 = sol.createListNode(l1);
+        ListNode list2 = sol.createListNode(l2);
+        ListNode node = sol.addTwoNumbers(list1, list2);
+        sol.printList(node);
+    }
 
     /**
      * intput:
@@ -30,12 +53,13 @@ public class q2_add_two_numbers {
      * 2 4 3
      * 3
      * 5 6 4
-     *
+     * <p>
      * out:
      * 7, 0, 8
+     *
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main02(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n1 = sc.nextInt(); // Á´±í³¤¶È
 //        sc.nextLine();
@@ -46,8 +70,28 @@ public class q2_add_two_numbers {
         sc.close();
 
         q2_add_two_numbers sol = new q2_add_two_numbers();
-        print(sol.addTwoNumbers(l1, l2));
+        sol.printList(sol.addTwoNumbers(l1, l2));
     }
+
+
+    public ListNode createListNode(int[] nums) {
+        ListNode dummy = new ListNode(-1);
+        ListNode cur = dummy;
+        for (int i = 0; i < nums.length; i++) {
+            cur.next = new ListNode(nums[i]);
+            cur = cur.next;
+        }
+        return dummy.next;
+    }
+
+    public void printList(ListNode list) {
+        ListNode p = list;
+        while (p != null) {
+            System.out.print(p.val + " ");
+            p = p.next;
+        }
+    }
+
 
     private static ListNode getListNode(int n, Scanner sc) {
         ListNode dummy = new ListNode(-1);
@@ -60,12 +104,5 @@ public class q2_add_two_numbers {
         return dummy.next;
     }
 
-    private static void print(ListNode list) {
-        ListNode p = list;
-        while (p != null) {
-            System.out.print(p.val + " ");
-            p = p.next;
-        }
-    }
 
 }

@@ -16,10 +16,12 @@ public class q402_remove_k_digits {
                 // 新来的数更小，说明可以把栈顶pop，放入更小的数字 ->> 维护单调递增栈
                 stack.pop();
                 k--;
-            }
+            } // 退出while：可能后续都是递增栈（不满足条件3），【但k--仍大于0】！
             stack.push(curNum);
         }
-        while (!stack.isEmpty() && k-- > 0) stack.pop(); // ?勿漏！法1) 还需pop，直至k为0!!!!
+        // case: "1123456", 3 -> ak为"1123", 漏则"1123456"
+        while (!stack.isEmpty() && k-- > 0) stack.pop(); // 【勿漏】法1) 还需pop，直至k为0!!!!
+
         while (!stack.isEmpty() && stack.peekLast() == 0) stack.removeLast(); //法1） ?队头/栈底=Last：前导0去除, 不可pop！
         StringBuilder sb = new StringBuilder();
         while (!stack.isEmpty()) {

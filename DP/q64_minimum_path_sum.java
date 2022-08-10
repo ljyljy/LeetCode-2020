@@ -18,18 +18,27 @@ public class q64_minimum_path_sum {
         return dp[m-1][n-1];
     }
 
-    // Ð´·¨-£¨´íÎó£©
-    public int minPathSum_WA(int[][] grid) {
+    // Ð´·¨2
+    public int minPathSum2(int[][] grid) {
         int m = grid.length, n = grid[0].length;
         int[][] dp = new int[m+1][n+1];
         Arrays.fill(dp[0], Integer.MAX_VALUE);
-        for (int j = 0; j <= n; j++) dp[0][j] = Integer.MAX_VALUE;
+        for (int j = 0; j <= m; j++) dp[j][0] = Integer.MAX_VALUE;
+        dp[0][1] = dp[1][0] = 0; // ÎðÍü£¡
 
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
                 dp[i][j] = Math.min(dp[i-1][j], dp[i][j-1]) + grid[i-1][j-1];
             }
         }
+
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                System.out.println(dp[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
+
         return dp[m][n];
     }
 }

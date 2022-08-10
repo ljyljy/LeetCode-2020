@@ -40,6 +40,25 @@ public class q11_container_with_most_water {
         return max;
     }
 
+    // 写法2，将minH拆分为if-else
+    public int maxArea0(int[] height) {
+        int n = height.length;
+        int maxH_L = height[0], maxH_R = height[n-1];
+        int i = 0, j = n-1, ans = 0;
+        while (i < j) {
+            if (maxH_L < maxH_R) {
+                int curArea = maxH_L * (j - i);
+                ans = Math.max(ans, curArea);
+                maxH_L = Math.max(maxH_L, height[++i]);
+            } else {
+                int curArea = maxH_R * (j - i);
+                ans = Math.max(ans, curArea);
+                maxH_R = Math.max(maxH_R, height[--j]);
+            }
+        }
+        return ans;
+    }
+
 
     // 1.枚举--TLE
     public int maxArea01(int[] height) {
