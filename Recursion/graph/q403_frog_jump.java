@@ -7,28 +7,31 @@ public class q403_frog_jump {
     int[] stones;
     int n;
     Map<Integer, Integer> idxNoMap = new HashMap<>(); //<idx=stones[i], No.i>, i∈[0,n-1]
-    Map<String, Boolean> memo = new HashMap<>(); // <"iNo_step", T/F>
+    Map<String, Boolean> memo = new HashMap<>(); // <key="iNo_step", T/F>
     public boolean canCross_dfs2(int[] stones) { // stones[i]存储石子idx，i为石子编号❤
         this.stones = stones; n = stones.length;
 
-        for (int i = 0; i < n; i++) idxNoMap.put(stones[i], i);
+        for (int i = 0; i < n; i++) {
+            idxNoMap.put(stones[i], i);
+        }
         // check first step: (或 if stones[1] != 1)
         if (!idxNoMap.containsKey(1)) return false;
 
         return dfs2(1, 1); // <当前iNo, 上一跳步数>
     }
 
-    private boolean dfs2(int iNo, int step) {
-        if (iNo == n-1) return true;
-        String key = iNo + "_" + step;
+    private boolean dfs2(int curI, int lastJump) {
+        if (curI == n-1) return true;
+        String key = curI + "_" + lastJump;
         if (memo.containsKey(key)) return memo.get(key);
 
-        for (int i = -1; i <= 1; i++) {
-            int jumpCnt = step + i;
-            int nxtIdx = stones[iNo] + jumpCnt;
-            if (jumpCnt == 0) continue; // 原地踏步，跳过
+        for (int dir = -1; dir <= 1; dir++) {
+            int curJump = lastJump + dir;
+            int idx = stones[curI];
+            int nxtIdx = idx + curJump;
+            if (curJump == 0) continue; // 原地踏步，跳过
             if (idxNoMap.containsKey(nxtIdx)) {
-                if (dfs2(idxNoMap.get(nxtIdx), jumpCnt)) {
+                if (dfs2(idxNoMap.get(nxtIdx), curJump)) {
                     memo.put(key, true);
                     return true;
                 }
@@ -42,18 +45,19 @@ public class q403_frog_jump {
     public boolean canCross_dp(int[] stones) { // stones[i]存储石子idx，i为石子编号❤
         int n = stones.length;
         // check first step:
+        boolean[][] dp = new boolean[n+1][n+1]; // dp[No.i][k], 即dp<curI,lastJump>
+
         if (stones[1] != 1) return false;
-        boolean[][] dp = new boolean[n+1][n+1]; // dp[No.i][k]
         dp[1][1] = true;
-        for (int cur = 2; cur < n; cur++) {
-            for (int prev = 1; prev < cur; prev++) {
-                // 从位prev -> cur: 跳跃步长k
-                int k = stones[cur] - stones[prev];
+        for (int curI = 2; curI < n; curI++) {
+            for (int prev = 1; prev < curI; prev++) {
+                // 从位prev -> cur: 跳跃步长k (curJump)
+                int k = stones[curI] - stones[prev];
                 // ∵每次跳跃，idx至少增加 1，而步长k'最多增加 1 (k'<=k+1)
                 // ∴从位置 prev(0/1/2...) 发起的跳跃,步长k ≤ prev + 1(1/2/3...)
                 if (k <= prev + 1) { // ❤
-                    dp[cur][k] = dp[prev][k-1] || dp[prev][k] || dp[prev][k+1];
-                    // 上一跳dp[prev][k'], 则下一跳dp[cur][k]=k'+1 || k' || k'-1
+                    dp[curI][k] = dp[prev][k-1] || dp[prev][k] || dp[prev][k+1];
+                    // 上一跳dp[prev][k'], 则下一跳dp[curI][k]=k'+1 || k' || k'-1
                 }
             }
         }
