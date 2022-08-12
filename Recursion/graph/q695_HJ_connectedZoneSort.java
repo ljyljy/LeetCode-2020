@@ -55,15 +55,15 @@ public class q695_HJ_connectedZoneSort {
 
     private static int dfs(int i, int j) {
         int cnt = 1;
-         //        ↓ 必须对graph做原地修改，visited无用！【类比q130】
-         graph[i][j] = -1; // DFS的时候一定要将她改掉！不然会影响判断！可以不加visited，改掉以后自然就visited了
+        //        ↓ 必须对graph做原地修改，visited无用（因为之前回溯后置F，实则不可！）【类比q130】
+        graph[i][j] = -1; // DFS的时候一定要将她改掉！不然会影响判断！可以不加visited，改掉以后自然就visited了
         for (int dir= 0; dir < 4; dir++) {
             int newX = i + _x[dir], newY = j + _y[dir];
             if (!check(newX, newY)) continue;
             if (visited[newX][newY]) continue;
-//            visited[newX][newY] = true; // 可以不加
+//            visited[newX][newY] = true; // 可以不加，直接graph改为-1
             cnt += dfs(newX, newY);
-//            visited[newX][newY] = false;
+//            visited[newX][newY] = false; // WA! 这里不可以置false！类比q130,200
         }
 
 
