@@ -32,15 +32,8 @@ public class HW0_10sum {
         list2.add(arr[j]);
         sum2 += arr[j];
 
-        for (int num: list1) {
-            System.out.print(num + " ");
-        }
-        System.out.println();
-
-        for (int num: list2) {
-            System.out.print(num + " ");
-        }
-        System.out.println();
+        System.out.println(list1);
+        System.out.println(list2);
         return sum1 - sum2;
     }
     public static void main(String[] args) {
@@ -53,9 +46,11 @@ public class HW0_10sum {
             arr[i] = new Random().nextInt(20);
         }
         Arrays.sort(arr);
-        for (int num: arr) {
-            System.out.print(num + " ");
-        }
+
+//        for (int num: arr) {
+//            System.out.print(num + " ");
+//        }
+//        System.out.println();
         System.out.println(Arrays.toString(arr)); // ?一维数组的快速打印Arrays.toString(int[])
 
         System.out.println("\ndistribution of force: ");

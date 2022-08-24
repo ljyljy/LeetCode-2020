@@ -19,8 +19,8 @@ public class q862_shortest_subarray_with_sum_at_least_k {
 
         // 递增栈（sum[i]-sum[peek]>=k, 则记录并比较minLen）
         for (int i = 0; i < sum.length; i++) {
-            // 取等！保证0元素（preSum保持不变）不被算到minLen中！
-            // 不取等也AC!
+            // 保证递增栈：pop栈顶！栈内都是当前尚未达到 sum[i]-sum[队头/栈底]>=k的元素
+            //     若现在来了个更小的，那栈顶的较大sum就失效了
             while (!deque.isEmpty() && sum[i] <= sum[deque.peekFirst()]) {
                 deque.removeFirst();
             }

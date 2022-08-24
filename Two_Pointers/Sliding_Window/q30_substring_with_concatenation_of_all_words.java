@@ -15,6 +15,7 @@ import java.util.Map;
 //          若匹配上， lf += word_len，直至lf == rt则整个窗口成功匹配多个单词
 //          否则，即seg不匹配need || seg匹配数量足够，就break（重新返回for，执行i++）
 // 4) 窗口大小固定！只需要window.add, 无需remove/减小窗口（left++）！
+
 public class q30_substring_with_concatenation_of_all_words {
     public List<Integer> findSubstring(String s, String[] words) {
         List<Integer> res = new ArrayList<>();
