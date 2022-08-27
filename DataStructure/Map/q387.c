@@ -2,9 +2,6 @@
 // Created by ljylj on 2022/8/24.
 //
 
-#ifndef CSTUDY_Q387_H
-#define CSTUDY_Q387_H
-
 #include "utlib/uthash.h"
 #include <stdbool.h>
 
@@ -59,5 +56,3 @@ int firstUniqChar(char *s) {
     freeMap();
     return -1;
 }
-
-#endif //CSTUDY_Q387_H

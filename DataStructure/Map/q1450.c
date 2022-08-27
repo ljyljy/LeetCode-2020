@@ -2,8 +2,6 @@
 // Created by ljylj on 2022/8/24.
 //
 
-#ifndef CSTUDY_Q1450_H
-#define CSTUDY_Q1450_H
 
 #include "utlib/uthash.h"
 #include <stdbool.h>
@@ -69,7 +67,3 @@ bool canBeEqual(int* target, int targetSize, int* arr, int arrSize) {
     }
     return true;
 }
-
-
-
-#endif //CSTUDY_Q1450_H

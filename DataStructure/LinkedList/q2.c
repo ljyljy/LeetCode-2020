@@ -2,9 +2,6 @@
 // Created by ljylj on 2022/8/20.
 //
 
-#ifndef CSTUDY_Q2_H
-#define CSTUDY_Q2_H
-
 #include <stdlib.h>
 #include "ListNode.h"
 
@@ -41,5 +38,3 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
     cur = NULL; // 可加可不加
     return dummy->next;
 }
-
-#endif //CSTUDY_Q2_H

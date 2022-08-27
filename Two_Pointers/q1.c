@@ -2,8 +2,6 @@
 // Created by ljylj on 2022/8/20.
 //
 
-#ifndef CSTUDY_Q1_H
-#define CSTUDY_Q1_H
 
 #include "utlib/uthash.h"
 
@@ -49,20 +47,15 @@ int *twoSum(const int *nums, int n, int target, int *returnSize) {
     return NULL;
 }
 
-#endif //CSTUDY_Q1_H
-
-//
-//#include "src/Two_Pointers/q1.h"
-//
-//int main() {
-//    int nums[] = {2, 7, 11, 15};
-//    int target = 9;
-//    int n = sizeof(nums) / sizeof(int);
-//    int *returnSize = malloc(sizeof(int *));
-//    int *ans = twoSum(nums, n, target, returnSize); // 【不加 &returnSize】
-//    printf("returnSize = %d\n", *returnSize);
-//    for (int i = 0; i < *returnSize; ++i) {
-//        printf("%d ", ans[i]);
-//    }
-//    return 0;
-//}
+int main() {
+    int nums[] = {2, 7, 11, 15};
+    int target = 9;
+    int n = sizeof(nums) / sizeof(int);
+    int *returnSize = malloc(sizeof(int *));
+    int *ans = twoSum(nums, n, target, returnSize); // 【不加 &returnSize】
+    printf("returnSize = %d\n", *returnSize);
+    for (int i = 0; i < *returnSize; ++i) {
+        printf("%d ", ans[i]);
+    }
+    return 0;
+}
