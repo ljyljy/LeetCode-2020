@@ -7,50 +7,67 @@ import java.util.*;
 public class q1755_closest_subsequence_sum {
     // https://leetcode.cn/problems/closest-subsequence-sum/solution/by-mountain-ocean-1s0v/
 
-    // 法2：二分 + - yxc
+    // 法2：二分 + 双向DFS - yxc
 //    目标值不明确(要求minDiff，而非确切的sum)，背包容量不知，不能用背包，只能枚举子集的和
 //    https://www.acwing.com/video/2356/
-    private final int N = (int)2e6 + 10; // 双向DFS爆搜，最多N=2^(40/2)个结果（数组长度1~40）
-    private int[] sumMap;
+    private final int N = (int)2e6 + 10; // 双向DFS爆搜，最多N=2^(40/2)=10^6个结果（数组长度1~40）
+    private int[] sumMap_L;
     private int n, res, curCnt, target;
     private int start_R, end_R;
     public int minAbsDifference(int[] nums, int target) {
-        sumMap = new int[N]; // 双向DFS爆搜，最多N=2^(40/2)个结果（数组长度1~40）
+        sumMap_L = new int[N]; // 双向DFS爆搜，最多N=2^(40/2)个结果（数组长度1~40）
         n = nums.length; res = Integer.MAX_VALUE; curCnt = 0; this.target = target;
         start_R = n / 2; end_R = n;
 
-        dfs_L(nums, 0, 0); // 爆搜左边，计算sum[0...n/2]
-        Arrays.sort(sumMap, 0, curCnt); // 【只对[0, curCnt]排序，而非整体[0,n) ！】
-//        System.out.println(Arrays.toString(sum));
+        dfs_L(nums, 0, 0); // 爆搜左边，计算sumMap_L, idx∈[0,start_R)
+        Arrays.sort(sumMap_L, 0, curCnt); // 【只对[0, curCnt)排序【左闭右开】，而非整体[0,n) ！】
+        for (int i = 0; i < curCnt; i++) {
+            System.out.print(sumMap_L[i] + " ");
+        }
+        System.out.println();
         dfs_R(nums, start_R, 0);
         return res;
     }
 
     private void dfs_L(int[] nums, int idx_L, int sum_L) {
         if (idx_L == start_R) { // idx_L ∈ [0, (n+1)/2]
-            sumMap[curCnt++] = sum_L; // 记录枚举的所有∑nums_L[0,..,start_R)可能结果, 【左闭右开】！
-            return;
+            sumMap_L[curCnt++] = sum_L; // 记录枚举的所有∑nums_L[0,..,start_R)可能结果, 【左闭右开】！
+            return; // 勿忘！否则死循环！
         }
         dfs_L(nums, idx_L + 1, sum_L); // 不选第idx_L个元素
         dfs_L(nums, idx_L + 1, sum_L + nums[idx_L]); // 选第idx_L个元素
     }
 
     private void dfs_R(int[] nums, int idx_R, int sum_R) {
-        if (idx_R == end_R) { // 记录枚举的所有∑nums_R[start_R, end_R)可能结果, 【左闭右开】！
-            int start_L = 0, end_L = curCnt-1; // curCnt属于右侧，二分左侧[0,cnrCnt)之间的sum_L
-            while (start_L < end_L) { // [start, mid] [mid, end]
-                int mid_L = start_L + end_L + 1 >> 1;
-                if (sumMap[mid_L] + sum_R <= target) {
+        if (idx_R == end_R) { // 固定sum_R, 二分搜索合适的sumMap_L, 求minDiff
+            int start_L = 0, end_L = curCnt-1; // curCnt是开区间！sumMap_L有效下标∈[0,curCnt-1]
+            // ∵ 需要start、end都做计算，选minDiff∴ ↓使用九章模板！
+            while (start_L + 1 < end_L) { // 非[start, mid-1] [mid, end]！
+                int mid_L = start_L + end_L >> 1;
+                if (sumMap_L[mid_L] + sum_R <= target) {
                     start_L = mid_L;
-                } else end_L = mid_L - 1;
+                } else end_L = mid_L;
             }
-            int curDiff1 = Math.abs(sumMap[end_L] + sum_R - target);
+            int curDiff1 = Math.abs(sumMap_L[start_L] + sum_R - target);
             res = Math.min(res, curDiff1);
-            if (end_L + 1 < curCnt) {
-                int curDiff2 = Math.abs(sumMap[end_L+1] + sum_R - target);
-                res = Math.min(res, curDiff2);
-            }
-            return;
+            int curDiff2 = Math.abs(sumMap_L[end_L] + sum_R - target);
+            res = Math.min(res, curDiff2);
+            return;// 勿忘！否则【死循环！】
+
+            // 法2
+//            while (start_L < end_L) { // 注意！[start, mid] [mid+1, end]！
+//                int mid_L = start_L + end_L + 1 >> 1;
+//                if (sumMap_L[mid_L] + sum_R <= target) {
+//                    start_L = mid_L;
+//                } else end_L = mid_L - 1;
+//            }
+//            int curDiff1 = Math.abs(sumMap_L[end_L] + sum_R - target);
+//            res = Math.min(res, curDiff1);
+//            if (end_L + 1 < curCnt) {
+//                int curDiff2 = Math.abs(sumMap_L[end_L+1] + sum_R - target);
+//                res = Math.min(res, curDiff2);
+//            }
+//            return;
         }
         dfs_R(nums, idx_R+1, sum_R);
         dfs_R(nums, idx_R+1, sum_R + nums[idx_R]);
@@ -103,8 +120,10 @@ public class q1755_closest_subsequence_sum {
     }
 
     public static void main(String[] args) {
-        int[] nums = {1,2,3,4,5,  6,7,8,9,10}; // sum_L=sum{1,2,3,4,5}的组合总和；sum_R = {6,..,10}的组合总和
-        int target = 13;
+//        int[] nums = {1,2,3,4,5,  6,7,8,9,10}; // sum_L=sum{1,2,3,4,5}的组合总和；sum_R = {6,..,10}的组合总和
+//        int target = 13;
+        int[] nums = {5,-7,3,5}; // sum_L=sum{1,2,3,4,5}的组合总和；sum_R = {6,..,10}的组合总和
+        int target = 6;
         q1755_closest_subsequence_sum sol = new q1755_closest_subsequence_sum();
         int res = sol.minAbsDifference(nums, target);
         System.out.println(res);
