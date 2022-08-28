@@ -1,9 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <limits.h>
+#include <string.h>
+
 /*
   2】
   1）二维指针malloc、memset(..., len+1)
   2）调用时，勿混淆char[]与char*（错误！没有数组长度属性！导致段错误！）
 */
-
+void FREE(void* p) {
+    free(p);
+    p = NULL;
+}
 char* convert(char * s, int n){
     int len = strlen(s);
     if (n == 1 || n >= len) return s;
@@ -37,19 +46,19 @@ char* convert(char * s, int n){
             s[idx++] = mat[i][j];
             // printf("mat[%d][j]=%c, sizeof(mat[i])=%d\n", i, mat[i][j], strlen(mat[i]));
         }
-        free(mat[i]);
+        FREE(mat[i]);
     }
     // s[idx] = 0;
-    free(mat);
-    free(rows_lastIdx);
+    FREE(mat);
+    FREE(rows_lastIdx);
     return s;
 }
 //leetcode submit region end(Prohibit modification and deletion)
 
-// int main() {
-//     char s[] = "PAYPALISHIRING"; // 【勿混淆指针与数组】！若定义为char* s,则丢失了数组长度属性！导致程序出错！
-//     int numRows = 3;
-//     char *res = convert(s, numRows);
-//     printf("%s\n", res);
-//     return 0;
-// }
+ int main() {
+     char s[] = "PAYPALISHIRING"; // 【勿混淆指针与数组】！若定义为char* s,则丢失了数组长度属性！导致程序出错！
+     int numRows = 3;
+     char *res = convert(s, numRows);
+     printf("%s\n", res);
+     return 0;
+ }

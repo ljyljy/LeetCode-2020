@@ -10,7 +10,7 @@ public class q1755_closest_subsequence_sum {
     // 法2：二分 + 双向DFS - yxc
 //    目标值不明确(要求minDiff，而非确切的sum)，背包容量不知，不能用背包，只能枚举子集的和
 //    https://www.acwing.com/video/2356/
-    private final int N = (int)2e6 + 10; // 双向DFS爆搜，最多N=2^(40/2)=10^6个结果（数组长度1~40）
+    private final int N = (int)1e7 + 10; // 双向DFS爆搜，最多N=2^(40/2)=10^6个结果（数组长度1~40）
     private int[] sumMap_L;
     private int n, res, curCnt, target;
     private int start_R, end_R;

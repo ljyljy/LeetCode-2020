@@ -8,10 +8,7 @@ double getKth(int* A, int i, int n1, int* B, int j, int n2, int k) {
     int len1 = n1 - i, len2 = n2 - j;
     if (len1 > len2) return getKth(B, j, n2, A, i, n1, k);
     if (i == n1) return B[j + k - 1];
-    if (k == 1) {
-//        printf("%d, %d, min=d\n", A[i], B[j], fmin(A[i], B[j]));
-        return fmin(A[i], B[j]);
-    }
+    if (k == 1) return fmin(A[i], B[j]);
 
     int newI = fmin(i + k / 2, n1);
     int newJ = j + k / 2;

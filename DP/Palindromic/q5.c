@@ -18,7 +18,6 @@ void initArr(int n, int(*arr)[n]) {
         // printf("\n");
     }
 }
-
 // 法2：二级指针的赋值
 void initPtr(int n, int** arr) {
     // int row = sizeof(arr) / sizeof(*arr); // 退化：row=1
@@ -27,13 +26,10 @@ void initPtr(int n, int** arr) {
         for (int j = 0; j < n; j++) {
             if (i == j) {
                 arr[i][j] = 1;
-            }
-            else {
+            } else {
                 arr[i][j] = 0;
             }
-            // printf("%d ", arr[i][j]);
         }
-        // printf("\n");
     }
 }
 
@@ -52,11 +48,10 @@ char* longestPalindrome(char* s) {
     for (int i = 0; i < n; i++) {
         dp[i] = (int*)malloc(sizeof(int) * (n));
         // memset(dp[i], 0, sizeof(int) * (n));
-        // printf("sizeof(dp[i]) = %d\n", sizeof(dp[i]));
     }
     initPtr(n, dp);
 
-    int maxLen = 1, start = 0; // start不可定义为-1！case:"ac", 不会进入下面的二层for！
+    int maxLen = 1, start = 0; // start不可定义为-1！case:"ac", 不会进入二层for
 
     for (int i = n - 1; i >= 0; i--) {
         for (int j = 0; j < n; j++) {
@@ -68,17 +63,15 @@ char* longestPalindrome(char* s) {
                     start = i;
                 }
             }
-            // printf ("%d ", dp[i][j]);
         }
-        // printf("\n");
     }
 
     // https://leetcode.cn/problems/longest-palindromic-substring/solution/by-frosty-kapitsatia-7z99/
     // c切片分割:
-    // 法1)利用\0和地址来输出字符串 -- only LC 可以AC, IDE会报错Segmentation fault！
+    // 法1)利用\0和地址来输出字符串 -- only LC 可以AC, IDE会报错Segmentation fault！【 猜测：s是栈上对象，返回后被释放！？】
     // printf("maxLen = %d, start = %d\n", maxLen, start);
     // s[start+maxLen] = 0; //'\0';
-    // s = &s[start];
+    // s = &s[start]; // 或 s = s + start
     // return s;
 
 
@@ -86,7 +79,7 @@ char* longestPalindrome(char* s) {
     // 如memcpy(x,y+3,4);*(x+5)='\0';，这样就把字符串y中的下标为3的字符开始的连续4个字符拷贝到了x，然后*(x+5)='\0';在4个字符后补一个'\0'构成字符串。
     char* res = malloc(sizeof(char) * (maxLen + 1)); // 【勿忘+1！maxLen是strlen（不包括'\0'），还需给最后的'\0'留位置！】
     memcpy(res, s + start, maxLen);
-    res[maxLen] = '\0';
+    res[maxLen] = '\0'; // 或 0
     return res;
 }
 
