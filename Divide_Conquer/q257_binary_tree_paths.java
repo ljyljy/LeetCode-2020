@@ -14,6 +14,7 @@ public class q257_binary_tree_paths {
         return res;
     }
 
+    // todo：改进 将path改为int[] path，遍历到叶子时再生成path，并加入res。
     private void dfs(TreeNode root, String path) {
         if (root == null) return;
         if (root.left == null && root.right == null) {
