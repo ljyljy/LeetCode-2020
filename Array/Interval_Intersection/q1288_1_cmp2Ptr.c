@@ -92,5 +92,7 @@ int main() {
 
     int* intervalsColSize = (int*)malloc(sizeof(int));
     int leftCnt = removeCoveredIntervals(intervals, row, intervalsColSize);
+//    int intervalsColSize = 0; // todo: test
+//    int leftCnt = removeCoveredIntervals(intervals, row, &intervalsColSize);
     printf("leftCnt=%d\n", leftCnt);
 }

@@ -3,7 +3,34 @@ package Recursion.combination_based;
 import java.util.Arrays;
 
 public class q698_partition_to_k_equal_sum_subsets {
-    // 【荐】法2（面试写，对比分析复杂度）：枚举桶，对每个num执行选or不选【不可重复放桶】 -- 推荐-O(k桶*(2^n))
+    int n;
+    public boolean canPartitionKSubsets_new(int[] nums, int k) {
+        n = nums.length;
+        int sum = Arrays.stream(nums).sum();
+        if (sum % k != 0) return false; // 可行性剪枝
+        Arrays.sort(nums);
+        int targetSum = sum / k;
+        return dfs(nums, n - 1, k, 0, targetSum, new boolean[n]);
+    }
+
+    boolean dfs(int[] nums, int idx, int bucketCnt, int bucketSum, int targetSum, boolean[] used) {
+        if (bucketCnt == 0) return true;
+        if (bucketSum == targetSum) {
+            return dfs(nums,n - 1, bucketCnt - 1, 0, targetSum, used);
+        }
+        for (int i = idx; i >= 0; i--) {  // 倒序剪枝
+            if (used[i] || bucketSum + nums[i] > targetSum) continue;  // 可行性剪枝
+            used[i] = true;
+            if (dfs(nums,i - 1, bucketCnt, bucketSum + nums[i], targetSum, used)) {
+                return true;
+            }
+            used[i] = false;
+            if (bucketSum == 0) return false; // 可行性剪枝
+        }
+        return false;
+    }
+
+    // 【荐】法2（面试写，对比分析复杂度）：枚举桶，对每个num执行选or不选【不可重复放桶, 去重used】 -- 推荐-O(k桶*(2^n))
     // 普通的组合总和 【+ 枚举桶】
     public boolean canPartitionKSubsets(int[] nums, int k) {
         int n = nums.length;
