@@ -39,7 +39,7 @@ bool dfs_v1(int* nums, int n, int bucketLeft, int idx, int bucketSum, int target
         // ↑ 【【【勿忘return】】】!!!否则【WA，不应继续for】!!!
     }
 
-    for (int i = idx; i >= 0; i--) {
+    for (int i = idx; i >= 0; i--) { // 逆序遍历！从最大数往前遍历
         if (used[i]) continue;
         if (bucketSum + nums[i] > targetSum) continue;
         used[i] = true;
