@@ -3,6 +3,9 @@ package Recursion.combination_based;
 import java.util.Arrays;
 
 public class q698_partition_to_k_equal_sum_subsets {
+    // 【DFS + 剪枝】
+    //   如果我们提前对 nums 数组排序，把大的数字排在前面/后面，那么【大数优先分配到桶中】，
+    //   对于之后的数字，bucket[i] + nums[index] 会【更大，更容易触发剪枝】的 if 条件。
     int n;
     public boolean canPartitionKSubsets_new(int[] nums, int k) {
         n = nums.length;
@@ -18,19 +21,20 @@ public class q698_partition_to_k_equal_sum_subsets {
         if (bucketSum == targetSum) {
             return dfs(nums,n - 1, bucketCnt - 1, 0, targetSum, used);
         }
-        for (int i = idx; i >= 0; i--) {  // 倒序剪枝
+        for (int i = idx; i >= 0; i--) {  // 倒序剪枝：∵nums升序，需【优先大数入桶】，争取提前剪枝
             if (used[i] || bucketSum + nums[i] > targetSum) continue;  // 可行性剪枝
             used[i] = true;
             if (dfs(nums,i - 1, bucketCnt, bucketSum + nums[i], targetSum, used)) {
-                return true;
+                return true; // 当前桶，选择nums[i]是否放入
             }
             used[i] = false;
-            if (bucketSum == 0) return false; // 可行性剪枝
+            // 若本次连第一个值都无法搜到（即bucketSum=0 <=> 剩余元素的最大值(∵逆序遍历，大数优先)不能作为当前集合的元素），必然无解。
+            if (bucketSum == 0) return false; // 可行性剪枝，可不加
         }
         return false;
     }
 
-    // 【荐】法2（面试写，对比分析复杂度）：枚举桶，对每个num执行选or不选【不可重复放桶, 去重used】 -- 推荐-O(k桶*(2^n))
+    // 【未优化！】法2（面试写，对比分析复杂度）：枚举桶，对每个num执行选or不选【不可重复放桶, 去重used】 -- 推荐-O(k桶*(2^n))
     // 普通的组合总和 【+ 枚举桶】
     public boolean canPartitionKSubsets(int[] nums, int k) {
         int n = nums.length;

@@ -73,14 +73,13 @@ int** fourSum(int* nums, int n, int target, int* returnSize, int** retColCnt) {
 int main() {
     int basicSize = 8;
     int nums[] = { 1, 0, -1, 0, -2, 2 }, target = 0;
-    int* returnSize = malloc(sizeof(int));
-    int** retColCnt = malloc(sizeof(int*) * basicSize);
-    int** res = fourSum(nums, DIM(nums), target, returnSize, retColCnt);
-    for (int i = 0; i < *returnSize; i++) {
-        for (int j = 0; j < (*retColCnt)[i]; j++) {
+    int returnSize = 0;
+    int* retColCnt = (int*)malloc(sizeof(int*) * basicSize);
+    int** res = fourSum(nums, DIM(nums), target, &returnSize, &retColCnt);
+    for (int i = 0; i < returnSize; i++) {
+        for (int j = 0; j < retColCnt[i]; j++) {
             printf("%d ", res[i][j]);
         }
         printf("\n");
     }
-
 }
