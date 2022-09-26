@@ -4,9 +4,10 @@ import java.util.*;
 
 public class q854_k_similar_strings {
     // BFS（推荐）
-    public int kSimilarity_BFS(String s1, String s2) {
+    public int kSimilarity(String s1, String s2) {
         int n = s1.length();
         Queue<String> queue = new ArrayDeque<>(); // key = str_idx(str与s2最长匹配idx)
+        // <中间结果串str, 将遍历的下标idx（目前以得到str[0:idx) = s2[0:idx), 且s1->str转换了step次）>
         queue.offer(s1 + "_" + 0);
         Set<String> visited = new HashSet<>();
         visited.add(s1);
@@ -18,16 +19,17 @@ public class q854_k_similar_strings {
                 String curKey = queue.poll();
                 String[] item = curKey.split("_");
                 String curStr = item[0];
-                int curIdx = Integer.valueOf(item[1]); // s2与curStr首个不一样的字符的下标（当前遍历.idx）
+                int curIdx = Integer.valueOf(item[1]); // s2与curStr首个不一样的字符的下标
                 if (s2.equals(curStr)) return step;
+                // 应对case: "bcbabc" & "bcbbca", 头部都为bcb(不用移动)，curIdx应后移
                 while (curIdx < n && s2.charAt(curIdx) == curStr.charAt(curIdx)) {
-                    curIdx++;
+                    curIdx++; // 挪到curStr与s2第一个不相等的下标
                 }
-                char pattern = s2.charAt(curIdx);
+                char pattern = s2.charAt(curIdx); // 模式字符
                 // 在s1[idx+1, n)中，查找并选择与s2[idx]相同的字符，交换一次
                 //   则curStr[:idx+1]=s2[:idx+1]，保存中间结果<str, idx>, step++
                 for (int j = curIdx+1; j < n; j++) {
-                    // 剪枝：二者相同=没必要不交换，交换后curStr没变化（徒增step），跳过
+                    // 剪枝：二者相同=没必要不交换（徒增step），跳过
                     if (curStr.charAt(j) == s2.charAt(j)) continue;
 
                     // 找到与pattern相同的字符，交换后，curStr[:curIdx+1]==s2[:curIdx]，计算当前nxtStr的最小交换次数
@@ -36,11 +38,14 @@ public class q854_k_similar_strings {
                         if (!visited.contains(nxtStr)) {
                             String nxtKey = nxtStr + "_" + (curIdx+1);
                             queue.offer(nxtKey);
+                            visited.add(nxtStr);
+                            // if (s2.equals(nxtStr)) return curIdx+1; // WA! 不可提前return，不一定min！
                         }
                     }
                 }
             }
-            step++; // 每一层遍历结束，step++
+            // curStr[curIdx:]中，与pattern相同的所有字符都遍历完毕，且生成了一系列新的中间字符串nxtStr
+            step++; // 本遍历结束，step++
         }
         return step;
     }
@@ -61,7 +66,8 @@ public class q854_k_similar_strings {
         for (int i = 0; i < n; i++) ans += s.charAt(i) != t.charAt(i) ? 1 : 0;
         return ans + 1 >> 1;
     }
-    public int kSimilarity(String s1, String s2) {
+
+    public int kSimilarity2(String s1, String s2) {
         if (s1.equals(s2)) return 0;
         t = s2;
         n = s1.length();
