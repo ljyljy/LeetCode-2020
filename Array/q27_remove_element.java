@@ -19,7 +19,7 @@ public class q27_remove_element {
         if (n == 0) return 0;
         int write = 0, read = 0;
         while (read < n) {
-            if (nums[read] != val) {// vs q26：nums[read] != nums[write-1]
+            if (nums[read] != val) {  // vs q26：nums[read] != nums[write-1]
                 nums[write++] = nums[read];
             }
             read++;

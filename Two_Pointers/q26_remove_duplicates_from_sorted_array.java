@@ -5,6 +5,7 @@ public class q26_remove_duplicates_from_sorted_array {
     public int removeDuplicates1(int[] nums) {
         int n = nums.length;
         if (n <= 1) return n;
+        // nums[0]肯定不变，因此write从1起 ↓
         int write = 1, read = 1; // slow = write, fast = read
         while (read < n) {
             if (nums[read] != nums[write-1]) { // vs q27：nums[read] != val
