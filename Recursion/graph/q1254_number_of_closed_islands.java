@@ -1,6 +1,6 @@
 package Recursion.graph;
 
-// 类比q130, 200, 1254
+// 类比q130, 200, 1254, 1905, 694
 public class q1254_number_of_closed_islands {
     private int m, n;
     private static final int LAND = 0, WATER = 1;

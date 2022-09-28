@@ -1,5 +1,6 @@
 package Recursion.graph;
 
+// 类比q130, 200, 1254，1905
 public class q1905_count_sub_islands {
     private final int[] _x = {-1, 0, 1, 0};
     private final int[] _y = {0, -1, 0, 1};
@@ -7,7 +8,7 @@ public class q1905_count_sub_islands {
     private int m, n;
     public int countSubIslands(int[][] grid1, int[][] grid2) {
         m = grid1.length; n = grid1[0].length;
-        // 1) 先排除非子岛的部分：A=WATER && B=LAND
+        // 1) 【先排除非子岛】的部分：A=WATER && B=LAND
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 // 将A相应水域, 映射到B岛并'淹掉'（FloodFill）
