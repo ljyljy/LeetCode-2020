@@ -1,4 +1,4 @@
-package BFS;
+package BFS.ShortestPath;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
