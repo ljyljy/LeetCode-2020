@@ -4,6 +4,41 @@ import java.util.*;
 
 // A厂（Amazon）真题
 public class q9_1565_modern_ludo_i_FacA {
+    // 法1：BFS & 简易 SPFA(最短路径快速算法)
+    //      优化见 q9_1565_modern_ludo_i_SPFA_FacA.java
+    public int modernLudo_1(int len, int[][] conns) {
+        int minDist = 0;
+        Deque<Integer> deque = new ArrayDeque<>(); // todo：优化为PQ
+        int[] dists = new int[len + 1]; // 无需设为Node<idx, minDist>
+        for (int i = 0; i <= len; i++) {
+            dists[i] = Integer.MAX_VALUE;
+        }
+        deque.offer(1);
+        dists[1] = 0;
+        while (!deque.isEmpty()) {
+            int curIdx = deque.poll();
+            for (int i = 1; i <= 6; i++) { // 遍历1）骰子点数∈[1, 6]
+                int nxtIdx = curIdx + i;
+                if (nxtIdx <= len && dists[nxtIdx] > dists[curIdx] + 1) {
+                    dists[nxtIdx] = dists[curIdx] + 1; // 更新nxtIdx(via骰子)的最短距离
+                    deque.offer(nxtIdx);
+                }
+            }
+            // todo: 建图，直接找到与curIdx的领接表
+            for (int[] conn : conns) { // 遍历2）连通域
+                // SPFA优化：无需进行内层BFS, 因为在下探时若碰到距离更小的，则进行更新。
+                int start = conn[0], end = conn[1];
+                if (curIdx == start && dists[curIdx] < dists[end]) {
+                    deque.offer(end);
+                    dists[end] = dists[curIdx]; // // 更新[直连]通路, [距离不变]
+                }
+            }
+        }
+        return dists[len];
+    }
+
+
+
     // 法0：BFS+BFS
     //      外层 BFS 做最短路径，内层 BFS 找连通块。
     Map<Integer, Set<Integer>> graph = new HashMap<>(); // <idx, 领接表>
@@ -19,6 +54,11 @@ public class q9_1565_modern_ludo_i_FacA {
             int curIdx = deque.poll();
             int farthest = Math.min(curIdx + 6, len);
             for (int neigh = curIdx+1; neigh <= farthest; neigh++) {
+                // 复杂图：路径越长，可能dist不递增
+                //   如：C-E直通，则BFS从C下探到E时，层数++，但距离不变
+                //      违反BFS-简单图下，层数↑，距离↑的规律！
+                //      因此需要内层BF S(或SPFA, 下探时更新最短路)，将本层连通的所有点找到
+                //          如：[2,5], [5,8], [8,10]: 2与5、8、10都是直连，距离为0！！！
                 Set<Integer> nxtNodes = getNxtUnvisited(neigh); // BFS-2
                 for (int nxt: nxtNodes) {
                     distMap.put(nxt, distMap.get(curIdx) + 1);
@@ -30,7 +70,7 @@ public class q9_1565_modern_ludo_i_FacA {
     }
 
     // 内层BFS: 搜索邻接表graph所有未遍历过的直通域/连通域
-    //   外层BFS若遍历过，则旧值一定是最短路径，跳过
+    //   外层BFS若遍历过，则旧值一定是最短路径（非严格递增，一定<=新遍历到的值），跳过
     private Set<Integer> getNxtUnvisited(int node) {
         Set<Integer> nxtNodes = new HashSet<>();
         Deque<Integer> deque = new ArrayDeque<>();
@@ -59,36 +99,6 @@ public class q9_1565_modern_ludo_i_FacA {
         }
     }
 
-    // 法1：普通BFS
-    public int modernLudo_1(int len, int[][] conns) {
-        int minDist = 0;
-        Deque<Integer> deque = new ArrayDeque<>();
-        int[] dists = new int[len + 1]; // 不要设为Node<idx, minDist>, 否则还要遍历minDist
-        for (int i = 0; i <= len; i++) {
-            dists[i] = Integer.MAX_VALUE;
-        }
-        deque.offer(1);
-        dists[1] = 0;
-        while (!deque.isEmpty()) {
-            int curIdx = deque.poll();
-            for (int i = 1; i <= 6; i++) { // 遍历1）骰子点数∈[1, 6]
-                int nxtIdx = curIdx + i;
-                if (nxtIdx <= len && dists[nxtIdx] > dists[curIdx] + 1) {
-                    dists[nxtIdx] = dists[curIdx] + 1;
-                    deque.offer(nxtIdx);
-                }
-            }
-            // todo: 建图，直接找到与curIdx的领接表
-            for (int k = 0; k < conns.length; k++) { // 遍历2）连通域
-                int start = conns[k][0], end = conns[k][1];
-                if (curIdx == start && dists[curIdx] < dists[end]) {
-                    deque.offer(end);
-                    dists[end] = dists[curIdx]; // 更新直连通路
-                }
-            }
-        }
-        return dists[len];
-    }
 
     // todo：法2 - dp
     // dp： 坑有点多，因为存在connections的两地s -> t的目的地t对应的s可能是多个的

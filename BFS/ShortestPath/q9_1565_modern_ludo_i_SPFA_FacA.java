@@ -3,107 +3,92 @@ package BFS.ShortestPath;
 import java.util.*;
 
 public class q9_1565_modern_ludo_i_SPFA_FacA {
-    public int modernLudo_1(int length, int[][] connections) {
-        Map<Integer, Set<Integer>> graph = buildGraph(length, connections);
+    // 【荐，避免两层BFS！】 法1：SPFA(最短路径快速算法)
+    Map<Integer, Set<Integer>> graph = new HashMap<>();
+    Map<Integer, Integer> distMap = new HashMap<>();
 
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(1);
-        Map<Integer, Integer> distance = new HashMap<>();
-        for (int i = 1; i <= length; i++) {
-            distance.put(i, Integer.MAX_VALUE);
+    public int modernLudo_SPFA1(int len, int[][] conns) {
+        buildGraph(len, conns);
+        Deque<Integer> deque = new ArrayDeque<>();
+        deque.offer(1); // 起点
+        for (int i = 1; i <= len; i++) {
+            distMap.put(i, Integer.MAX_VALUE);
         }
-        distance.put(1, 0);
+        distMap.put(1, 0);
 
-        while (!queue.isEmpty()) {
-            int node = queue.poll();
-            for (int nextNode : graph.get(node)) {
-                if (distance.get(nextNode) > distance.get(node)) {
-                    distance.put(nextNode, distance.get(node));
-                    queue.offer(nextNode);
+        while (!deque.isEmpty()) {
+            int cur = deque.poll();
+            for (int i = 1; i <= 6; i++) { // 遍历1）骰子点数∈[1, 6]
+                int nxtIdx = cur + i;
+                if (nxtIdx > len) break;
+                if (distMap.get(nxtIdx) > distMap.get(cur) + 1) {
+                    deque.offer(nxtIdx);
+                    distMap.put(nxtIdx, distMap.get(cur) + 1); // 更新nxtIdx更短距离(curDist+1)
                 }
             }
-            int limit = Math.min(node + 7, length + 1);
-            for (int nextNode = node + 1; nextNode < limit; nextNode++) {
-                if (distance.get(nextNode) > distance.get(node) + 1) {
-                    distance.put(nextNode, distance.get(node) + 1);
-                    queue.offer(nextNode);
+            for (int nxtIdx: graph.get(cur)) { // 遍历2）连通域
+                // SPFA优化：无需进行内层BFS, 因为在下探时若碰到距离更小的，则进行更新。
+                if (distMap.get(nxtIdx) > distMap.get(cur)) {
+                    deque.offer(nxtIdx);
+                    distMap.put(nxtIdx, distMap.get(cur)); // 更新[直连]通路, [距离不变]
                 }
             }
         }
-
-        return distance.get(length);
+        return distMap.get(len);
     }
 
-    private Map<Integer, Set<Integer>> buildGraph(int length, int[][] connections) {
-        Map<Integer, Set<Integer>> graph = new HashMap<>();
-        for (int i = 1; i <= length; i++) {
+    private void buildGraph(int len, int[][] conns) {
+        for (int i = 1; i <= len; i++) {
             graph.put(i, new HashSet<>());
         }
-        for (int i = 0; i < connections.length; i++) {
-            int from = connections[i][0];
-            int to = connections[i][1];
-            graph.get(from).add(to);
-        }
-        return graph;
-    }
 
-    // version 2 堆优化
-    class Pair {
-        int distance, node;
-
-        Pair(int distance, int node) {
-            this.node = node;
-            this.distance = distance;
+        for (int[] conn: conns) {
+            int start = conn[0], end = conn[1];
+            graph.get(start).add(end);
         }
     }
 
-    public int modernLudo_2(int length, int[][] connections) {
-        Map<Integer, Set<Integer>> graph = buildGraph2(length, connections);
-
-        Queue<Pair> queue = new PriorityQueue(
-                new Comparator<Pair>() {
-                    public int compare(Pair p1, Pair p2) {
-                        return p1.distance - p2.distance;
-                    }
-                }
-        );
-        queue.offer(new Pair(0, 1));
-        Map<Integer, Integer> distance = new HashMap<>();
-        for (int i = 1; i <= length; i++) {
-            distance.put(i, Integer.MAX_VALUE);
+    // 法1-2：SPFAv2，堆优化
+    class Node {
+        int idx, dist;
+        public Node (int idx, int dist) {
+            this.idx = idx;
+            this.dist = dist;
         }
-        distance.put(1, 0);
-        while (!queue.isEmpty()) {
-            int dist = queue.peek().distance;
-            int node = queue.peek().node;
-            queue.poll();
-            for (int nextNode : graph.get(node)) {
-                if (distance.get(nextNode) > dist) {
-                    distance.put(nextNode, dist);
-                    queue.offer(new Pair(dist, nextNode));
-                }
+    }
+
+//    Map<Integer, Set<Integer>> graph = new HashMap<>();
+//    Map<Integer, Integer> distMap = new HashMap<>();
+    public int modernLudo(int len, int[][] conns) {
+         buildGraph(len, conns);
+         // 类比：A*、Dijkstra中，堆的应用
+         Queue<Node> minHeap = new PriorityQueue<>(((o1, o2) -> (o1.dist - o2.dist)));
+         minHeap.offer(new Node(1, 0));
+        for (int i = 1; i <= len; i++) {
+            distMap.put(i, Integer.MAX_VALUE);
+        }
+        distMap.put(1, 0);
+
+        while (!minHeap.isEmpty()) {
+            Node node = minHeap.poll();
+            int curIdx = node.idx, curDist = node.dist;
+            for (int i = 1; i <= 6; i++) {// 遍历1）骰子点数∈[1, 6]
+                int nxtIdx = curIdx + i;
+                if (nxtIdx > len) break;
+                if (distMap.get(nxtIdx) > curDist + 1) {
+                    distMap.put(nxtIdx, curDist + 1);
+                    minHeap.offer(new Node(nxtIdx, curDist + 1));
+                }// 更新nxtIdx更短距离(curDist+1) ↑
             }
-            int limit = Math.min(node + 7, length + 1);
-            for (int nextNode = node + 1; nextNode < limit; nextNode++) {
-                if (distance.get(nextNode) > dist + 1) {
-                    distance.put(nextNode, dist + 1);
-                    queue.offer(new Pair(dist + 1, nextNode));
+
+            for (int nxtIdx: graph.get(curIdx)) { // 遍历2）连通域
+                // SPFA优化：无需进行内层BFS, 因为在下探时若碰到距离更小的，则进行更新。
+                if (distMap.get(nxtIdx) > curDist) {
+                    distMap.put(nxtIdx, curDist);
+                    minHeap.offer(new Node(nxtIdx, curDist)); // 更新[直连]通路, [距离不变]
                 }
             }
         }
-        return distance.get(length);
-    }
-
-    private Map<Integer, Set<Integer>> buildGraph2(int length, int[][] connections) {
-        Map<Integer, Set<Integer>> graph = new HashMap<>();
-        for (int i = 1; i <= length; i++) {
-            graph.put(i, new HashSet<>());
-        }
-        for (int i = 0; i < connections.length; i++) {
-            int from = connections[i][0];
-            int to = connections[i][1];
-            graph.get(from).add(to);
-        }
-        return graph;
+        return distMap.get(len);
     }
 }
