@@ -25,7 +25,6 @@ typedef struct NodeQ {
     int idx; // 本轮遍历下标idx：pattern=s2[idx]
     // ↑ 进度：str[0:idx) = s2[0:idx), 且s1->str转换了step次
     struct NodeQ* next;
-    UT_hash_handle hh;
 } NodeQ;
 
 

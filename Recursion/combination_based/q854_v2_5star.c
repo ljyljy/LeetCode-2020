@@ -51,6 +51,7 @@ HashSet* set = NULL; // 设为全局变量（LC会TLE！）, 解决：在函数中传入二级指针Has
 //         HASH_FIND_STR(set, key, pEntry); \
 //     } while (0); \
 
+// todo：无需封装该函数，建议直接调用HASH_FIND_STR
 bool set_find(HashSet** set, const char* key, HashSet* pEntry) {
     HASH_FIND_STR(*set, key, pEntry);
     return pEntry != NULL;
