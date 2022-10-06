@@ -47,6 +47,10 @@ import java.util.*;
          ?	简单图： 没有访问过的点就扔进队列
          ?	复杂图： 如果到达该点的路径变短了就扔进队列
              ?	优化：SPFA 里会使用 Heap(PriorityQueue) 来替换 Queue，这样能够更快的找到最短路径（类比：A*、Dijkstra算法）
+     ?	SPFA 小结
+         ?	整体依然是一个 BFS 算法的轮廓
+         ?	变化1: 一个点可以重复进入队列, 只要发现更短的路径
+         ?	变化2: Queue 使用 heapq/PriorityQueue 替代
 
      方法4： 动态规划(DP)
      ?	找最短路径也在动态规划的魔爪范围内
@@ -62,7 +66,7 @@ import java.util.*;
  **/
 public class q9_1565_modern_ludo_i_SPFA_FacA {
     // 【荐，避免两层BFS！】 法1：SPFA(最短路径快速算法)
-    Map<Integer, Set<Integer>> graph = new HashMap<>();
+    Map<Integer, Set<Integer>> graph = new HashMap<>(); // C使用二维数组：int[起点i][m]=终点集j, j∈[0,m-1]
     Map<Integer, Integer> distMap = new HashMap<>();
 
     public int modernLudo_SPFA1(int len, int[][] conns) {
