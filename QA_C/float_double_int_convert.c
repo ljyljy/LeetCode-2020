@@ -30,5 +30,8 @@ int main() {
     printf("double=%.2lf, int=%d, sizeof(dd)=%d\n", dd, dd, sizeof(dd));
     // double=23.89, int=171798692, sizeof(dd)=8
 
+    // int转str后，所占字节数>=12！(见q811)
+    printf("INT_MIN=%d, sizeof(-2147483648)=%d , sizeof('INT_MIN')=%d\n", INT_MIN, sizeof(int), sizeof("-2147483648"));
+    // INT_MIN=-2147483648, sizeof(-2147483648)=4 , sizeof('INT_MIN')=12
     return 0;
 }
