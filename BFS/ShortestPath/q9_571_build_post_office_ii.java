@@ -2,6 +2,12 @@ package BFS.ShortestPath;
 
 import java.util.*;
 
+// C语言的邻接表？
+//  华为oj，封装一下：先定义一个结构体包含一个sublist[MAX_NUM]，结构体名称假设叫S。
+//  那么邻接表就是S *s = (S*)malloc(sizeof(S) * NUM)
+//  具体调用：
+//      外层index循环，内层i循环，取值s[index].sublist[i]
+
 public class q9_571_build_post_office_ii {
 
     static class GridType {
