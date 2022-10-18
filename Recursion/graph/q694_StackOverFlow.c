@@ -9,7 +9,7 @@
 
 #define LAND 1
 #define WATER 0
-#define MAX_LEN 3000
+#define MAX_LEN 2600
 int _x[] = { 0, 1, 0, -1 };
 int _y[] = { 1, 0, -1, 0 }; // 上，右，下，左
 
@@ -107,10 +107,18 @@ int main() {
     //     printf("\n");
     // }
 
-    // v2：通过int[][], 初始化int**（强转即可）
-    int grid[4][5] = { {1, 1, 0, 1, 1}, { 1,0,0,0,0 }, { 0,0,0,0,1 }, { 1,1,0,1,1 } };
-
-    int cnt = numDistinctIslands((int**)grid, m, n);
+    // v2：通过int[][], 为int**赋值（不可强转为int**，grid应退化为(int*)[5]！）
+    int fill[4][5] = { {1, 1, 0, 1, 1}, { 1,0,0,0,0 }, { 0,0,0,0,1 }, { 1,1,0,1,1 } };
+    int** grid = (int**)malloc(sizeof(int*) * m);
+    for (int i = 0; i < m; i++) {
+        grid[i] = (int*)malloc(sizeof(int) * n[0]);
+    }
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n[0]; j++) {
+            grid[i][j] = fill[i][j];
+        }
+    }
+    int cnt = numDistinctIslands(grid, m, n);
     printf("cnt = %d\n", cnt);
     return 0;
 }
