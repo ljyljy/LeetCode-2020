@@ -1,4 +1,4 @@
-package DataStructure.Map.TreeMap;
+package DataStructure.Heap;
 
 //import javafx.scene.layout.Priority;
 
