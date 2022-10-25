@@ -2,59 +2,69 @@
 // Created by ljylj on 2022/8/20.
 //
 
+#include "uthash.h"
 
-#include "utlib/uthash.h"
-
-struct hashTable {
+typedef struct HashMap {
     int key; // num
     int val; // idx
     UT_hash_handle hh;
-} *map;
+} HashMap;
 
-struct hashTable *find(int num) {
-    struct hashTable *entry;
-    HASH_FIND_INT(map, &num, entry); // 此处是&num，而非key/num！
-    return entry;
-}
-
-void insert(int num, int idx) {
-    struct hashTable *entry = find(num);
-    if (entry == NULL) {
-        struct hashTable *tmp = malloc(sizeof(struct hashTable));
-        tmp->key = num;
-        tmp->val = idx;
-        HASH_ADD_INT(map, key, tmp); // 此处是key（map.field属性字段），而非num！
-    } else {
-        entry->val = idx;
+void map_putOrAdd(HashMap** map, int num, int idx) {
+    HashMap* pEntry = NULL;
+    HASH_FIND_INT(*map, &num, pEntry); // 此处是&num，而非key/num！
+    if (pEntry == NULL) {
+        pEntry = malloc(sizeof(HashMap));
+        pEntry->key = num;
+        pEntry->val = idx;
+        HASH_ADD_INT(*map, key, pEntry); // 此处是key（map.field属性字段），而非num！
+    }
+    else {
+        pEntry->val = idx;
     }
 }
 
-int *twoSum(const int *nums, int n, int target, int *returnSize) {
-//    printf("n = %d, target = %d, returnSize = %d\n", n, target, *returnSize);
-    map = NULL;
+
+void map_free(HashMap** map) {
+    HashMap* cur, * tmp;
+    HASH_ITER(hh, *map, cur, tmp) {
+        HASH_DEL(*map, cur);
+        free(cur);
+        cur = NULL;
+    }
+}
+
+int* twoSum(const int* nums, int n, int target, int* returnSize) {
+    //    printf("n = %d, target = %d, returnSize = %d\n", n, target, *returnSize);
+    HashMap* map = NULL;
     for (int i = 0; i < n; ++i) {
-        int x = nums[i], y = target - x;
-        struct hashTable *entry = find(y);
-        if (entry != NULL) {
+        HashMap* pEntry = NULL;
+        int y = target - nums[i];
+        HASH_FIND_INT(map, &y, pEntry); // 此处是&num，而非key/num！
+        if (pEntry != NULL) {
             *returnSize = 2;
-            int *ret = malloc(sizeof(int) * 2);
-            ret[0] = entry->val, ret[1] = i;
+            int* ret = malloc(sizeof(int) * 2);
+            ret[0] = pEntry->val, ret[1] = i;
+            map_free(&map);
             return ret;
         }
-        insert(x, i);
+        map_putOrAdd(&map, nums[i], i);
     }
+    map_free(&map);
     *returnSize = 0;
     return NULL;
 }
 
+
+
 int main() {
-    int nums[] = {2, 7, 11, 15};
+    int nums[] = { 2, 7, 11, 15 };
     int target = 9;
     int n = sizeof(nums) / sizeof(int);
-    int *returnSize = malloc(sizeof(int *));
-    int *ans = twoSum(nums, n, target, returnSize); // 【不加 &returnSize】
-    printf("returnSize = %d\n", *returnSize);
-    for (int i = 0; i < *returnSize; ++i) {
+    int returnSize = 0;
+    int* ans = twoSum(nums, n, target, &returnSize); // 【不加 &returnSize】
+    printf("returnSize = %d\n", returnSize);
+    for (int i = 0; i < returnSize; ++i) {
         printf("%d ", ans[i]);
     }
     return 0;
