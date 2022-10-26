@@ -7,10 +7,16 @@
 
 /**
  * 知识点
- * 1）队列
+ * 1）队列, q934
  *  【队列空】head(++,poll) == tail(++,offer)
     【队列size】tail - head，无需+1（左闭右开）！！！
- * 2）C语言 - 搜索
+   2) 扩展 - 双端队列，q862
+     【栈顶】 [tail-1], 左闭右开！！！
+     【栈底】 [head]
+     【栈空】 head == tail
+     【pop/弹栈】tail--
+     【出队列poll/removeLast】head++
+ * 3）C语言 - 搜索
     坐标2D转1D：idx = i * col + j
     i = idx / col; j = idx % col;
  */

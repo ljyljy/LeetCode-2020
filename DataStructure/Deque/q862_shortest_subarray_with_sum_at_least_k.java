@@ -22,12 +22,12 @@ public class q862_shortest_subarray_with_sum_at_least_k {
             // 保证递增栈：pop栈顶！栈内都是当前尚未达到 sum[i]-sum[队头/栈底]>=k的元素
             //     若现在来了个更小的，那栈顶的较大sum就失效了
             while (!deque.isEmpty() && sum[i] <= sum[deque.peekFirst()]) {
-                deque.removeFirst();
+                deque.removeFirst(); // 保持递增栈
             }
             while (!deque.isEmpty() && sum[i] - sum[deque.peekLast()] >= k) {
-                minLen = Math.min(minLen, i - deque.removeLast());
+                minLen = Math.min(minLen, i - deque.removeLast()); // poll！缩小窗口，left++
             }
-            deque.addFirst(i); // addFirst
+            deque.addFirst(i); // addFirst，扩大窗口，right++
         }
         return minLen == Integer.MAX_VALUE? -1 : minLen;
     }
