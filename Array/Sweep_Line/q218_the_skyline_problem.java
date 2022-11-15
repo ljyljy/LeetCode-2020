@@ -1,4 +1,4 @@
-package Binary_Search.Sweep_Line;
+package Array.Sweep_Line;
 
 import java.util.*;
 
@@ -24,11 +24,11 @@ public class q218_the_skyline_problem {
         }
         List<Node> nodes = new ArrayList<>();
         for (int[] building : buildings) {
-            nodes.add(new Node(building[0], building[2])); // 起点
-            nodes.add(new Node(building[1], -building[2])); // 终点
+            nodes.add(new Node(building[0], building[2])); // time=起点
+            nodes.add(new Node(building[1], -building[2])); // time=终点
         } // (∵高度降序 ∴【终点】始终不会被peek()/firstKey()) ↑
         Collections.sort(nodes,
-                ((o1, o2) -> o1.time == o2.time? o2.height - o1.height: o1.time - o2.time));
+                ((o1, o2) -> o1.time == o2.time ? o2.height - o1.height : o1.time - o2.time));
 
 //        for (Node node: nodes) {
 //            System.out.println(node.time + ", " + node.height);
@@ -39,13 +39,13 @@ public class q218_the_skyline_problem {
         tmap.put(-1, 1); // 哨兵❤ <楼高=-1, cnt=1>
         int prevH = -1;  // 哨兵❤
         int prevTime = nodes.get(0).time;
-        for (Node node: nodes) {
+        for (Node node : nodes) {
             int curH = node.height, curTime = node.time;
             if (curH >= 0) { // 起点，加入tmap（频数+1）
-                tmap.put(curH, tmap.getOrDefault(curH, 0)+1);
+                tmap.put(curH, tmap.getOrDefault(curH, 0) + 1);
             } else { // 终点，移除tmap（根据频数≥1 分情况）
                 curH = -node.height;
-                tmap.put(curH, tmap.get(curH)-1);
+                tmap.put(curH, tmap.get(curH) - 1);
                 if (tmap.get(curH) < 1) {
                     tmap.remove(curH);
                 }

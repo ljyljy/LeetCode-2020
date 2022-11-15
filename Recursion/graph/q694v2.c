@@ -8,8 +8,8 @@
 #include <time.h>
 /**
  * 坑：
- * 1）HASH_key为结构体指针（HASH_ADD_KEYPTR、HASH_FIND）
- * 2）防止char[2600]导致栈溢出，key为指针类型，并定义长度("动态数组")
+ * 1）HASH_key为[结构体指针]/字符指针（HASH_ADD_KEYPTR、HASH_FIND）
+ * 2）防止字符数组char[2600]导致栈溢出，key为指针类型，并定义长度("动态数组")
  * 3）HASH_COUNT：等价于map.size()
  */
 #define LAND 1

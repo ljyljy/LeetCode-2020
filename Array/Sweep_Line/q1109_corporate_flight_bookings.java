@@ -1,4 +1,4 @@
-package Array;
+package Array.Sweep_Line;
 
 public class q1109_corporate_flight_bookings {
     public int[] corpFlightBookings(int[][] bookings, int n) {

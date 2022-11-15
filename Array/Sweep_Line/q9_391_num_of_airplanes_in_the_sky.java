@@ -1,4 +1,4 @@
-package Binary_Search.Sweep_Line;
+package Array.Sweep_Line;
 
 import java.util.ArrayList;
 import java.util.Collections;

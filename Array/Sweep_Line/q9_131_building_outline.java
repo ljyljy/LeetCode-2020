@@ -1,4 +1,4 @@
-package Binary_Search.Sweep_Line;
+package Array.Sweep_Line;
 
 import java.util.*;
 
@@ -8,8 +8,14 @@ public class q9_131_building_outline {
     // TEST CASE: [[1,2,3],[1,2,4],[1,2,3],[1,2,4]]
     class Node { // 返回值为三维 - Java:自定义类(成员变量*3)/Py: list([_s,_e,_h])
         private int time, height;
-        public Node(){}
-        public Node(int t, int h){time = t; height = h;}
+
+        public Node() {
+        }
+
+        public Node(int t, int h) {
+            time = t;
+            height = h;
+        }
     }
 
     private Comparator<Node> comparator = new Comparator<Node>() {
@@ -40,10 +46,10 @@ public class q9_131_building_outline {
 
         int prevH = 0;
         int startTime = nodes.get(0).time;
-        for (Node node: nodes) {
+        for (Node node : nodes) {
             if (node.height >= 0) { // 楼の起点，加入TreeMap
                 tmap.put(node.height, tmap.getOrDefault(node.height, 0) + 1);
-            } else{ // 终点(height为负，需要再取负) - map中去除
+            } else { // 终点(height为负，需要再取负) - map中去除
                 int cnt = tmap.get(-node.height);
                 if (cnt == 1)
                     tmap.remove(-node.height);
