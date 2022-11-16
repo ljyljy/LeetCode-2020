@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class q1094_car_pooling {
-    // 类比：扫描线q218，1109
+    // 类比：扫描线q218，差分1109
     // 法1：差分数组
     public boolean carPooling(int[][] trips, int capacity) {
         int[] sum = new int[1001];
