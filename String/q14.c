@@ -8,9 +8,28 @@
 #define DIM(arr) sizeof(arr)/sizeof(*arr)
 #endif
 
-// 法2：推荐
-char* longestCommonPrefix(char** strs, int n)
-{
+// 法3：推荐
+char* longestCommonPrefix(char** strs, int n) {
+    char* pat = strs[0];
+    int n0 = strlen(pat);
+    if (n0 == 0 || n <= 1) return pat;
+
+    for (int i = 0; i < n0; i++) {
+        for (int j = 1; j < n; j++) {
+            char* curStr = strs[j];
+            int n1 = strlen(curStr);
+            if (i >= n1 || curStr[i] != pat[i]) {
+                pat[i] = 0;
+                return pat;
+            }
+        }
+    }
+    return pat; // 非NULL
+}
+
+
+// 法2
+char* longestCommonPrefix2(char** strs, int n) {
     char* pattern = strs[0];
     int n0 = strlen(pattern);
     char* res = (char*)malloc(sizeof(char) * (n0 + 1));
@@ -31,7 +50,7 @@ char* longestCommonPrefix(char** strs, int n)
 }
 
 // 法1：while + 计算最长公共前缀串
-char* longestCommonPrefixv0(char** strs, int n)
+char* longestCommonPrefix0(char** strs, int n)
 {
     char* pattern = strs[0];
     int n0 = strlen(pattern);
