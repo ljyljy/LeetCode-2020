@@ -26,6 +26,26 @@ bool carPooling2(int** trips, int n, int* tripsColSize, int capacity) {
     return true;
 }
 
+bool carPooling3(int** trips, int tripsSize, int* tripsColSize, int capacity) {
+    int* diff = (int*)calloc(1001, sizeof(int)); // 差分数组
+    for (int i = 0; i < tripsSize; i++) { // trip=[n, from, to]
+        diff[trips[i][1]] += trips[i][0]; // 上车
+        diff[trips[i][2]] -= trips[i][0]; // 下车，(from, to)之中的人数为diff[from, to]前缀和
+    }
+
+    int curTotalCnt = 0;
+    for (int i = 0; i < 1001; i++) {
+        curTotalCnt += diff[i];
+        if (curTotalCnt > capacity) {
+            free(diff);
+            diff = NULL;
+            return false;
+        }
+    }
+    free(diff);
+    diff = NULL;
+    return true;
+}
 
 // 法1：扫描线 = TreeMap / 小根堆 + 前缀和【类比：q218扫描线】
 #define ADD 1

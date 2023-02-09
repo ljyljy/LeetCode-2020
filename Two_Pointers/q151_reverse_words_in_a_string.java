@@ -1,7 +1,8 @@
-package String;
+package Two_Pointers;
 
 import java.util.*;
 
+// 与c不同！
 public class q151_reverse_words_in_a_string {
     // 法1： Java特性，推荐！
     public String reverseWords(String s) {
@@ -11,7 +12,7 @@ public class q151_reverse_words_in_a_string {
         return String.join(" ", words);
     }
 
-    // 写法2：常规（bew）
+    // 写法2：常规（new）
     public String reverseWords1(String s) {
         s = s.trim();
         int n = s.length();
@@ -52,8 +53,6 @@ public class q151_reverse_words_in_a_string {
         res.insert(0, sb); // 最后i == n时，还剩最后一个单词！
         return res.toString();
     }
-
-
 
 
 }

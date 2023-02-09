@@ -1,8 +1,9 @@
-package DP;
+package DP.SubSeqStr;
 
 public class q115_distinct_subsequences {
     public int numDistinct(String s, String t) {
         int n1 = s.length(), n2 = t.length();
+        if (n1 < n2) return 0; // 坑：避免超长无效串
         char[] ch1 = s.toCharArray(), ch2 = t.toCharArray();
         int[][] dp = new int[n1+1][n2+1]; // 字符串匹配s[i-1] t[j-1]的方案数
         // 初始化：1) dp[0,1:]=0(模式串非空，不可能匹配s="", 方案数=0)

@@ -1,8 +1,9 @@
-package DP;
+package DP.SubSeqStr;
 
 public class q72_161_one_edit_distance {
     char[] ss, pp;
     int n1, n2;
+
     // 类比q72
     public boolean isOneEditDistance(String s, String p) {
         ss = s.toCharArray(); pp = p.toCharArray();

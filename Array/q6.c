@@ -9,6 +9,43 @@
   1）二维指针malloc、memset(..., len+1)
   2）调用时，勿混淆char[]与char*（错误！没有数组长度属性！导致段错误！）
 */
+
+// new
+char* convert(char* s, int numRows) {
+    int len = strlen(s);
+    if (numRows == 1 || len <= numRows) return s;
+    char** mat = (char**)calloc(numRows, sizeof(char*));
+    for (int i = 0; i < numRows; i++) {
+        mat[i] = (char*)calloc(len + 1, sizeof(char));// 【勿忘+1 ('\0')】
+    }
+
+    int* lastColIdxOfRows = (int*)calloc(numRows, sizeof(int));
+    int row_i = 0, flag = -1;
+    for (int i = 0; i < len; i++) {
+        int curCol = lastColIdxOfRows[row_i]++;
+        mat[row_i][curCol] = s[i];
+        if (row_i == 0 || row_i == numRows - 1) {
+            flag = -flag;
+        }
+        row_i += flag;
+    }
+
+    char* res = (char*)calloc(len + 1, sizeof(char));
+    int idx = 0;
+    for (int i = 0; i < numRows; i++) {
+        for (int j = 0; j < lastColIdxOfRows[i]; j++) {
+            res[idx++] = mat[i][j];
+        }
+        free(mat[i]);
+        mat[i] = NULL;
+    }
+    free(mat);
+    mat = NULL;
+    res[len] = 0; // res[idx] = 0;
+    return res;
+}
+
+// Old
 void FREE(void* p) {
     free(p);
     p = NULL;

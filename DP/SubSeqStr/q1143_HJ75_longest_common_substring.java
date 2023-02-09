@@ -1,4 +1,4 @@
-package DP;
+package DP.SubSeqStr;
 
 import java.util.Scanner;
 
@@ -14,7 +14,7 @@ public class q1143_HJ75_longest_common_substring {
 
     private static int getLCStr(String s, String p) {
         int n1 = s.length(), n2 = p.length();
-        int[][] dp = new int[n1+1][n2+1]; // s[0,i-1]与p[0,j-1]的最长公共子串(连续LCStr)
+        int[][] dp = new int[n1 + 1][n2 + 1]; // s[0,i-1]与p[0,j-1]的最长公共子串(连续LCStr)
         int maxLen = 0;
         for (int i = 1; i <= n1; i++) {
             for (int j = 1; j <= n2; j++) {

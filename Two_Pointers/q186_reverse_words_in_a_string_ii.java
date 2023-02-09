@@ -1,4 +1,4 @@
-package String;
+package Two_Pointers;
 
 public class q186_reverse_words_in_a_string_ii {
     public void reverseWords(char[] s) {

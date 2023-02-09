@@ -1,4 +1,4 @@
-package DataStructure.Deque;
+package DP.SubSeqStr;
 
 import java.util.Arrays;
 

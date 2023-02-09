@@ -3,6 +3,37 @@
 #include <stdio.h>
 #include <string.h>
 
+
+// 最新版本
+char* longestPalindrome2(char* s) {
+    if (!s) return s;
+    int n = strlen(s);
+    if (n < 2) return s;
+
+    int dp[n][n];
+    memset(dp, 0, sizeof(dp));
+    int start = 0, maxLen = -1;
+    char* res = (char*)calloc(n + 1, sizeof(char));
+    for (int i = n - 1; i >= 0; i--) {
+        for (int j = 0; j < n; j++) {
+            if (s[i] == s[j] && (j - i <= 2 || dp[i + 1][j - 1])) {
+                dp[i][j] = 1;
+                int curLen = j - i + 1;
+                if (curLen > maxLen) {
+                    maxLen = curLen;
+                    start = i;
+                }
+            }
+        }
+    }
+
+    memcpy(res, s + start, maxLen);
+    res[maxLen] = '\0';
+    return res;
+}
+
+
+// old
 // 必须将m，n放在arr前面！
 void initArr(int n, int(*arr)[n]) {
     for (int i = 0; i < n; i++) {
