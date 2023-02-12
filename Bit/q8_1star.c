@@ -1,45 +1,47 @@
 //C判断溢出不同于java！！！！
 
-#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
 #include <string.h>
+#include <limits.h>
+#include <ctype.h>
 
-bool overFlow(int res, int num) {
+bool overflow(int res, int mod) {
     // Java判断溢出: res * 10 / 10 != res（C语言一定是True） || (res == Integer.MAX_VALUE / 10 && num > 7)
     // C 判断溢出：
-    return (res < INT_MIN / 10 || res > INT_MAX / 10) || \
-                (res == INT_MAX / 10 && num > 7);
+    return res < INT_MIN / 10 || res> INT_MAX / 10
+        || (res == INT_MAX / 10 && mod > 7);
 }
-
-int myAtoi(char * s){
+int myAtoi(char* s) {
     if (!s) return 0;
     int n = strlen(s);
     int i = 0;
-    while (i < n && s[i] == ' ') i++;// 1. 跳过前导空格
+    while (i < n && s[i] == ' ') i++; // 1. 跳过前导空格
+    if (i >= n) return 0;
+
     int flag = 1;
-    if (i < n) {
-        if (s[i] == '+') {
-            i++;
-        } else if (s[i] == '-') {
-            flag = -1;
-            i++;
-        }
-        if (i >= n || s[i] == '+' || s[i] == '-') {
-            return 0;
-        }
+    if (s[i] == '-') {
+        flag = -1;
+        i++;
+    }
+    else if (s[i] == '+') {
+        i++;
+    }
+    if (i >= n || s[i] == '+' || s[i] == '-') {
+        return 0;
     }
 
     int res = 0;
-    while (i < n && ('0' <= s[i] && s[i] <= '9')) {
-        int num = s[i] - '0';
-        if (overFlow(res, num)) {
-            return flag>0? INT_MAX: INT_MIN;
+    while (i < n && isdigit(s[i])) {// 0 <= s[i] && s[i] <= 9
+        int num = s[i] - '0'; // 【勿漏！】
+        if (overflow(res, num)) {
+            return flag > 0 ? INT_MAX : INT_MIN;
         }
         res = res * 10 + num;
         i++;
     }
-
     return flag * res;
 }
 
