@@ -35,8 +35,9 @@ int** threeSum(int* nums, int n, int* returnSize, int** retColCnts) {
     //     memset(res[i], 0, sizeof(int) * 3);
     // }
     // ↓ 或 *retColCnts = ...
-    int* n_cols = (int*)malloc(sizeof(int) * basicSize * 1); // n行 * 数字=res在该行的列数(int*1)
-    memset(n_cols, 0, sizeof(int) * basicSize);
+    int* n_cols = (int*)malloc(sizeof(int) * basicSize * 1); // n行 * 1列，保存：每行ans的列数
+    // sizeof(int* n_cols)=8, sizeof(int) * basicSize = 32
+    memset(n_cols, 0, sizeof(int) * basicSize); // 不可写sizeof(int*)=8
 
     qsort(nums, n, sizeof(int), cmp);
 
@@ -52,16 +53,15 @@ int** threeSum(int* nums, int n, int* returnSize, int** retColCnts) {
                 n_cols[curCnt] = 3; // for调用：记录当前行的列数为3, 或(*retColCnts)[curCnt]=3
                 curCnt++;
 
+                if (curCnt == basicSize) {// 动态扩容！
+                    basicSize *= 2;
+                    res = (int**)realloc(res, sizeof(int*) * basicSize); // 每行指针, N*3
+                    n_cols = (int*)realloc(n_cols, sizeof(int) * basicSize); // N*1
+                }
+
                 while (lf < rt && nums[lf] == nums[lf + 1]) lf++;
                 while (lf < rt && nums[rt] == nums[rt - 1]) rt--;
                 lf++; rt--;
-
-                if (curCnt == basicSize) {// 动态扩容！
-                    basicSize *= 2;
-                    res = (int**)realloc(res, sizeof(int*) * basicSize); // 每行指针
-                    n_cols = (int*)realloc(n_cols, sizeof(int) * basicSize);
-                }
-
             }
             else if (sum > 0) rt--;
             else lf++;
@@ -135,6 +135,7 @@ int** threeSum_v1(int* nums, int n, int* returnSize, int** retColCnts) {
 
 int main() {
     // int nums[] = { -1,0,1,2,-1,-4,4,-2 }; // { -1, 0, 1, 2, -1, -4 };
+    // [-1,0,1,2,-1,-4,-2,-3,3,0,4]
     int nums[] = { -7, -4, -6, 6, 4, -6, -9, -10, -7, 5, 3, -1, -5, 8, -1, -2, -8, -1, 5, -3, -5, 4, 2, -5, -4, 4, 7 };
     int n = DIM(nums); // 27
     // printf("n=%d\n", n);
