@@ -40,7 +40,7 @@ int* nextGreaterElement(int* nums_query, int nq, int* nums, int n, int* returnSi
 
     for (int i = 0; i < n; i++) {
         while (top != 0 && nums[PEEK] < nums[i]) {
-            map[nums[PEEK]] = nums[i]; // Map<idxInNums_query, numInNums_query>
+            map[nums[PEEK]] = nums[i]; // Map记录所有结果，最后过滤为res
             --top; /* 出栈 */
         }
         stk[top++] = i;
