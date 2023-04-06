@@ -28,7 +28,7 @@ static inline int cmp(const void* pa, const void* pb) {
 // v2（本题必须这么做，否则堆溢出！）: res支持动态扩容！类似ArrayList/Vector！
 // 最后的参数int** retColCnts，实则是一个指向int* n_cols的指针，记录res每行的列数=3
 int** threeSum(int* nums, int n, int* returnSize, int** retColCnts) {
-    int basicSize = 8;
+    int basicSize = 8,  curCnt = 0;
     int** res = (int**)malloc(sizeof(int*) * basicSize); // 调用时，需要知道行数，通过指针(returnSize)返回
     // for (int i = 0; i < basicSize;i++) { // 需要动态扩容！
     //     res[i] = (int*)malloc(sizeof(int) * 3);
@@ -41,7 +41,6 @@ int** threeSum(int* nums, int n, int* returnSize, int** retColCnts) {
 
     qsort(nums, n, sizeof(int), cmp);
 
-    int curCnt = 0;
     for (int i = 0; i < n - 2; i++) {
         if (i - 1 >= 0 && nums[i] == nums[i - 1]) continue;
         int lf = i + 1, rt = n - 1;
