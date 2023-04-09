@@ -4,24 +4,26 @@
 #include <math.h>
 #include <limits.h>
 
-struct ListNode* mergeHelper(struct ListNode** lists, int n, int start, int end);
-struct ListNode* mergeTwoLists(struct ListNode* left, struct ListNode* right);
-
 struct ListNode {
     int val;
     struct ListNode* next;
 };
 
+
+struct ListNode* mergeHelper(struct ListNode** lists, int start, int end);
+
+struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2);
+
 struct ListNode* mergeKLists(struct ListNode** lists, int n) {
     if (lists == NULL || n == 0) return NULL;
-    return mergeHelper(lists, n, 0, n - 1);
+    return mergeHelper(lists, 0, n - 1);
 }
 
-struct ListNode* mergeHelper(struct ListNode** lists, int n, int start, int end) {
+struct ListNode* mergeHelper(struct ListNode** lists, int start, int end) {
     if (start == end) return lists[start];
     int mid = start + end >> 1;
-    struct ListNode* left = mergeHelper(lists, n, start, mid);
-    struct ListNode* right = mergeHelper(lists, n, mid + 1, end);
+    struct ListNode* left = mergeHelper(lists, start, mid);
+    struct ListNode* right = mergeHelper(lists, mid + 1, end);
     return mergeTwoLists(left, right);
 }
 
