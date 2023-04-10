@@ -17,6 +17,13 @@ void swap(int* a, int* b) {
     *b = tmp;
 }
 
+/* 思路：
+- 逆序找递增[i-1，i]。
+- nums[i,n)升序。
+  - qsort(nums + i, n - i, sizeof(int), cmp);
+- swap(对调目标[i-1], j∈[i,n)中仅次于且大于[i-1]的元素)。
+  - swap(&nums[j], &nums[i - 1]);
+*/
 void nextPermutation(int* nums, int n) {
     for (int i = n - 1; i - 1 >= 0; i--) {
         if (nums[i] > nums[i - 1]) {
