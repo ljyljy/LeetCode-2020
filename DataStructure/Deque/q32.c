@@ -12,7 +12,7 @@
   - 为避免'()()'时栈空，左哨兵')'.idx=[-1] 入栈
   - 若[i]为'(', 则入栈i；
   - 若[i]为')', 则计算&出栈：
-    - 先pop栈顶。则次栈顶为[i]的最近无效idx，
+    - 先pop栈顶。则次栈顶为[i]的最近无效idx：
     - 非空，则计算有效长度=[peek+1,i]，即i-peek
     - 空, 则入栈[i]作为左哨兵')'，是后续出现的')'的最近无效idx
 */
@@ -24,7 +24,7 @@ int longestValidParentheses(char* s) {
     int* stk = (int*)calloc(n + 1, sizeof(int)), top = 0;
     int maxLen = 0;
 
-    stk[top++] = -1; // 左哨兵[-1]=')'，入栈
+    stk[top++] = -1; // 左哨兵')'.idx=[-1], 入栈
     for (int i = 0; i < n; i++) {
         if (s[i] == '(') {
             stk[top++] = i;
@@ -34,13 +34,14 @@ int longestValidParentheses(char* s) {
             if (top == 0) {
                 stk[top++] = i; // 作为左哨兵[i]=')'
             }
-            maxLen = fmax(maxLen, i - PEEK); //
+            maxLen = fmax(maxLen, i - PEEK); // 计算有效长度=[peek+1,i]，即i-peek
         }
     }
     return maxLen;
 }
 
-// C单调栈v2：top=-1, 则入栈++top，栈顶为top，空为top=-1
+// C单调栈v2：top=-1, 则入栈++top，栈顶为top，空为top=-1, 栈顶&弹栈为stk[top--]
+#define PEEK2 (stk[top])
 int longestValidParentheses2(char* s) {
     int n = strlen(s);
     int stk[n + 1], top = -1; // 对比q20：top定义为-1，统一前缀自加/自减
@@ -51,11 +52,11 @@ int longestValidParentheses2(char* s) {
             stk[++top] = i; // deque.push(i);
         }
         else {
-            --top; // deque.pop();
+            top--; // deque.pop();
             if (top == -1) { // deque.isEmpty()
                 stk[++top] = i;
             }
-            ans = fmax(ans, i - stk[top]);
+            ans = fmax(ans, i - PEEK2);
         }
     }
     return ans;

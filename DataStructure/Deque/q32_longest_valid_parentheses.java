@@ -1,4 +1,4 @@
-package DP;
+package DataStructure.Deque;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
