@@ -7,7 +7,7 @@ public class q37_sudoku_solver {
     }
 
     private boolean dfs(char[][] board) { // ?返回值为bool!
-        // 无递归出口(return T/F即可)
+        // 递归出口在最后(return T/F即可)
         for (int i = 0; i < 9; i++) { // board.length==9
             for (int j = 0; j < 9; j++) { // board[0].length==9
                 if (board[i][j] != '.') continue; // 非空格，跳过
@@ -20,10 +20,10 @@ public class q37_sudoku_solver {
                         board[i][j] = '.';
                     }
                 }
-                return false;
+                return false; // 【勿漏】无解，回溯
             }
         }
-        return true;
+        return true; // 【勿漏】找到解，回溯
     }
 
     private boolean check(int row, int col, char ch, char[][] board) {
@@ -37,7 +37,7 @@ public class q37_sudoku_solver {
                 return false;
             }
         }
-        // 当前子矩阵(3*3)，ch唯一
+        // 当前子矩阵(3*3)的首元素下标↓，ch唯一
         int startRow =  (row / 3) * 3;// 0,1,2--0; 3,4,5--1; 6,7,8--2
         int startCol = (col / 3) * 3;
         for (int i = startRow; i < startRow + 3; i++) {

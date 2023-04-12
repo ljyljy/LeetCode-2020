@@ -5,7 +5,7 @@ public class q36_valid_sudoku {
         int n = 9; // board.length;
         boolean[][] row = new boolean[n][n]; // <行号，位图>
         boolean[][] col = new boolean[n][n]; // <列号，位图>
-        boolean[][] subMat = new boolean[n][n]; // <idx，位图>
+        boolean[][] subMat = new boolean[n][n]; // <子矩阵idx，位图>
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 // i / 3: subMat.行号，*3：每行首个subMat.idx， +j/3： 当前列.offset
