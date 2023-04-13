@@ -15,6 +15,7 @@
 /* 坑：
 1）dfs函数的返回值：bool
 2）函数入参为char** board，输入输出的写法 & 适用场景(q37 vs q36)
+3) char* 字面量只读，不能修改
 */
 bool dfs(char** board, int n);
 bool isValid(char** board, int row, int col, char c);

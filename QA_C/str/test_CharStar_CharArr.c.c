@@ -14,7 +14,7 @@ int main() {
     char strE[] = "Hello" ", geek!"; // 字面量不同, 000000000061FDC4
     printf("%p %p %p %p %p\n", strA2, strB2, strB3, strD, strE);
 
-    // 尝试修改char*（失败），char[]（成功）
+    // 尝试修改 字符串指针char*（失败），字符数组char[]（成功）
     // strB2[0] = 'h'; // 失败 error: assignment of read-only location '*strB2'
     // printf("%s\n", strB2);
     strD[0] = 'h';
@@ -24,5 +24,5 @@ int main() {
     // 总结：1）strB、strB2、strB3都是char*，字面量相同, 地址都为0000000000404000
     // 2）strA、strA2、strD、strE字面量不同，地址不同
     // 3）strA、strA2、strB、strB2、strB3都是char*，不可修改，属于read-only string
-    // 4）strD、strE都是char[]，可修改
+    // 4）strD、strE都是char[] 字符数组，可修改
 }
