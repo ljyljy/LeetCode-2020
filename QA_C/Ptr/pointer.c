@@ -46,6 +46,32 @@ int func1_4() {
     printf("*tmp2=%c, *p2=%c, p2[1]=%c\n", tmp2, *p2, p2[1]);
 }
 
+void func5_PtrOrder() {
+    int data[2] = { 100, 200 };
+    int moredata[2] = { 300, 400 };
+
+    int* p1, * p2, * p3;
+    p1 = p2 = data;
+    p3 = moredata;
+    printf("  *p1 = %d,   *p2 = %d,     *p3 = %d\n",
+        *p1, *p2, *p3);
+
+    printf("*p1++ = %d, *++p2 = %d, (*p3)++ = %d\n",
+        *p1++, *++p2, (*p3)++);
+    // *p1++：等价于*(p1++)，拷贝p1_old并打印，后移p1【此后的*p1=200】
+    // *++p2：等价于*(++p2)，先后移p2，再取*p2_new(值200)并打印
+    // (*p3)++：先取*p3(值300)并打印，再将值加1【此后的*p3=301】
+
+    printf("  *p1 = %d,   *p2 = %d,     *p3 = %d\n",
+        *p1, *p2, *p3); // 200, 200, 301（具体原因见上面注释）
+
+    /* output:
+      *p1 = 100,   *p2 = 100,     *p3 = 300
+    *p1++ = 100, *++p2 = 200, (*p3)++ = 300
+      *p1 = 200,   *p2 = 200,     *p3 = 301
+    */
+}
+
 // TEST2 - q264
 void swap(int* pa, int* pb) {
     int tmp = *pa;
@@ -101,4 +127,5 @@ int main() {
     // func1_3();
     func1_4();
     // func2();
+    func5_PtrOrder();
 }

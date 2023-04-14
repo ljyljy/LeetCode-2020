@@ -9,45 +9,29 @@
 // 法2：差分数组/前缀和
 #define MAX_LEN 1001
 bool carPooling2(int** trips, int n, int* tripsColSize, int capacity) {
-    int* sum = (int*)calloc(MAX_LEN, sizeof(int));
+    int* sum = (int*)calloc(MAX_LEN, sizeof(int));// 差分数组
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {// trip=[n, from, to]
         int cnt = trips[i][0], t_start = trips[i][1], t_end = trips[i][2];
-        sum[t_start] += cnt;
-        sum[t_end] -= cnt;
+        sum[t_start] += cnt; // 上车
+        sum[t_end] -= cnt;   // 下车，(from, to)之中的人数为diff[from, to]前缀和
     }
-    int totalWeight = 0;
+    int curWeight = 0;
     for (int i = 0; i < MAX_LEN; i++) {
-        totalWeight += sum[i];
-        if (totalWeight > capacity) {
+        curWeight += sum[i]; // 前缀和
+        if (curWeight > capacity) {
+            free(sum);
+            sum = NULL;
             return false;
         }
     }
+    free(sum);
+    sum = NULL;
     return true;
 }
 
-bool carPooling3(int** trips, int tripsSize, int* tripsColSize, int capacity) {
-    int* diff = (int*)calloc(1001, sizeof(int)); // 差分数组
-    for (int i = 0; i < tripsSize; i++) { // trip=[n, from, to]
-        diff[trips[i][1]] += trips[i][0]; // 上车
-        diff[trips[i][2]] -= trips[i][0]; // 下车，(from, to)之中的人数为diff[from, to]前缀和
-    }
 
-    int curTotalCnt = 0;
-    for (int i = 0; i < 1001; i++) {
-        curTotalCnt += diff[i];
-        if (curTotalCnt > capacity) {
-            free(diff);
-            diff = NULL;
-            return false;
-        }
-    }
-    free(diff);
-    diff = NULL;
-    return true;
-}
-
-// 法1：扫描线 = TreeMap / 小根堆 + 前缀和【类比：q218扫描线】
+// 法1：扫描线 = Map增减&排序 + 前缀和【类比：q218扫描线】
 #define ADD 1
 #define MINUS 2
 
@@ -59,13 +43,13 @@ typedef struct TreeMap {
 
 void map_putOrUpdate(TreeMap** map, int key, int val, int OPS) {
     TreeMap* pEntry = NULL;
-    HASH_FIND_INT(*map, &key, pEntry);
+    HASH_FIND_INT(*map, &key, pEntry);// 【入参key.地址】
     if (pEntry == NULL) { // put
         pEntry = (TreeMap*)malloc(sizeof(TreeMap));
         pEntry->time = key;
         if (OPS == ADD) pEntry->cnt = val;
         else pEntry->cnt = -val; // 后续用于前缀和
-        HASH_ADD_INT(*map, time, pEntry);
+        HASH_ADD_INT(*map, time, pEntry);// 【Map.key字段名】
     }
     else { // Update: 加/减
         if (OPS == ADD) {
@@ -111,3 +95,4 @@ bool carPooling(int** trips, int n, int* tripsColSize, int capacity) {
     map_free(&map);
     return true;
 }
+
