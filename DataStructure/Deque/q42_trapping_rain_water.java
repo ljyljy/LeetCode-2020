@@ -9,7 +9,7 @@ public class q42_trapping_rain_water {
     public int trap_2v1(int[] height) {
         if (height.length == 0 || height == null) return 0;
         int n = height.length;
-        int l_maxH = height[0], r_maxH = height[n-1];
+        int l_maxH = height[0], r_maxH = height[n - 1]; // 左侧[0,i]/右侧[j,n)目前最高的柱子
         int res = 0;
         for (int i = 0, j = n-1; i <= j; ) { // 而非i<j！否则会漏算i==j时的列
             if (l_maxH < r_maxH) { // 写法1（获取左右侧最高柱子的较矮者）

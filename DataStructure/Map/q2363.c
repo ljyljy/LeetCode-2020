@@ -131,7 +131,7 @@ int** mergeSimilarItems2(int** items1, int n1, int* items1ColSize,
     // 按照价值升序排序
     qsort(items, n1 + n2, sizeof(items[0]), cmp2);
 
-    // 统计每个价值的总重量(去重)
+    // 统计每个价值的总重量(去重 – by旧值更新)
     /* 法1：动态扩容，每次扩充1个int*空间
     int** ret = NULL;
     int curCnt = 0;
