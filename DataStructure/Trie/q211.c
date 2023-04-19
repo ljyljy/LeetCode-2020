@@ -63,6 +63,7 @@ void wordDictionaryFree(WordDictionary* obj) {
         }
     }
     free(obj);
+    obj = NULL;
 }
 
 int main() {
