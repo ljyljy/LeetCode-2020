@@ -6,7 +6,10 @@
 // #include <limits.h>
 
 // q146.c
-// 法1: 数组代替UT_HASH
+// 法2：略（双向链表 + 哈希表UT_HASH）
+// https://leetcode.cn/problems/lru-cache/solution/by-nirvana-10-7xik/
+
+// 法1: 双向链表 + keys数组代替UT_HASH
 typedef struct Node_s {
     bool keyExist; // key存在与否。具体key对应nodes数组的下标
     int value;
