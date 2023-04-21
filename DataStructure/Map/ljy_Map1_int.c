@@ -36,32 +36,25 @@ void map_add(int user_id, char* name) {
 // //  完整代码，见q1094
 // #define ADD 1
 // #define MINUS 2
-
-//typedef struct TreeMap {
-//    int time; // key
-//    int cnt; // val
-//    UT_hash_handle hh;
-//} TreeMap;
-
-//void map_putOrUpdate(TreeMap** map, int key, int val, int OPS) {
-//    TreeMap* pEntry = NULL;
-//    HASH_FIND_INT(*map, &key, pEntry);// 【入参key.地址】
-//    if (pEntry == NULL) { // put
-//        pEntry = (TreeMap*)malloc(sizeof(TreeMap));
-//        pEntry->time = key;
-//        if (OPS == ADD) pEntry->cnt = val;
-//        else pEntry->cnt = -val; // 后续用于前缀和
-//        HASH_ADD_INT(*map, time, pEntry);// 【Map.key字段名】
-//    }
-//    else { // Update: 加/减
-//        if (OPS == ADD) {
-//            pEntry->cnt += val;
-//        }
-//        else {
-//            pEntry->cnt -= val;
-//        }
-//    }
-//}
+// void map_putOrUpdate(Map** map, int key, int val, int OPS) {
+//     Map* pEntry = NULL;
+//     HASH_FIND_INT(*map, &key, pEntry);
+//     if (pEntry == NULL) { // put
+//         pEntry = (Map*)malloc(sizeof(Map));
+//         pEntry->key = key;
+//         if (OPS == ADD) pEntry->val = val;
+//         else pEntry->val = -val; // 勿忘！后续用于前缀和
+//         HASH_ADD_INT(*map, key, pEntry);
+//     }
+//     else { // Update: 加/减
+//         if (OPS == ADD) {
+//             pEntry->val += val;
+//         }
+//         else {
+//             pEntry->val -= val;
+//         }
+//     }
+// }
 
 
 // 2.3 查找 - HASH_FIND_INT(map, &key_val, pEntry)
@@ -87,6 +80,14 @@ void replace_user(HashHead* head, HashNode* newNode) {
 void delete_user(Map* pEntry) {
     HASH_DEL(map, pEntry);  /* user: pointer to deletee */
     free(pEntry);             /* optional; it's up to you! */
+}
+
+void delete_all() {
+    Map* cur, * tmp;
+    HASH_ITER(hh, map, cur, tmp) {
+        HASH_DEL(map, cur);  /* delete; users advances to next */
+        free(cur);            /* optional- if you want to free  */
+    }
 }
 
 // 2.6 循环删除
