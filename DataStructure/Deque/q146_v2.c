@@ -5,10 +5,6 @@
 // #include <math.h>
 // #include <limits.h>
 
-// q146.c
-// 法2：略（双向链表 + 哈希表UT_HASH）
-// https://leetcode.cn/problems/lru-cache/solution/by-nirvana-10-7xik/
-
 /* 分析：
 1) LRUCache需要有capacity最大容量、以及当前容量curCnt
 2) get要求快速找到key的索引，此处使用数组代替哈希
@@ -19,32 +15,35 @@
 总结：
   - LRUCache存储的主要对象应是一个链表Lists，且为双向（需要全局视野下保持对其head和tail的监视）
     - 具体链表结点ListNode：k-v对、前&后继
+4）易错：涉及更改链表结构、结构体成员值等操作，必须取指针！
+  - 直接的【赋值语句（浅拷贝）】+取地址，操作对象已经不是其原身了！
 */
 
-// 法1: 双向链表 + keys数组代替UT_HASH
+#define MAX_NUM 10001
 typedef struct Node_s {
-    bool keyExist; // key存在与否。具体key对应nodes数组的下标
-    int value;
-    struct Node_s* prev;
+    int key;
+    int val;
     struct Node_s* next;
-} Node; // 自建：双向链表Node, 包括<k,v>和prev/next指针
+    struct Node_s* prev;
+} Node;
 
 typedef struct {
-    int curCnt; // 当前容量
-    int capacity; // 最大容量
-    Node* head; // 头指针, dummy
-    Node* tail; // 尾指针, dummy
-    Node nodes[10001]; // keys数组代替哈希，0 <= key <= 10000
-} LRUCache; // 双向链表 + 哈希表<key, 链表Node>
+    int curCnt;
+    int capacity;
+    Node nodes[MAX_NUM];
+    Node* head;
+    Node* tail;
+    bool isKeyExist[MAX_NUM]; // 法2：全局视野下，控制key存在与否
+} LRUCache;
+
 
 void removeNode(Node* node);
 void addToHead(LRUCache* obj, Node* node);
 
 LRUCache* lRUCacheCreate(int capacity) {
     LRUCache* obj = (LRUCache*)calloc(1, sizeof(LRUCache));
-    // memset(obj->nodes, 0, 10001 * sizeof(Node));
-    obj->curCnt = 0;
     obj->capacity = capacity;
+    // memset(obj->nodes, 0, MAX_NUM * sizeof(Node));
     obj->head = (Node*)calloc(1, sizeof(Node));
     obj->tail = (Node*)calloc(1, sizeof(Node));
     obj->head->next = obj->tail;
@@ -53,33 +52,33 @@ LRUCache* lRUCacheCreate(int capacity) {
 }
 
 int lRUCacheGet(LRUCache* obj, int key) {
-    if (obj->nodes[key].keyExist == false) {
-        return -1;
+    if (obj->isKeyExist[key]) {
+        Node* node = &(obj->nodes[key]);
+        removeNode(node);
+        addToHead(obj, node);
+        return node->val;
     }
-    Node* node = &(obj->nodes[key]);
-    removeNode(node);
-    addToHead(obj, node);
-    return node->value;
+    return -1;
 }
 
 void lRUCachePut(LRUCache* obj, int key, int value) {
-    if (obj->nodes[key].keyExist == true) {
-        Node* node = &(obj->nodes[key]);
-        node->value = value;
-        removeNode(node); // 勿忘！
-        addToHead(obj, node); // 勿忘！
+    Node* node = &(obj->nodes[key]);
+    if (obj->isKeyExist[key]) {
+        node->val = value;
+        removeNode(node);
+        addToHead(obj, node);
     }
     else {
-        Node* node = &(obj->nodes[key]);
-        node->keyExist = true;
-        node->value = value;
-        addToHead(obj, node); // 勿忘！
+        obj->isKeyExist[key] = true;
+        node->key = key;
+        node->val = value;
+        addToHead(obj, node);
         obj->curCnt++;
 
         if (obj->curCnt > obj->capacity) {
             Node* tail = obj->tail->prev;
+            obj->isKeyExist[tail->key] = false;
             removeNode(tail);
-            tail->keyExist = false;
             obj->curCnt--;
         }
     }
@@ -92,23 +91,33 @@ void lRUCacheFree(LRUCache* obj) {
 }
 
 void removeNode(Node* node) {
-    node->prev->next = node->next;
     node->next->prev = node->prev;
+    node->prev->next = node->next;
 }
 
 void addToHead(LRUCache* obj, Node* node) {
-    node->next = obj->head->next;
-    node->prev = obj->head;
-    obj->head->next->prev = node;
+    Node* nxt = obj->head->next;
     obj->head->next = node;
+    node->prev = obj->head;
+    node->next = nxt;
+    nxt->prev = node;
 }
+/**
+ * Your LRUCache struct will be instantiated and called as such:
+ * LRUCache* obj = lRUCacheCreate(capacity);
+ * int param_1 = lRUCacheGet(obj, key);
+
+ * lRUCachePut(obj, key, value);
+
+ * lRUCacheFree(obj);
+*/
 
 int main() {
     LRUCache* obj = lRUCacheCreate(2);
     lRUCachePut(obj, 1, 1);
     lRUCachePut(obj, 2, 2);
     printf("%d\n", lRUCacheGet(obj, 1)); // 1
-    lRUCachePut(obj, 3, 3);
+    lRUCachePut(obj, 3, 3); // 把2挤出去了
     printf("%d\n", lRUCacheGet(obj, 2)); // -1
     lRUCachePut(obj, 4, 4);
     printf("%d\n", lRUCacheGet(obj, 1)); // -1

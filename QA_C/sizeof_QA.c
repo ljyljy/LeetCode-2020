@@ -56,12 +56,55 @@ typedef union {// 对齐参数     偏移地址        大小
     int f;                          // 4B, 被double覆盖
 } test_Union2_2; // min(pack_4,max_8)=4; 0;   8B
 
+struct {
+    short a; // 2 B
+    char b; // 1
+    char c; // 1
+    // padding - 4B
+
+    int* d; // x86-64位 - 8B
+
+    union { // max=4B
+        double e; // 4B
+        int f; // 4B
+    };
+    // padding - 4B
+} S2 = { 4, 'b0', 'c0', NULL, {.f = 30} };
+// ↑ 默认将S2.a初始化为4，若给了其他非short类型数值，将会进行强转，再赋值给S2.a
+
 int main() {
     printf("sizeof(test_Struct) = %d, sizeof(test_Union) = %d\n",
         sizeof(test_Struct), sizeof(test_Union)); // 6, 8
 
     printf("sizeof(test_Struct2) = %d, sizeof(test_Union2_2) = %d\n",
         sizeof(test_Struct2), sizeof(test_Union2_2));// 20, 8
+
+    printf("sizeof(S2) = %d\n", sizeof(S2)); // 24
+    printf("S2.a = %d, S2.b = %c, S2.c = %c, S2.d = %p, S2.e = %.2f, S2.f = %d\n",
+        S2.a, S2.b, S2.c, S2.d, S2.e, S2.f); // 4, b0, c0, 0, 0, 30
+
+
+    // char* 与 char [N]
+    char str1[] = "123456";
+    printf("sizeof(str1)=%d \n", sizeof(str1)); // 7
+    printf("strlen(str1)=%d \n", strlen(str1)); // 6
+
+    char* str2 = "123456";
+    printf("sizeof(str2)=%d \n", sizeof(str2)); // 8
+    printf("strlen(str2)=%d \n", strlen(str2)); // 6
+
+    char str3[] = "\\";// 特殊字符'\'
+    printf("sizeof(str3)=%d \n", sizeof(str3)); // 2
+    printf("strlen(str3)=%d \n", strlen(str3)); // 1
+
+    // 字符数组初始化
+    // 双引号的字符串在定义字符串 时，系统会自动增加一个结束符，但是采取单引号依次赋值则不会主动增加结束符。
+    char word[] = { 'T', 'u', 'r', 'b', 'o', '\0' };
+    char word2[] = { "Turbo\0" };
+    char word3[] = "Turbo\0";
+    printf("sizeof(word)=%d, sizeof(word2)=%d, sizeof(word3)=%d \n",
+        sizeof(word), sizeof(word2), sizeof(word3)); // 6, 7, 7
+
 
     return 0;
 }
