@@ -5,6 +5,9 @@
 // #include <math.h>
 // #include <limits.h>
 
+
+// q51.c
+
 /* bool数组代替哈希：
 - 题目：1 <= n <= 9，
   - 1）row + col∈[0, 18];
@@ -40,11 +43,11 @@ char*** solveNQueens(int n, int* returnSize, int** returnColumnSizes) {
 void dfs(int n, int row, int* path) {
     if (row == n) {
         res[curCnt] = (char**)calloc(n, sizeof(char*)); // 每个解(res[curCnt])都是一个n*n的棋盘(char**)
-        for (int i = 0; i < n; i++) { // 遍历每一行
-            res[curCnt][i] = (char*)calloc(n + 1, sizeof(char)); // 每一行，末尾'\0'
-            memset(res[curCnt][i], '.', n);
-            res[curCnt][i][path[i]] = 'Q';
-            res[curCnt][i][n] = '\0';
+        for (int row = 0; row < n; row++) { // 遍历每一行
+            res[curCnt][row] = (char*)calloc(n + 1, sizeof(char)); // 每行，形如".Q..\0"，末尾'\0'
+            memset(res[curCnt][row], '.', n);
+            res[curCnt][row][path[row]] = 'Q';
+            res[curCnt][row][n] = '\0';
             // printf("%s \t", res[curCnt][i]);
         }
         pathLens[curCnt++] = n; // curLen == n

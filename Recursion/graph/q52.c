@@ -5,6 +5,8 @@
 // #include <math.h>
 // #include <limits.h>
 
+// q52.c
+
 bool cols[10], xyDiff[20], xySum[20];
 int curCnt, curLen;
 

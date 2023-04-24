@@ -24,7 +24,7 @@ public class q56_merge_intervals {
     }
 
     private boolean isOverlap(int[] inv1, int[] inv2) {
-        return Math.max(inv1[0], inv2[0]) <= Math.min(inv1[1], inv2[1]);
+        return Math.max(inv1[0], inv2[0]) <= Math.min(inv1[1], inv2[1]); // qsort后，一定是inv2[0] <= inv1[1]
     }
 
     private int[] mergeInterval(int[] inv1, int[] inv2) {
