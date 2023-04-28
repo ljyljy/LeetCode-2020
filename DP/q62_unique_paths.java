@@ -37,7 +37,7 @@ public class q62_unique_paths {
     }
 
     // ·¨1£ºDFS+memo[×¢Òâ(1,1)->(m, n)]
-    private int cnt = 0;
+//    private int cnt = 0;
     private Map<String, Integer> memo = new HashMap<>();
     public int uniquePaths_DFS(int m, int n) {
         return dfs(m, n, 1, 1, memo);
