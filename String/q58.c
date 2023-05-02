@@ -37,17 +37,18 @@ int lengthOfLastWord(char* s) {
 }
 
 int main() {
-    char* s1 = "Hello World";
-    int len1 = lengthOfLastWord(s1);
+    // char* s1 = "Hello World"; // 不可！strtok的参数1不可以以“字面量”的形式传入！段错误！【见q71/q58 main】
+    char s1[100] = "Hello World";
+    int len1 = lengthOfLastWord0(s1);
     printf("len1 = %d\n", len1);
     // len1 = 5
 
-    char* s2 = "   fly me   to   the moon  ";
+    char s2[100] = "   fly me   to   the moon  ";
     int len2 = lengthOfLastWord(s2);
     printf("len2 = %d\n", len2);
     // len2 = 4
 
-    char* s3 = "luffy is still joyboy";
+    char s3[100] = "luffy is still joyboy";
     int len3 = lengthOfLastWord(s3);
     printf("len3 = %d\n", len3);
     // len3 = 6

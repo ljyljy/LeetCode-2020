@@ -11,7 +11,7 @@ void split_tokens(char* line, char* split) {
 
     // 写法2
     int cnt = 1;
-    char* token = strtok(line, split);
+    char* token = strtok(line, split); // strtok参数1不可以以“字面量/const”的形式传入！！！段错误！【见q71.c main】
     while (token != NULL) {
         printf("token [%d] is '%s'\n", cnt++, token);
         token = strtok(NULL, split); // strtok传入NULL：从原串上一次切分的位置继续tok
