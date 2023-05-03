@@ -23,7 +23,7 @@ public class quickSort_test {
             }
         }
         swap(arr, start, j);
-        return j;
+        return j; // 或 i-1, 即分区mid下标（右闭）
     }
 
     private void swap (int[] arr, int i, int j) {

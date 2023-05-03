@@ -88,7 +88,7 @@ public class q75_sort_colors {
             }
         }
         swap(nums, start, j);
-        return i; // 或j+1
+        return j; // 或i-1
     }
 
     private void swap(int[] A, int left, int right) {

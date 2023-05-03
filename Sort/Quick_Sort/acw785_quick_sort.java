@@ -33,7 +33,7 @@ public class acw785_quick_sort {
             }
         }// 退出后 (start) [start+1, (j)]  [i, end]
         swap(arr, start, j); // [start, j(pivot)][i, end]
-        return j;
+        return j; // 或 i-1, 即分区mid下标（右闭）
     }
 
     private void swap (int[] arr, int i, int j) {
