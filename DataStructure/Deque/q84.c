@@ -4,27 +4,37 @@
 #include <math.h>
 #include <limits.h>
 
-#define DUMMY_NUM 2;
+#define PEEK stk[top-1]
 
 int largestRectangleArea(int* heights, int n) {
+    int m = n + 2;
+    int heights2[m];
+    heights2[0] = heights2[m - 1] = -1;
     int maxArea = 0;
-    int m = n + DUMMY_NUM;
-    int *tmp = malloc(sizeof(int) * m);
-    memset(tmp, 0, sizeof(int) * m); // 勿忘赋值！首尾哨兵！
-    for (int i = 1; i <= n; ++i) { // 0 [1,n] n+1
-        tmp[i] = heights[i-1];
-    }
-    int *stk = malloc(sizeof(int) * m);
-    memset(stk, 0, sizeof(int) * m);
-    int top = 0;
-    for (int r = 0; r < m; ++r) {
-        while (top > 0 && tmp[r] < tmp[stk[top-1]]) { // 栈顶应为top-1！
-            int h = tmp[stk[top-1]];
-            top--;
-            int width = r - stk[top-1] - 1;
-            maxArea = fmax(maxArea, width * h);
+    memcpy(&heights2[1], heights, n * sizeof(int));
+
+    int stk[m], top = 0;
+    stk[top++] = -1; // 左哨兵入栈
+    memset(stk, 0, sizeof(stk));
+    for (int r = 0; r < m; r++) {
+        // 看到更低的柱子[r]，前面就可以计算了[递增栈?，与q42接雨水相反！]
+        while (top > 0 && heights2[PEEK] > heights2[r]) {
+            // ↓ 由于递增栈，因此之前的最高h即为栈顶[PEEK]
+            int maxH = heights2[PEEK]; // 取栈顶
+            --top; // 并弹栈
+            int curArea = maxH * (r - PEEK - 1); // 宽度=[PEEK+1, r-1]（因为之前弹栈了，因此这里PEEK需+1）
+            maxArea = fmax(maxArea, curArea);
         }
-        stk[top++] = r; // 栈顶idx=0，top=1 -> 因此当stk非空后，取栈顶应为top-1！
+        stk[top++] = r;
     }
+
     return maxArea;
+}
+
+int main() {
+    int heights[] = { 2, 1, 5, 6, 2, 3 };
+    int n = sizeof(heights) / sizeof(heights[0]);
+    int ans = largestRectangleArea(heights, n);
+    printf("%d", ans);
+    return 0;
 }

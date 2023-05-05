@@ -48,7 +48,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class q84_largest_rectangle_in_histogram_4star {
-    // 1. 单调栈（维护栈）【加哨兵！！！】
+    // 1. 单调栈，递增栈（维护栈）【加哨兵！！！】
     public int largestRectangleArea(int[] heights) {
         // 这里为了代码简便，在柱体数组的头和尾加了两个高度为 0 的柱体【哨兵】。
         int[] tmp = new int[heights.length + 2];
@@ -64,7 +64,7 @@ public class q84_largest_rectangle_in_histogram_4star {
                 // ↓【高柱子(栈顶)弹栈&计算，给矮tmp[i](>哨兵0)压栈等待后面计算的机会】
                 int h = tmp[stack.pop()]; // i: 右边界
                 max = Math.max(max, (r - stack.peek() - 1) * h); // 弹栈后的栈顶（原-次栈顶）是左边界
-                // 宽度要-1 == [peek(),r-1]的宽度！ 矮高矮--> 面积只算高的部分！
+                // 宽度要-1 == [peek()+1,r-1]的宽度（因为之前弹栈了，因此PEEK需+1） ！ 矮高矮--> 面积只算高的部分！
                 // 高的弹栈后，矮的以后有机会自会再算一次（此时下标相减就会包括高的）。
             }
             stack.push(r); // 递增栈❤

@@ -1,4 +1,4 @@
-package Array.MergeSort_array;
+package Sort.Merge_Sort.MergeSort_array;
 
 public class q88_merge_sorted_array {
     public void merge(int[] A, int m, int[] B, int n) {
@@ -13,11 +13,11 @@ public class q88_merge_sorted_array {
     }
 
     public static void main(String[] args) {
-        int[] A = {1,2,3,0,0,0};
-        int[] B = {2,5,6};
+        int[] A = {1, 2, 3, 0, 0, 0};
+        int[] B = {2, 5, 6};
         q88_merge_sorted_array sol = new q88_merge_sorted_array();
         sol.merge(A, A.length - B.length, B, B.length);
-        for (int a: A)
+        for (int a : A)
             System.out.print(a + " ");
     }
 }
