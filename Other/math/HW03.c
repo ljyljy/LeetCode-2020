@@ -8,7 +8,7 @@
 // HW03. 二进制转十进制
 
 // ACv1: 从后往前遍历，每次乘2^k，k = 0, 1, 2, ...
-// 直接将二进制字符串转化为十进制数，由于是int，因此负数补码最后将自动转换为负数十进制int
+// 直接将二进制字符串转化为十进制数，由于返回值是int，因此负数补码最后将自动转换为负数十进制int
 int BinaryToDecimal(char* binStr) {
     int len = strlen(binStr);
     int output = 0;
