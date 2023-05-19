@@ -6,7 +6,7 @@ public class q207_course_schedule {
     // 法1：BFS-拓扑排序
     public boolean canFinish(int n, int[][] prerequisites) {
         int[] indegrees = new int[n]; // 入度
-        List<List<Integer>> adjList = new ArrayList<>(); // 领接表<pre, cur>
+        List<List<Integer>> adjList = new ArrayList<>(); // 领接表<pre, cur> / nxtCourses
         for (int i = 0; i < n; i++) adjList.add(new ArrayList<>());
         for (int[] pair: prerequisites) { // pair <cur, pre>
             int cur = pair[0], pre = pair[1];
@@ -59,7 +59,7 @@ public class q207_course_schedule {
 
     private boolean dfs(int i) {
         if (visited[i] == 1) return false; // 成环【回溯过，已知i~邻边成环】
-        if (visited[i] == -1) return true; //??? 【回溯过，已知i~所有邻边不成环】
+        if (visited[i] == -1) return true; //??? 剪枝 【当前'选修路径'回溯过(cur的前置课程dfs时，下探过cur)，已知cur~所有邻边不成环, 无需再从cur出发下探】
 
         visited[i] = 1;
         for (int nxt: adjList.get(i)) {
