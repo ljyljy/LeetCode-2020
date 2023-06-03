@@ -1,6 +1,18 @@
-package DP;
+package DP.P1_Optimize;
 
 public class q121_best_time_to_buy_and_sell_stock {
+    // 法1. 贪心: 求max{右max-左min}
+    public int maxProfit_greedy(int[] prices) {
+        int n = prices.length;
+        int min = Integer.MAX_VALUE; // -inf!
+        int res = 0;
+        for (int i = 1; i < n; i++) {
+            min = Math.min(min, prices[i - 1]);
+            res = Math.max(res, prices[i] - min);
+        }
+        return res;
+    }
+
     // 法2：DP
     public int maxProfit(int[] prices) {
         final int MOD = 2;
@@ -10,10 +22,10 @@ public class q121_best_time_to_buy_and_sell_stock {
         dp[0][1] = 0;
         for (int i = 1; i < n; i++) {
 //            for(int j = 0; j < 2; j++) {
-                // 第i天持有：先前就持有or今天买入(-成本/付出)
-                dp[i % MOD][0] = Math.max(dp[(i-1) % MOD][0], -prices[i]);
-                // 第i天不持有：先前没买or今天刚卖出(售价/获利)
-                dp[i % MOD][1] = Math.max(dp[(i-1) % MOD][1], dp[(i-1) % MOD][0] + prices[i]);
+            // 第i天持有：max(先前就持有, 今天买入(-成本/付出，利润为负))   ↓ 与前一天不持有无关(只可以一次买入，dp[(i-1) % MOD][1]可能是前一天卖出的利润，不为0！)
+            dp[i % MOD][0] = Math.max(dp[(i - 1) % MOD][0], -prices[i]); // 只可能买入一次
+            // 第i天不持有：max(第i-1天不持有(卖出/利润), 第i-1天持有且今天卖出)
+            dp[i % MOD][1] = Math.max(dp[(i - 1) % MOD][1], dp[(i - 1) % MOD][0] + prices[i]); // 只可能卖出一次
 //            }
         }
         return Math.max(dp[(n-1) % MOD][0], dp[(n-1) % MOD][1]);
@@ -42,18 +54,5 @@ public class q121_best_time_to_buy_and_sell_stock {
         System.out.println("buy: " + buy + ", sell: " + sell); // 购买日 & 卖出日
         return Math.max(dp[n-1][0], dp[n-1][1]);
     }
-
-    // 法1. 贪心: 求max{右max-左min}
-    public int maxProfit_greedy(int[] prices) {
-        int n = prices.length;
-        int min = Integer.MAX_VALUE; // -inf!
-        int res = 0;
-        for (int i = 1; i < n; i++) {
-            min = Math.min(min, prices[i-1]);
-            res = Math.max(res, prices[i] - min);
-        }
-        return res;
-    }
-
 
 }
