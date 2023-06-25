@@ -10,7 +10,7 @@ public class q99_recoverBST {
         if (root == null) return;
         dfs(root);
         TreeNode x = null, y = null;
-        // BST中序：res理应升序，找到逆序对<x, y>
+        // BST中序：res理应升序，找到逆序对<x-首个,即Max; y-向右找到min>
         for (int i = 0; i+1 < res.size(); i++) {
             if (res.get(i).val > res.get(i+1).val) {
                 if (x == null) x = res.get(i);
