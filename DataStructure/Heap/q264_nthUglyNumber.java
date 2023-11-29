@@ -23,6 +23,27 @@ public class q264_nthUglyNumber {
                 visited.add(newUgly);
             }
         }
-        return (int)curUgly;
+        return (int) curUgly;
+    }
+
+    public int nthUglyNumber2(int n) {
+        PriorityQueue<Long> heap = new PriorityQueue<>();
+        Set<Long> visited = new HashSet<>();
+        heap.add(1L);
+        visited.add(1L);
+
+        int[] factors = {2, 3, 5};
+        Long curUgly = 1L, newUgly;
+        for (int i = 0; i < n; i++) {
+            curUgly = heap.poll();
+            for (int factor : factors) {
+                newUgly = curUgly * factor;
+                if (!visited.contains(newUgly)) {
+                    heap.offer(newUgly);
+                    visited.add(newUgly);
+                }
+            }
+        }
+        return (int) ((long) curUgly);
     }
 }

@@ -26,6 +26,23 @@ public class q541_reverse_string_ii {
         }
     }
 
+    // 法2
+    public String reverseStr02(String s, int k) {
+        StringBuilder sb = new StringBuilder(s);
+        StringBuilder subStr = new StringBuilder();
+        int n = s.length();
+        boolean flag = true;
+        for (int i = 0; i < n; i += k) {
+            int j = Math.min(i + k, n);
+            if (flag) {
+                subStr = new StringBuilder(sb.substring(i, j)).reverse();
+                sb.replace(i, j, subStr.toString());
+            }
+            flag = !flag;
+        }
+        return sb.toString();
+    }
+
     // old: StringBuilder()
     public String reverseStr0(String s, int k) {
         StringBuffer sb = new StringBuffer(s);
@@ -34,12 +51,12 @@ public class q541_reverse_string_ii {
         boolean flag = true;
 
         for (int i = 0; i < n; i += k) { // ❤注意 i不是++，而是+=k！
-            int start = j * k, end = (j+1)* k < n? (j+1)* k: n;
+            int start = j * k, end = (j + 1) * k < n ? (j + 1) * k : n;
 
             if (flag && start <= i && i <= end) {
                 // ❤字符串s.substring,  sb.reverse().toString()【字符串无reverse!】
                 String subStr = new StringBuffer(s.substring(start, end))
-                                .reverse().toString();
+                        .reverse().toString();
                 newStr = sb.replace(start, end, subStr);
                 j++;
             } else { // !flag
@@ -48,5 +65,10 @@ public class q541_reverse_string_ii {
             flag = !flag;
         }
         return newStr.toString();
+    }
+
+    public static void main(String[] args) {
+        q541_reverse_string_ii obj = new q541_reverse_string_ii();
+        System.out.println(obj.reverseStr02("abcdefg", 2));
     }
 }

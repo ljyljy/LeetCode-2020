@@ -1,5 +1,6 @@
 package DataStructure.Heap;
 
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 // 类比q23, 373, 786, 719（PQ超时 -> 二分+双指针）
@@ -13,7 +14,7 @@ public class q786_k_th_smallest_prime_fraction {
         PriorityQueue<int[]> maxQ = new PriorityQueue<>(k,
                 (a, b)->Double.compare(1.0*b[0]/b[1], 1.0*a[0]/a[1])); // 大根堆 - 逆序
         for (int i = 0; i < n; i++) {
-            for (int j = i+1; j < n; j++) {
+            for (int j = i + 1; j < n; j++) {
                 double tmp = 1.0 * arr[i] / arr[j];
                 maxQ.offer(new int[]{arr[i], arr[j]});
                 if (maxQ.size() > k) {
@@ -22,5 +23,11 @@ public class q786_k_th_smallest_prime_fraction {
             }
         }
         return maxQ.poll();
+    }
+
+    public static void main(String[] args) {
+        q786_k_th_smallest_prime_fraction obj = new q786_k_th_smallest_prime_fraction();
+        int[] nums = {1, 2, 3, 5};
+        System.out.println(Arrays.toString(obj.kthSmallestPrimeFraction(nums, 3)));
     }
 }

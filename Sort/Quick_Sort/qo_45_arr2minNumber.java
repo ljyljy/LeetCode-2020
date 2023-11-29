@@ -14,7 +14,6 @@ public class qo_45_arr2minNumber {
         Arrays.sort(numStrs, (o1, o2) -> (o1 + o2).compareTo(o2 + o1)); // "10 2" < "2 10", ÉýÐò
         return String.join("", numStrs);
     }
-
     // ·¨2£º¿ìÅÅ
     public String minNumber(int[] nums) {
         int n = nums.length;
@@ -55,5 +54,11 @@ public class qo_45_arr2minNumber {
         String tmp = str[i];
         str[i] = str[j];
         str[j] = tmp;
+    }
+
+    public static void main(String[] args) {
+        qo_45_arr2minNumber obj = new qo_45_arr2minNumber();
+        int[] nums = {63, 42, 13};
+        System.out.println(obj.minNumber(nums));
     }
 }
